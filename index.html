@@ -198,7 +198,7 @@ details.det .in{padding-bottom:12px}
 
 /* v4 */
 .tbar{display:flex;gap:8px;margin:0 0 12px}
-.pillb{flex:1;padding:11px 10px;border-radius:16px;font-weight:650;font-size:14.5px;text-align:center}
+.pillb.on{background:var(--acc);color:var(--on)}.pillb{flex:1;padding:11px 10px;border-radius:16px;font-weight:650;font-size:14.5px;text-align:center}
 .d .jd{position:absolute;bottom:5px;left:6px;display:flex;gap:2px}.d .jd i{width:6px;height:6px;border-radius:50%;box-shadow:0 0 0 1px var(--on)}
 .d.x{box-shadow:inset 0 0 0 2.5px var(--dn)!important}
 .d.o .v{font-size:15px}
@@ -231,6 +231,36 @@ details.det .in{padding-bottom:12px}
 .oprog{height:6px;border-radius:99px;background:var(--sf2);overflow:hidden;width:100%}.oprog i{display:block;height:100%;background:var(--acc);border-radius:99px;transition:width .35s}
 .odots{flex-direction:column;align-items:flex-start;gap:10px}.osec{font-size:14px;font-weight:650;color:var(--at)}
 .btn[disabled]{opacity:.4}
+html,body{overflow-x:hidden}
+body.full{padding-bottom:calc(28px + env(safe-area-inset-bottom,0px))}body.full.hasbar{padding-bottom:calc(104px + env(safe-area-inset-bottom,0px))}
+.top .tr{display:flex;gap:8px}#bell{position:relative}.bdg{position:absolute;top:-3px;right:-3px;min-width:19px;height:19px;padding:0 5px;border-radius:99px;background:var(--dn);color:#fff;font-size:11.5px;font-weight:700;display:grid;place-items:center;line-height:1}
+@keyframes sll{from{opacity:0;transform:translateX(46px)}}@keyframes slr{from{opacity:0;transform:translateX(-46px)}}@keyframes slb{from{opacity:.4;transform:translateX(-30px)}}
+.sl-l{animation:sll .32s cubic-bezier(.2,.8,.2,1)}.sl-r{animation:slr .32s cubic-bezier(.2,.8,.2,1)}.sl-b{animation:slb .3s cubic-bezier(.2,.8,.2,1)}
+.jseg{display:flex;gap:4px;padding:4px;border-radius:14px;background:var(--sf);margin-bottom:10px;overflow-x:auto;scrollbar-width:none}.jseg::-webkit-scrollbar{display:none}
+.jseg button{flex:1;min-width:max-content;display:flex;align-items:center;justify-content:center;gap:7px;padding:9px 12px;border-radius:11px;font-weight:650;font-size:14.5px;color:var(--mut);white-space:nowrap}.jseg button i{width:9px;height:9px;border-radius:50%;flex:none}.jseg button.on{background:var(--g1);color:var(--ink);box-shadow:0 1px 4px rgba(0,0,0,.12)}
+.tpl2{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin-top:10px;padding:1px}.tpl2::-webkit-scrollbar{display:none}
+.tpl2 button{flex:none;display:flex;align-items:center;gap:6px;padding:6px 10px;border-radius:99px;border:1px solid var(--bd);font-size:13.5px;font-weight:600;color:var(--mut);white-space:nowrap}.tpl2 button span{font-weight:500;opacity:.8}.tpl2 button i{width:8px;height:8px;border-radius:50%}
+.tpl2 button.on{border-color:var(--ab);color:var(--at);background:var(--as)}.tpl2 button[disabled]{opacity:.4}
+.d.sel{background:var(--acc2)!important;box-shadow:inset 0 0 0 2px var(--on)!important}.d.sel .v,.d.sel .n{color:var(--on)!important}
+.grid.selm{touch-action:none}.grid.selm .d{transition:transform .1s}
+.d .gk{position:absolute;bottom:5px;right:6px;width:6px;height:6px;border-radius:2px;background:var(--acc2);box-shadow:0 0 0 1px var(--on)}
+.selbar{position:fixed;left:0;right:0;bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:6;padding:0 14px;animation:sll .25s ease}.selb{max-width:480px;margin:0 auto;padding:10px 12px}
+.selh{display:flex;align-items:center;justify-content:space-between;gap:8px}.selh b{font-size:15px}.selh .ib{width:34px;height:34px;background:var(--sf2);font-size:18px}.sel2{margin-top:8px}.sel2 button{padding:8px 12px}
+.savebar{position:fixed;left:0;right:0;bottom:0;z-index:7;padding:14px 16px calc(14px + env(safe-area-inset-bottom,0px));background:linear-gradient(to top,var(--dock) 60%,transparent)}.savebar .btn{display:flex;width:100%;max-width:488px;margin:0 auto;justify-content:center;padding:15px;font-size:16.5px;border-radius:18px}
+.verf{display:flex;justify-content:center;align-items:center;gap:12px;padding:6px 0 4px;color:var(--mut);font-size:14px}.verf b{font-weight:600}
+.lnk2{color:var(--at);font-weight:650;font-size:14.5px}
+.av{border-radius:50%;object-fit:cover;flex:none;display:block;background:var(--sf2)}.avl{display:block;flex:none}.avl svg{width:100%;height:100%}.avb{cursor:pointer;position:relative;display:block}
+.prof .av,.prof .avl{width:56px;height:56px}
+.ir select{border:0;background:var(--sf2);border-radius:10px;padding:8px 10px;font:inherit;font-size:14.5px;color:var(--ink);flex:none}
+.stp{display:flex;align-items:center;justify-content:center;gap:22px;padding:12px}.stp button{width:46px;height:46px;border-radius:50%;background:var(--sf2);font-size:24px;text-align:center}.stp b{min-width:130px;text-align:center;font-size:20px}
+.tp.unr{position:relative}.tp.unr strong::after{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--dn);margin-left:8px;vertical-align:2px}
+.chl{margin:8px 0 0;padding-left:18px;color:var(--ink);font-size:14.5px}.chl li{margin:4px 0}
+#nt .tp{align-items:flex-start}
+.onb .in{display:flex;flex-direction:column;min-height:100%}.onb #ost{flex:1;display:flex;flex-direction:column}.ostep{flex:1;display:flex;flex-direction:column}
+.oacts{margin-top:auto!important;position:sticky;bottom:0;padding:18px 0 calc(6px + env(safe-area-inset-bottom,0px));background:linear-gradient(to top,var(--bg) 70%,transparent);z-index:2}
+.ostep>.g,.ostep>.pick,.ostep>.warn,.ostep>p.soft,.ostep>.big-in,.ostep>.tt,.ostep>.btn{flex:none}
+.ostep>.btn.q{align-self:flex-start;margin:4px 0 8px}
+.onb{padding-bottom:0}
 .beta{font:700 11px/1 -apple-system,BlinkMacSystemFont,sans-serif;padding:5px 8px;border-radius:99px;background:var(--acc2);color:var(--on);letter-spacing:.02em;margin-left:2px;align-self:center}
 .betanote{margin:0 0 18px;padding:14px 16px;border-radius:18px;background:var(--as);text-align:left}.betanote b{display:block;font-size:16px;margin-bottom:3px}.betanote span{font-size:15px;color:var(--mut)}
 #fb .oinfo{margin:14px 0 0}
@@ -243,7 +273,8 @@ details.det .in{padding-bottom:12px}
 .tabs>div{pointer-events:auto;max-width:480px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);padding:5px;border-radius:26px}
 .tabs button{display:flex;flex-direction:column;align-items:center;gap:2px;padding:7px 0 6px;border-radius:20px;color:var(--mut);font-size:11px;font-weight:600;min-width:0}
 .tabs svg{width:23px;height:23px}
-.tabs button.on{color:var(--on);background:var(--acc)}
+.tabs button.on{color:var(--on)}.tabs button{position:relative;z-index:1;transition:color .3s}
+.tabs>div{position:relative}.tind{position:absolute;top:5px;bottom:5px;left:0;width:0;transition:transform .55s cubic-bezier(.3,1.35,.45,1),width .55s cubic-bezier(.3,1.35,.45,1);will-change:transform;pointer-events:none}.tind b{display:block;width:100%;height:100%;border-radius:20px;background:var(--acc);box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 4px 14px var(--gl1)}.tind.mv b{animation:squish .55s cubic-bezier(.3,1.2,.5,1)}@keyframes squish{0%{transform:scale(1)}35%{transform:scale(1.16,.86)}70%{transform:scale(.97,1.04)}100%{transform:scale(1)}}
 
 /* sheets */
 .ov{position:fixed;inset:0;background:rgba(5,8,3,.5);opacity:0;pointer-events:none;transition:opacity .2s;z-index:20}
@@ -337,7 +368,8 @@ textarea{width:100%;min-height:110px;border:1px solid var(--bd);background:var(-
 
 <header class="top" id="top">
   <div class="brand"><span class="logo"></span><b>MySal</b><button class="beta" data-act="beta" aria-label="Бета-версія: як повідомити про проблему">beta</button></div>
-  <button class="ib g" id="menu" aria-label="Налаштування"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
+  <div class="tr"><button class="ib g" id="bell" aria-label="Сповіщення"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 1.5h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></svg><span class="bdg" id="bdg" hidden></span></button>
+  <button class="ib g" id="menu" aria-label="Налаштування"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button></div>
 </header>
 
 <section id="v-home">
@@ -366,7 +398,7 @@ textarea{width:100%;min-height:110px;border:1px solid var(--bd);background:var(-
 
 <section id="v-cal" hidden>
   <div class="mh"><button class="ib g" id="cpv" aria-label="Попередній місяць">‹</button><button class="mt" id="cmt" aria-label="Обрати місяць"></button><button class="ib g" id="cnx" aria-label="Наступний місяць">›</button></div>
-  <div class="tbar"><button class="g pillb" data-act="autoplan">✨ Скласти план</button><button class="g pillb" data-act="copyweek">⧉ Копія тижня</button></div>
+  <div class="tbar"><button class="g pillb" data-act="autoplan">✨ План</button><button class="g pillb" data-act="copyweek">⧉ Копія</button><button class="g pillb" data-act="selmode" id="selbtn">☑︎ Кілька днів</button></div>
   <div class="g cal">
     <div class="dow"><span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Нд</span></div>
     <div class="grid" id="grid"></div>
@@ -409,7 +441,7 @@ textarea{width:100%;min-height:110px;border:1px solid var(--bd);background:var(-
 <section id="v-slip" hidden></section>
 <section id="v-sim" hidden></section>
 
-<nav class="tabs" id="tabs"><div class="g">
+<nav class="tabs" id="tabs"><div class="g"><i class="tind" id="tind"><b></b></i>
   <button data-v="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11.5 12 5l8 6.5V19a1 1 0 0 1-1 1h-4.5v-5h-5v5H5a1 1 0 0 1-1-1z"/></svg><span>Огляд</span></button>
   <button data-v="cal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><rect x="4" y="5.5" width="16" height="14.5" rx="3"/><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4"/></svg><span>Графік</span></button>
   <button data-v="money"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="6" width="17" height="13" rx="3"/><path d="M3.5 10.5h17M7.5 15h3"/></svg><span>Гроші</span></button>
@@ -417,7 +449,28 @@ textarea{width:100%;min-height:110px;border:1px solid var(--bd);background:var(-
   <button data-v="care"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><path d="M12 20s-7.5-4.6-7.5-10.2A4.2 4.2 0 0 1 12 7.3a4.2 4.2 0 0 1 7.5 2.5C19.5 15.4 12 20 12 20z"/></svg><span>Турбота</span></button>
 </div></nav>
 
+<div class="selbar" id="selbar" hidden></div>
+<div class="savebar" id="savebar" hidden><button class="btn" id="svbtn" disabled>Зберегти</button></div>
 <div class="ov" id="ov"></div>
+
+<div class="sh" id="gs" role="dialog" aria-modal="true" aria-labelledby="gst">
+  <div class="grab"></div>
+  <div class="sht"><span id="gst">Разовий підробіток</span><button class="ib" data-act="close" aria-label="Закрити">×</button></div>
+  <div id="gsb"></div>
+</div>
+
+<div class="sh" id="nt" role="dialog" aria-modal="true" aria-labelledby="ntt">
+  <div class="grab"></div>
+  <div class="sht"><span id="ntt">Сповіщення</span><button class="ib" data-act="close" aria-label="Закрити">×</button></div>
+  <div id="ntl"></div>
+</div>
+
+<div class="sh" id="cf" role="dialog" aria-modal="true" aria-labelledby="cft">
+  <div class="grab"></div>
+  <div class="sht"><span id="cft">Зберегти зміни?</span></div>
+  <p class="lead" style="text-align:center;margin:0 0 6px">Є зміни, які ще не збережено.</p>
+  <div class="oacts"><button class="btn" data-cf="save">Зберегти</button><button class="btn q" data-cf="drop">Не зберігати</button><button class="btn q" data-cf="cancel">Скасувати</button></div>
+</div>
 
 <div class="sh" id="sh" role="dialog" aria-modal="true" aria-labelledby="st">
   <div class="grab"></div>
@@ -444,7 +497,7 @@ textarea{width:100%;min-height:110px;border:1px solid var(--bd);background:var(-
 <div class="sh" id="ss" role="dialog" aria-modal="true" aria-labelledby="sst">
   <div class="grab"></div>
   <div class="sht"><button class="ib" id="ssp" aria-label="Попередня ніч">‹</button><span id="sst"></span><button class="ib" id="ssn" aria-label="Наступна ніч">›</button></div>
-  <div class="tt"><label><small>Ліг</small><input type="time" id="sb" step="300"></label><label><small>Встав</small><input type="time" id="sw2" step="300"></label></div>
+  <div class="tt"><label><small id="sbl">Ліг</small><input type="time" id="sb" step="300"></label><label><small id="swl">Встав</small><input type="time" id="sw2" step="300"></label></div>
   <div class="hrs"><output id="sd" style="font-size:36px;min-width:0"></output></div>
   <p class="pn" id="ssv" style="margin-top:-4px">Збережено</p>
   <div class="en"><small>Як спалось?</small><div id="sqb"><button data-q="1">Погано</button><button data-q="2">Нормально</button><button data-q="3">Добре</button></div></div>
@@ -468,7 +521,7 @@ textarea{width:100%;min-height:110px;border:1px solid var(--bd);background:var(-
   <div class="sht"><span id="fbh">Це бета-версія 🧪</span><button class="ib" data-act="close" aria-label="Закрити">×</button></div>
   <p class="lead">MySal ще росте, тож щось може працювати не так. Ти дуже допоможеш, якщо помітиш баг, дивну цифру чи незручне місце.</p>
   <div class="oinfo"><b class="em">📸</b><div><strong>Зроби скрін</strong><span>Того місця, де щось не так.</span></div></div>
-  <div class="oinfo"><b class="em">✍️</b><div><strong>Напиши пару слів</strong><span>Що ти робив і чого чекав натомість.</span></div></div>
+  <div class="oinfo"><b class="em">✍️</b><div><strong>Напиши пару слів</strong><span>Що відбувалось і чого ти очікував(-ла) натомість.</span></div></div>
   <div class="oinfo"><b class="em">📨</b><div><strong>Надішли автору апки</strong><span>У Telegram чи куди зручно, разом із технічними даними нижче — так легше знайти причину.</span></div></div>
   <div class="row2"><button class="btn" data-act="share" id="fbs" style="flex:1;justify-content:center">Надіслати технічні дані</button><button class="btn q" data-act="diag" id="fbc" style="flex:1;justify-content:center">Скопіювати</button></div>
   <p class="soft">Там лише версія апки, екран і модель пристрою. Твоїх сум і особистих даних немає.</p>
@@ -486,13 +539,14 @@ const ML=["січні","лютому","березні","квітні","трав�
 const DL=["неділя","понеділок","вівторок","середа","четвер","п’ятниця","субота"];
 const DS=["Нд","Пн","Вт","Ср","Чт","Пт","Сб"];
 const W_DAY=["день","дні","днів"],W_SH=["зміна","зміни","змін"],W_T=["раз","рази","разів"],W_M=["місяць","місяці","місяців"],W_WK=["тиждень","тижні","тижнів"],W_N=["ніч","ночі","ночей"];
-const KEY="mysal2";
-const CUR=[["CZK","Kč","Чеська крона"],["EUR","€","Євро"],["UAH","₴","Гривня"],["PLN","zł","Польський злотий"],["USD","$","Долар США"],["GBP","£","Фунт стерлінгів"],["HUF","Ft","Угорський форинт"],["RON","lei","Румунський лей"],["SEK","kr","Шведська крона"],["NOK","kr","Норвезька крона"],["DKK","kr","Данська крона"],["CHF","CHF","Швейцарський франк"]];
-const CT=[["HPP","HPP — трудовий договір (CZ)"],["DPP","DPP — до 300 год на рік (CZ)"],["DPČ","DPČ — до пів ставки (CZ)"],["ŽL","Živnost — самозайнятість (CZ)"],["emp","Трудовий договір"],["part","Погодинна підробітка"],["fop","ФОП / фриланс"],["other","Інше"]];
+const KEY="mysal7",OLDK="mysal2";
+const CUR=[["CZK","Kč","Чеська крона"],["EUR","€","Євро"],["PLN","zł","Польський злотий"],["USD","$","Долар США"],["UAH","₴","Гривня"]];
+const FX0={EUR:1,CZK:25,PLN:4.25,USD:1.13,UAH:47.5},CCUR={CZ:"CZK",PL:"PLN"};
+const CT=[["HPP","HPP — трудовий договір","CZ"],["DPP","DPP — до 300 год на рік","CZ"],["DPČ","DPČ — до пів ставки","CZ"],["ŽL","Živnost — самозайнятість","CZ"],["UoP","Umowa o pracę — трудовий","PL"],["UZ","Umowa zlecenie — доручення","PL"],["UoD","Umowa o dzieło — підряд","PL"],["B2B","B2B / JDG — самозайнятість","PL"],["emp","Трудовий договір",""],["part","Погодинна підробітка",""],["gig","Разовий підробіток",""],["fop","ФОП / фриланс",""],["other","Інше",""]];
 const JC=["#a6d83f","#f2c230","#4fb3e8","#f07ba0","#9b7cf0","#ff9f4a"];
 const FUN=[["walk","Прогулянки"],["sport","Спорт"],["friends","Друзі"],["sleep","Відіспатись"],["nature","Природа"],["read","Читання"],["games","Ігри"],["create","Творчість"],["cook","Готувати"],["movies","Кіно й серіали"],["music","Музика"],["trip","Поїздки"]];
 const LV=[[0,"Мінус"],[1,"Виживання"],[1.2,"Стабільно"],[1.5,"Запас"],[2,"Свобода"]];
-const LVT=["Цього місяця дохід не дотягнув до базових витрат. Буває — головне, що тепер видно, як спланувати наступний.","Базові витрати покриті, але запасу майже нема. Ще трохи — і стане спокійніше.","Витрати покриті й щось лишається. Добрий фундамент.","Є запас: можна впевнено відкладати й не хвилюватись.","Дохід покриває базу двічі. Ти добре попрацював — не забудь і відпочити."];
+const LVT=["Цього місяця дохід не дотягнув до базових витрат. Буває — головне, що тепер видно, як спланувати наступний.","Базові витрати покриті, але запасу майже нема. Ще трохи — і стане спокійніше.","Витрати покриті й щось лишається. Добрий фундамент.","Є запас: можна впевнено відкладати й не хвилюватись.","Дохід покриває базу двічі. Гарна робота — не забудь і відпочити."];
 const RM=matchMedia("(prefers-reduced-motion: reduce)").matches;
 let LGN=0;const logo=()=>{const id="LG"+(++LGN);return`<svg viewBox="0 0 120 120" aria-hidden="true"><defs><linearGradient id="${id}" x1=".1" y1="0" x2=".9" y2="1"><stop offset="0" stop-color="#ffe27a"/><stop offset="1" stop-color="#b6ea5a"/></linearGradient></defs><path d="M46 12c13-5 29-5 41 2 15 8 22 22 21 40 0 21-9 38-25 47-18 10-45 9-62-3C9 89 6 72 9 56c3-19 16-36 37-44z" fill="url(#${id})" stroke="#1f2a10" stroke-width="3.5" stroke-linejoin="round"/><g fill="none" stroke="#1f2a10" stroke-width="4" stroke-linecap="round"><path d="M37 46q5-5 10 0"/><path d="M66 43q5-5 10 0"/></g><path d="M60 81c-9-6-14-11-14-16a6.5 6.5 0 0 1 14-2.5a6.5 6.5 0 0 1 14 2.5c0 5-5 10-14 16z" fill="#ff8fa8" stroke="#1f2a10" stroke-width="3.2" stroke-linejoin="round"/><g fill="none" stroke-linecap="round"><path d="M14 62c5 18 21 27 44 24" stroke="#1f2a10" stroke-width="13"/><path d="M14 62c5 18 21 27 44 24" stroke="#d6f27a" stroke-width="6.5"/><path d="M106 57c-2 21-21 32-44 29" stroke="#1f2a10" stroke-width="13"/><path d="M106 57c-2 21-21 32-44 29" stroke="#d6f27a" stroke-width="6.5"/></g></svg>`};
 
@@ -510,8 +564,11 @@ let TD=today(),TK=ds(TD);
 const tm=s=>{const[h,m]=String(s).split(":").map(Number);return h*60+(m||0)};
 const mt=x=>{x=((Math.round(x)%1440)+1440)%1440;return pad(Math.floor(x/60))+":"+pad(x%60)};
 const nf=(n,d=1)=>(Math.round(n*10**d)/10**d).toLocaleString("uk-UA",{maximumFractionDigits:d});
-const sym=()=>(CUR.find(c=>c[0]===S.cur)||CUR[0])[1];
-const kc=n=>Math.round(n).toLocaleString("uk-UA")+"\u00a0"+sym();
+const sym=c=>(CUR.find(x=>x[0]===(c||S.cur))||CUR[0])[1];
+const kc=(n,c)=>Math.round(n).toLocaleString("uk-UA")+"\u00a0"+sym(c);
+const gx=(m,f)=>{const x=S&&S.prof&&S.prof.sx;return x==="f"?f:x==="m"?m:m+"/"+f};
+const sgv=()=>num(S.cfg.sg)||8,prepv=()=>num(S.cfg.prep)||60,offv=()=>num(S.cfg.off)||2;
+const toM=(n,c)=>{if(!c||c===S.cur)return n;const f=S.fx||FX0;return n/(num(f[c])||FX0[c]||1)*(num(f[S.cur])||FX0[S.cur]||1)};
 const hf=h=>nf(h)+"\u00a0год";
 const hm=m=>{m=Math.round(m);const h=Math.floor(m/60),r=m%60;return h+"\u00a0год"+(r?" "+r+"\u00a0хв":"")};
 const pl=(n,f)=>{n=Math.abs(Math.round(n));const a=n%10,b=n%100;return f[a===1&&b!==11?0:a>=2&&a<=4&&(b<12||b>14)?1:2]};
@@ -524,14 +581,14 @@ function countTo(el,v,f){if(!el)return;const from=typeof el._v==="number"?el._v:
   const t0=performance.now(),d=700;const step=t=>{if(el._v!==v)return;const k=Math.min(1,(t-t0)/d),e=1-Math.pow(1-k,3);el.textContent=f(from+(v-from)*e);if(k<1)requestAnimationFrame(step)};requestAnimationFrame(step)}
 
 /* ---------- стан ---------- */
-const DEFR={rate:190,mult:0.89,bonus:250};
-function newJob(n,c){return{id:uid(),n:n||"Робота",c:c||JC[0],ct:"HPP",pd:15,lag:1,brk:0,yl:0,bn:"Závoz",zd:[2,5]}}
-function blank(){const j={...newJob("Основна робота",JC[0]),id:"j1"};
-  return{v:4,u:0,name:"Денисе",cur:"CZK",onb:false,demo:false,jobs:[j],rates:{j1:{}},days:{},sleep:{},slips:[],sv:{},bal:{a:0,d:""},
-  tpl:[{id:uid(),n:"Ранкова",j:"j1",s:"06:00",e:"14:00"},{id:uid(),n:"Вечірня",j:"j1",s:"14:00",e:"22:00"}],
-  base:[{id:uid(),n:"Оренда",a:0,d:15},{id:uid(),n:"Їжа",a:0,d:""},{id:uid(),n:"Транспорт",a:0,d:""},{id:uid(),n:"Зв’язок і підписки",a:0,d:""}],
-  goals:[{id:"cush",n:"Подушка безпеки",t:0,s:0},{id:uid(),n:"Об’єктив",t:18000,s:0}],
-  cfg:{week:40,rest:11,off:2,fun:[],target:0,theme:"auto",sg:8,prep:60,lb:"23:00",lw:"07:00",ls:"08:00",last:8}}}
+const DEFR={rate:0,mult:1,bonus:0};
+function newJob(n,c,cur){return{id:uid(),n:n||"",c:c||JC[0],ct:"",pt:"",cur:cur||"CZK",pd:"",lag:"",brk:"",yl:0,bn:"",bd:"",zd:[],zs:false,st:""}}
+function blank(){const j={...newJob("",JC[0],"CZK"),id:"j1"};
+  return{v:4,u:0,name:"",cur:"CZK",curSet:false,onb:false,demo:false,jobs:[j],rates:{j1:{}},days:{},sleep:{},slips:[],sv:{},bal:{a:0,d:""},gigs:[],fx:{...FX0},prof:{bd:"",ph:[],av:"",sx:""},nt:{read:{},ver:"",badge:false},since:"",lastBk:"",
+  tpl:[],
+  base:[],
+  goals:[{id:"cush",n:"Подушка безпеки",t:0,s:0}],
+  cfg:{week:0,wkU:false,rest:11,off:0,fun:[],target:0,theme:"auto",sg:0,prep:0,lb:"",lw:"",ls:"",last:0}}}
 function migrate(p){const b=blank();if(!p||typeof p!=="object")return b;
   if((p.v||0)<4){const j=b.jobs[0],c=p.cfg||{};j.brk=c.brk||0;j.yl=c.yl||0;if(c.zd)j.zd=c.zd;
     const days={};for(const[k,e]of Object.entries(p.days||{})){if(!e)continue;if(e.t==="o")days[k]={o:1};else if(e.t==="w"){const h=e.h||8,x={id:uid(),j:"j1",h,z:!!e.z};if(e.s){x.s=e.s;x.e=mt(tm(e.s)+h*60)}days[k]={sh:[x]};if(e.f)days[k].f=e.f}}
@@ -539,14 +596,14 @@ function migrate(p){const b=blank();if(!p||typeof p!=="object")return b;
   const o={...b,...p,cfg:{...b.cfg,...(p.cfg||{})}};
   ["jobs","tpl","base","goals","slips"].forEach(k=>{if(!Array.isArray(o[k]))o[k]=b[k]});
   ["sleep","sv","rates","days"].forEach(k=>{if(!o[k]||typeof o[k]!=="object")o[k]={}});
-  if(!o.bal)o.bal={a:0,d:""};if(!o.jobs.length)o.jobs=b.jobs;o.jobs.forEach(j=>{if(!o.rates[j.id])o.rates[j.id]={}});
+  if(!o.bal)o.bal={a:0,d:""};if(!CUR.find(x=>x[0]===o.cur))o.cur="CZK";if(!Array.isArray(o.gigs))o.gigs=[];if(!o.fx)o.fx={...FX0};if(!o.prof)o.prof={bd:"",ph:[],av:"",sx:""};if(o.prof.sx==null)o.prof.sx="";if(p.curSet===undefined)o.curSet=true;if(!Array.isArray(o.prof.ph))o.prof.ph=[];if(!o.nt)o.nt={read:{},ver:"",badge:false};if(!o.nt.read)o.nt.read={};o.jobs.forEach(j=>{if(!j.cur||!CUR.find(x=>x[0]===j.cur))j.cur=o.cur;if(!j.pt)j.pt="h";if(j.bd==null)j.bd="";if(j.zs==null)j.zs=false;if(j.st==null)j.st=""});if(!o.jobs.length)o.jobs=b.jobs;o.jobs.forEach(j=>{if(!o.rates[j.id])o.rates[j.id]={}});
   return o}
 let S=blank();
 function load(){try{const r=localStorage.getItem(KEY);if(r){S=migrate(JSON.parse(r));return}const o=localStorage.getItem("zp1");if(o){S=migrate(JSON.parse(o));saveLocal()}}catch(e){}}
-const saveLocal=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const saveLocal=()=>{try{localStorage.setItem(KEY,typeof SETBK!=="undefined"&&SETBK?SETBK:JSON.stringify(S))}catch(e){}};
 /* локальне сховище файлів (IndexedDB) — нічого не йде в мережу */
 let CLOUD=null,DOC=null,ASSETS=null,pT=null;
-function save(){S.u=Date.now();clearTimeout(pT);pT=setTimeout(saveLocal,150)}
+function save(){S.u=Date.now();if(SETBK){SDIRTY=true;updSave();return}clearTimeout(pT);pT=setTimeout(saveLocal,150)}
 window.addEventListener("pagehide",saveLocal);document.addEventListener("visibilitychange",()=>{if(document.hidden)saveLocal()});
 const IDB={p:null,open(){return this.p||(this.p=new Promise((res,rej)=>{const r=indexedDB.open("mysal-files",1);r.onupgradeneeded=()=>r.result.createObjectStore("f");r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)}))},
   tx(mode,fn){return this.open().then(d=>new Promise((res,rej)=>{const t=d.transaction("f",mode),q=fn(t.objectStore("f"));t.oncomplete=()=>res(q&&q.result);t.onerror=()=>rej(t.error)}))},
@@ -559,24 +616,18 @@ function initCloud(){if(window.indexedDB)ASSETS={upload:async f=>{const b=await 
 function fillFiles(){$$("[data-fid]").forEach(async el=>{const u=await fileURL(el.dataset.fid);if(!u)return;if(el.tagName==="IMG")el.src=u;else el.href=u})}
 const applyTheme=()=>{const t=S.cfg.theme;if(t==="auto")document.documentElement.removeAttribute("data-theme");else document.documentElement.setAttribute("data-theme",t)};
 /* ---------- розрахунки ---------- */
+const jc=id=>(job(id).cur||S.cur);
 const job=id=>S.jobs.find(j=>j.id===id)||S.jobs[0];
 const multi=()=>S.jobs.length>1;
 function R(j,y,m){const t=S.rates[j]||{},e=t[mk(y,m)];if(e)return e;for(let i=1;i<=48;i++){const x=t[mk(y,m-i)];if(x)return x}const ks=Object.keys(t).sort();return ks.length?t[ks[0]]:DEFR}
 function pin(y,m){const k=mk(y,m);if(k>mk(TD.getFullYear(),TD.getMonth()))return;S.jobs.forEach(j=>{const t=S.rates[j.id]||(S.rates[j.id]={});if(!t[k])t[k]={...R(j.id,y,m)}})}
 const shH=x=>{if(x.s&&x.e){let d=tm(x.e)-tm(x.s);if(d<=0)d+=1440;return d/60}return num(x.h)};
 const paidH=x=>{const h=shH(x),b=num(job(x.j).brk);return Math.max(0,h-(b&&h>6?b/60:0))};
-const shG=(x,y,m)=>{const r=R(x.j,y,m);return paidH(x)*r.rate+(x.z?num(r.bonus):0)};
+const shG=(x,y,m)=>{if(job(x.j).pt!=="h")return 0;const r=R(x.j,y,m);return paidH(x)*r.rate+(x.z?num(r.bonus):0)};
 const shN=(x,y,m)=>shG(x,y,m)*R(x.j,y,m).mult;
 const shOf=k=>(S.days[k]&&S.days[k].sh)||[];
 const isWd=k=>shOf(k).length>0;
 const isOff=k=>!!(S.days[k]&&S.days[k].o);
-function sumR(a,b,jf){const o={h:0,g:0,n:0,w:0,wd:0,o:0,z:0,ph:0,pn:0,pw:0,byJ:{}};
-  for(let d=a;d<=b;d=addD(d,1)){const k=ds(d),y=d.getFullYear(),m=d.getMonth(),fut=k>TK;
-    if(isOff(k)){if(!fut)o.o++;continue}let any=0;
-    for(const x of shOf(k)){if(jf&&x.j!==jf)continue;any=1;const g=shG(x,y,m),n=g*R(x.j,y,m).mult,h=paidH(x),bj=o.byJ[x.j]||(o.byJ[x.j]={h:0,n:0,ph:0,pn:0,w:0});
-      if(fut){o.ph+=h;o.pn+=n;o.pw++;bj.ph+=h;bj.pn+=n}else{o.h+=h;o.g+=g;o.n+=n;o.w++;bj.h+=h;bj.n+=n;bj.w++;if(x.z)o.z++}}
-    if(any&&!fut)o.wd++}
-  return o}
 const mSum=(y,m,jf)=>sumR(new Date(y,m,1),new Date(y,m,dim(y,m)),jf);
 const baseSum=()=>S.base.reduce((a,x)=>a+num(x.a),0);
 const goalT=g=>g.id==="cush"&&!num(g.t)?baseSum()*3:num(g.t);
@@ -584,8 +635,7 @@ const autoTarget=()=>{const b=baseSum();return b?Math.ceil(b*1.5/500)*500:0};
 const target=()=>num(S.cfg.target)||autoTarget();
 const norm=()=>num(S.cfg.week)||40;
 const restMin=()=>(num(S.cfg.rest)||11)*60;
-const netRate=(y=TD.getFullYear(),m=TD.getMonth(),j=bestJob())=>{const r=R(j,y,m);return r.rate*r.mult||1};
-function bestJob(){let b=S.jobs[0].id,v=-1;const y=TD.getFullYear(),m=TD.getMonth();S.jobs.forEach(j=>{const r=R(j.id,y,m),x=r.rate*r.mult;if(x>v){v=x;b=j.id}});return b}
+const netRate=(y=TD.getFullYear(),m=TD.getMonth(),j=bestJob())=>{const r=R(j,y,m);return toM(r.rate*r.mult,job(j).cur)||1};
 function avgShift(){let h=0,n=0;for(let d=addD(TD,-60);d<=TD;d=addD(d,1))for(const x of shOf(ds(d))){h+=paidH(x);n++}return n>=3?h/n:8}
 /* інтервали в абсолютних хвилинах */
 function blocks(a,b){const L=[];for(let d=a,i=0;d<=b;d=addD(d,1),i++){const k=ds(d),sh=shOf(k).filter(x=>x.s&&x.e);if(!sh.length)continue;
@@ -597,7 +647,7 @@ function stats(a,b){const end=b>TD?TD:b,wk={};let w=0,wd=0,h=0,st=0,mx=0,late=0,
   for(let d=a;d<=end;d=addD(d,1)){days++;const k=ds(d),sh=shOf(k),m=ds(monday(d)),day=S.days[k];wk[m]=wk[m]||{n:0,w:0};wk[m].n++;
     if(sh.length){wd++;wk[m].w++;st++;mx=Math.max(mx,st);let dh=0;sh.forEach(x=>{w++;dh+=paidH(x);if(x.s){if(tm(x.s)<360)early++;if(tm(x.s)+shH(x)*60>1320)late++}});h+=dh;
       if(day.f){er++;en+=day.f;if(dh>=10){lg++;if(day.f===1)lgH++}}}else st=0}
-  const tight=Object.values(wk).filter(x=>x.n===7&&x.w>7-(num(S.cfg.off)||2)).length,short=a<=end?shortRests(a,end).length:0;
+  const tight=Object.values(wk).filter(x=>x.n===7&&x.w>7-offv()).length,short=a<=end?shortRests(a,end).length:0;
   return{w,wd,h,mx,short,late,early,er,en,lg,lgH,days,tight,avg:w?h/w:0,pw:days?h/(days/7):0,fe:er?en/er:0}}
 const curStreak=()=>{let n=0;for(let d=TD;isWd(ds(d));d=addD(d,-1))n++;return n};
 const feel=x=>!x?"—":x<1.7?"важко":x<2.4?"нормально":"легко";
@@ -615,11 +665,34 @@ function saveAdvice(y,m){const base=baseSum(),s=mSum(y,m);if(!base||!s.n)return 
 function yearUse(j,y){let h=0,p=0;for(let d=new Date(y,0,1);d<=new Date(y,11,31);d=addD(d,1)){const k=ds(d);shOf(k).forEach(x=>{if(x.j===j){if(k>TK)p+=paidH(x);else h+=paidH(x)}})}return{h,p}}
 /* очікувані виплати й рахунки */
 function slipFor(j,per){return S.slips.find(s=>s.j===j&&s.m===per)}
-function payEvents(from,days){const E=[];for(let i=0;i<=days;i++){const d=addD(from,i),y=d.getFullYear(),m=d.getMonth(),last=dim(y,m);
-    S.jobs.forEach(j=>{const pd=Math.min(num(j.pd)||0,last);if(!pd||d.getDate()!==pd)return;const pm=new Date(y,m-(num(j.lag)),1),per=mk(pm.getFullYear(),pm.getMonth()),sl=slipFor(j.id,per);
-      const s=mSum(pm.getFullYear(),pm.getMonth(),j.id),a=sl&&num(sl.net)?num(sl.net):s.n+s.pn;if(a>0)E.push({d,t:"in",n:j.n,a,real:!!(sl&&num(sl.net)),per:pm})});
+function gigNet(g){return g.tx==="gross"?num(g.a)*(num(g.p)||85)/100:num(g.a)}
+function sumR(a,b,jf){const o={h:0,g:0,n:0,w:0,wd:0,o:0,z:0,ph:0,pn:0,pw:0,byJ:{}},a0=ds(a),b0=ds(b),bj=id=>o.byJ[id]||(o.byJ[id]={h:0,n:0,ph:0,pn:0,w:0});
+  const MJ=S.jobs.filter(j=>j.pt==="m"&&(!jf||j.id===jf));
+  for(let d=a;d<=b;d=addD(d,1)){const k=ds(d),y=d.getFullYear(),m=d.getMonth(),fut=k>TK;
+    MJ.forEach(j=>{if(j.st&&k<j.st)return;const r=R(j.id,y,m),v=toM(num(r.mon),j.cur)/dim(y,m),q=bj(j.id);if(fut){o.pn+=v;q.pn+=v}else{o.n+=v;o.g+=toM(num(r.mg)||num(r.mon),j.cur)/dim(y,m);q.n+=v}});
+    if(isOff(k)){if(!fut)o.o++;continue}let any=0;
+    for(const x of shOf(k)){if(jf&&x.j!==jf)continue;any=1;const cur=job(x.j).cur,g=toM(shG(x,y,m),cur),n=toM(shN(x,y,m),cur),h=paidH(x),q=bj(x.j);
+      if(fut){o.ph+=h;o.pn+=n;o.pw++;q.ph+=h;q.pn+=n}else{o.h+=h;o.g+=g;o.n+=n;o.w++;q.h+=h;q.n+=n;q.w++;if(x.z)o.z++}}
+    if(any&&!fut)o.wd++}
+  S.gigs.forEach(g=>{if(!g.d||g.d<a0||g.d>b0||!num(g.a))return;if(jf&&g.j!==jf)return;const v=toM(gigNet(g),g.cur),q=bj(g.j||"gig");if(g.d>TK){o.pn+=v;q.pn+=v}else{o.n+=v;o.g+=toM(num(g.a),g.cur);q.n+=v}});
+  return o}
+function jobMonth(jid,y,m){const J=job(jid),r=R(jid,y,m),pre=mk(y,m);let g=0,n=0,h=0,z=0;if(J.pt==="m"){g=num(r.mg)||num(r.mon);n=num(r.mon)}
+  for(let d=1;d<=dim(y,m);d++){for(const x of shOf(ds(new Date(y,m,d)))){if(x.j!==jid)continue;h+=paidH(x);if(x.z)z++;g+=shG(x,y,m);n+=shN(x,y,m)}}
+  S.gigs.forEach(q=>{if(q.j===jid&&q.d&&q.d.startsWith(pre)&&(q.cur||S.cur)===J.cur){g+=num(q.a);n+=gigNet(q)}});return{g,n,h,z}}
+function payEvents(from,days){const E=[],fk=ds(from),ek=ds(addD(from,days));
+  for(let i=0;i<=days;i++){const d=addD(from,i),y=d.getFullYear(),m=d.getMonth(),last=dim(y,m);
+    S.jobs.forEach(j=>{if(j.pt==="g")return;const pd=Math.min(num(j.pd)||0,last);if(!pd||d.getDate()!==pd)return;const pm=new Date(y,m-num(j.lag),1),per=mk(pm.getFullYear(),pm.getMonth()),sl=slipFor(j.id,per),raw=sl&&num(sl.net)?num(sl.net):jobMonth(j.id,pm.getFullYear(),pm.getMonth()).n;
+      if(raw>0)E.push({d,t:"in",n:j.n,a:toM(raw,j.cur),real:!!(sl&&num(sl.net)),per:pm})});
     S.base.forEach(b=>{const bd=num(b.d);if(!bd||!num(b.a))return;if(d.getDate()===Math.min(bd,last))E.push({d,t:"out",n:b.n||"Витрата",a:num(b.a)})})}
+  S.gigs.forEach(g=>{const k=g.pd||g.d;if(!k||k<fk||k>ek||!num(g.a))return;E.push({d:pk(k),t:"in",n:g.n||"Разовий підробіток",a:toM(gigNet(g),g.cur),real:true})});
   return E.sort((a,b)=>a.d-b.d||(a.t==="in"?-1:1))}
+function bestJob(){let b=null,v=-1;const y=TD.getFullYear(),m=TD.getMonth();S.jobs.forEach(j=>{if(j.pt!=="h")return;const r=R(j.id,y,m),x=toM(r.rate*r.mult,j.cur);if(x>v){v=x;b=j.id}});return b||S.jobs[0].id}
+const age=()=>{const b=S.prof&&S.prof.bd;if(!b)return null;const d=pk(b);let a=TD.getFullYear()-d.getFullYear();if(TD.getMonth()<d.getMonth()||(TD.getMonth()===d.getMonth()&&TD.getDate()<d.getDate()))a--;return a>0&&a<120?a:null};
+const recSleep=()=>{const a=age();return a===null?[7,9]:a<18?[8,10]:a>=65?[7,8]:[7,9]};
+function convertMain(nc){const oc=S.cur;if(nc===oc)return;const f=x=>Math.round(toM(num(x),oc)/toM(1,nc)*100)/100;
+  /* toM переводить в поточну основну; рахуємо через EUR */
+  const fx=S.fx||FX0,k=(num(fx[nc])||FX0[nc])/(num(fx[oc])||FX0[oc]);S.base.forEach(b=>{if(num(b.a))b.a=Math.round(num(b.a)*k)});S.goals.forEach(g=>{if(num(g.t))g.t=Math.round(num(g.t)*k);if(num(g.s))g.s=Math.round(num(g.s)*k)});if(num(S.bal.a))S.bal.a=Math.round(num(S.bal.a)*k);if(num(S.cfg.target))S.cfg.target=Math.round(num(S.cfg.target)*k);S.cur=nc}
+
 /* ---------- турбота: бібліотека порад ---------- */
 const ARTS={
  sleep:{e:"🌙",t:"Сон між змінами",s:"Між змінами варто лишати щонайменше 11 годин, щоб устигнути виспатись.",
@@ -628,7 +701,7 @@ const ARTS={
   fact:"Чеський трудовий кодекс теж вимагає 11 годин відпочинку між змінами. В окремих випадках їх можна скоротити, але для тебе це орієнтир для здоров’я, а не лише правило."},
  rest:{e:"🌿",t:"Вихідні, які відновлюють",s:"Два вільні дні на тиждень — твій запас сил на всі інші.",
   why:"Без вихідних втома копиться непомітно: гірше спиш, швидше дратуєшся, повільніше працюєш. Виходить, що за ту саму годину ти встигаєш менше, а сил витрачаєш більше. Відпочинок працює найкраще, коли в ньому є і повний перепочинок, і щось для себе.",
-  do:["Ставь вихідні першими, ще до того, як розписуєш зміни.","Не більше 5–6 робочих днів поспіль.","Один вільний день — рух і люди: прогулянка, друзі, спорт. Другий — просто нічого.","Вихідний — не день для «швидкої» підробітки. Ти його заслужив."],
+  do:["Ставь вихідні першими, ще до того, як розписуєш зміни.","Не більше 5–6 робочих днів поспіль.","Один вільний день — рух і люди: прогулянка, друзі, спорт. Другий — просто нічого.","Вихідний — не день для «швидкої» підробітки. Ти на нього заслуговуєш."],
   fact:"Відпочинок — частина роботи. Без нього наступний тиждень буде важчим і менш прибутковим."},
  long:{e:"⏳",t:"Довгі зміни",s:"Після 9–10 годин сили падають швидше, ніж росте заробіток.",
   why:"На довгій зміні останні години найважчі: рухаєшся повільніше, частіше помиляєшся, сильніше болять ноги й спина. Дванадцятигодинна зміна дає в півтора раза більше грошей за восьмигодинну, але відновлюватись після неї довше. Якщо таких змін кілька підряд, тиждень може вийти не кращим, а лише втомливішим.",
@@ -663,15 +736,16 @@ const funTxt=()=>{const f=(S.cfg.fun||[]).map(k=>(FUN.find(x=>x[0]===k)||[])[1])
 function last30(){return stats(addD(TD,-29),TD)}
 function pers(id){const s=last30(),nr=norm();
   if(id==="sleep"){const z=sleepStats(addD(TD,-13),TD),a=[];
-    if(z.n)a.push(`За 2 тижні ти спав у середньому ${hm(z.avg)}${z.short?`, ${z.short} ${pl(z.short,W_N)} — менше 7 годин`:""}.`);
+    if(z.n)a.push(`За 2 тижні ти ${gx("спав","спала")} у середньому ${hm(z.avg)}${z.short?`, ${z.short} ${pl(z.short,W_N)} — менше 7 годин`:""}.`);
     if(z.preN>=2&&z.pre<z.avg-30)a.push(`Перед ранніми змінами — лише ${hm(z.pre)}.`);
     if(s.short)a.push(`${s.short} ${pl(s.short,W_T)} між змінами було менше ${num(S.cfg.rest)} годин.`);
+    if(age()){const rr=recSleep();a.push(`У твоєму віці рекомендують ${rr[0]}–${rr[1]} годин сну.`)}
     return a.join(" ")||(s.w?"Між змінами вистачало часу на сон. Записуй, коли лягаєш і встаєш, — і я підкажу точніше.":"Записуй сон у «Турботі» — і я стежитиму, чи вистачає тобі відпочинку.")}
   if(id==="rhythm"){const z=sleepStats(addD(TD,-13),TD);return z.n>=4?`Ти зазвичай лягаєш близько ${mt(z.avgB)}, розкид — ±${hm(z.spread)}.${z.spread>75?" Це чимало, спробуй звузити коридор.":" Гарний рівний режим 👌"}`:"Запиши сон хоча б 4 ночі — і я покажу, наскільки рівний твій режим."}
   if(id==="rest"){const f=funTxt();return(s.w?`Найдовша серія за 30 днів — ${s.mx} ${pl(s.mx,W_DAY)} поспіль.${s.tight?` ${s.tight} ${pl(s.tight,W_WK)} мали менше вихідних, ніж ти хочеш.`:" Вихідних вистачало."}`:"Поки немає змін — немає й серій.")+(f?` На вихідних тебе зазвичай відновлює: ${f}.`:"")}
-  if(id==="long")return s.lg?`За 30 днів — ${s.lg} ${pl(s.lg,W_DAY)} від 10 годин роботи${s.lgH?`, ${s.lgH} з них ти позначив як важкі`:""}. Середня зміна — ${hf(s.avg)}.`:s.w?`Твоя середня зміна — ${hf(s.avg)}. Довгих днів останнім часом не було.`:"Поки немає змін для аналізу.";
+  if(id==="long")return s.lg?`За 30 днів — ${s.lg} ${pl(s.lg,W_DAY)} від 10 годин роботи${s.lgH?`, ${s.lgH} з них ти ${gx("позначив","позначила")} як важкі`:""}. Середня зміна — ${hf(s.avg)}.`:s.w?`Твоя середня зміна — ${hf(s.avg)}. Довгих днів останнім часом не було.`:"Поки немає змін для аналізу.";
   if(id==="plan"){const p=sumR(addD(TD,1),addD(TD,7));return p.pw?`На найближчі 7 днів заплановано ${p.pw} ${pl(p.pw,W_SH)}, це ${hf(p.ph)} і приблизно ${kc(p.pn)}.`:"На найближчий тиждень змін ще не заплановано. У «Графіку» є кнопка «Скласти план»."}
-  if(id==="body"){const w=stats(addD(TD,-6),TD);return w.w?`За останні 7 днів — ${w.w} ${pl(w.w,W_SH)} і ${hf(w.h)} роботи.`:"Цього тижня ти ще не працював — гарний час для розтяжки 🙂"}
+  if(id==="body"){const w=stats(addD(TD,-6),TD);return w.w?`За останні 7 днів — ${w.w} ${pl(w.w,W_SH)} і ${hf(w.h)} роботи.`:`Цього тижня ти ще не ${gx("працював","працювала")} — гарний час для розтяжки 🙂`}
   if(id==="cush"){const g=S.goals.find(x=>x.id==="cush"),t=g?goalT(g):0;return t?`Зібрано ${kc(num(g.s))} із ${kc(t)} — це ${Math.round(num(g.s)/t*100)}%.`:"Заповни базові витрати — і я порахую, якою має бути твоя подушка."}
   if(id==="save"){const[y,m]=prevM(),sv=saveAdvice(y,m);return sv&&sv.save>0?`За ${MN[m].toLowerCase()} пропоную відкласти ${kc(sv.save)}.`:"Щойно будуть базові витрати й дохід за місяць, я підкажу суму."}
   if(id==="pace"){const tg=target();if(!tg)return`Твоя норма — ${nr} год на тиждень.`;const ms=mSum(TD.getFullYear(),TD.getMonth()),l=tg-ms.n-ms.pn;return l>0?`З планом цього місяця вийде ${kc(ms.n+ms.pn)} при цілі ${kc(tg)}.`:"Ціль цього місяця вже закрита, разом із запланованим. Можна видихнути."}
@@ -706,12 +780,12 @@ function nextSteps(){const t=[],a=monday(TD),ws=sumR(a,addD(a,6)),nr=norm(),tot=
   const cf=cashRisk();if(cf)t.push(["💸",cf.t,cf.s,null,"go","money"]);
   if(st>=6)t.push(["🌿","Час на вихідний",`Ти вже ${st} ${pl(st,W_DAY)} поспіль у роботі.`+(tom.length?" Якщо можеш, переставити завтрашню зміну й відпочити.":" Залиш завтра собі."),"rest"]);
   const slog=sleepStats(addD(TD,-13),TD).n;
-  if(hr>=4&&hr<12&&slog&&!S.sleep[TK])t.push(["😴","Як спалось?","Запиши, коли ліг і встав, — це хвилина.",null,"sleep"]);
+  if(hr>=4&&hr<12&&slog&&!S.sleep[TK])t.push(["😴","Як спалось?",`Запиши, коли ${gx("ліг і встав","лягла і встала")}, — це хвилина.`,null,"sleep"]);
   const first=tom.filter(x=>x.s).sort((p,q)=>tm(p.s)-tm(q.s))[0];
-  if(hr>=12&&first&&tm(first.s)<600){const bed=tm(first.s)-num(S.cfg.prep)-num(S.cfg.sg)*60;t.push(["🌙","Сьогодні — раніше в ліжко",`Завтра зміна о ${first.s}. Щоб поспати ${nf(num(S.cfg.sg))} год і спокійно зібратись, ляж до ${mt(bed)}.`,"sleep"])}
+  if(hr>=12&&first&&tm(first.s)<600){const bed=tm(first.s)-prepv()-sgv()*60;t.push(["🌙","Сьогодні — раніше в ліжко",`Завтра зміна о ${first.s}. Щоб поспати ${nf(sgv())} год і спокійно зібратись, ляж до ${mt(bed)}.`,"sleep"])}
   const sr=shortRests(TD,addD(TD,7))[0];if(sr){t.push(["🌙","Мало відпочинку попереду",`Перед зміною ${dLong(pk(sr.k))} лише ${hm(sr.g)} після попередньої.`,"sleep"])}
   if(tot>nr*1.15)t.push(["🫶","Тиждень уже насичений",`${hf(tot)} при твоїй нормі ${nr}. Нових змін цього тижня краще не брати.`,"pace"]);
-  if(!tom.length&&isOff(tk)&&funTxt())t.push(["🌿","Завтра вихідний",`Може, ${funTxt().split(", ")[0]}? Ти казав, що це тебе відновлює.`,"rest"]);
+  if(!tom.length&&isOff(tk)&&funTxt())t.push(["🌿","Завтра вихідний",`Може, ${funTxt().split(", ")[0]}? Ти ${gx("казав","казала")}, що це тебе відновлює.`,"rest"]);
   const tg=target(),y=TD.getFullYear(),m=TD.getMonth();
   if(tg){const ms=mSum(y,m),left=tg-ms.n-ms.pn;
     if(left>0){const hh=left/netRate(),rem=dim(y,m)-TD.getDate(),cap=Math.max(0,nr*rem/7-ms.ph),sh=Math.ceil(hh/avgShift());
@@ -763,27 +837,27 @@ function renderCalBody(){
       if(mj)ex+=`<span class="jd">${[...new Set(sh.map(x=>x.j))].map(j=>`<i style="background:${job(j).c}"></i>`).join("")}</span>`;
       if(sh.some(x=>x.z))ex+='<i class="z"></i>';if(S.days[k].f===1)ex+='<i class="h1"></i>'}
     else if(isOff(k)){c+=" o";v="🌿"}
-    if(k===TK)c+=" t";
+    if(k===TK)c+=" t";if(SELM&&SEL.has(d))c+=" sel";if(S.gigs.some(g=>g.d===k&&num(g.a)))ex+='<i class="gk"></i>';
     html+=`<button class="${c}" data-d="${d}" aria-label="${d} ${MG[CM]}"><span class="n">${d}</span><span class="v">${v}</span>${ex}</button>`}
   $("#grid").innerHTML=html;
   const s=mSum(CY,CM);
   $("#csm").innerHTML=`<div class="s3"><div><small>Чистими</small><b class="num">${kc(s.n)}</b></div><div><small>Години</small><b class="num">${hf(s.h)}</b></div><div><small>Зміни</small><b class="num">${s.w}</b></div></div>${s.pw?`<p class="fcl">З планом — <b>${kc(s.n+s.pn)}</b> і ${hf(s.h+s.ph)}</p>`:""}`;
   $("#cwk").innerHTML=wks.map((w,i)=>`<div class="r${w.h||w.ph?"":" dim"}"><div>Тиждень ${i+1}<small>${w.a}${w.b>w.a?"–"+w.b:""} ${MG[CM]}</small></div><div style="text-align:right"><b class="num">${kc(w.n+w.pn)}</b><small>${hf(w.h+w.ph)}${w.ph?", з них план "+hf(w.ph):""}</small></div></div>`).join("");
-  $("#cbr").innerHTML=S.jobs.map(j=>{const r=R(j.id,CY,CM),x=mSum(CY,CM,j.id);if(!x.w&&!x.pw&&multi())return"";return`${multi()?`<div class="sub"><span class="dot" style="background:${j.c}"></span>${esc(j.n)}</div>`:""}
-    <div class="r"><span>${hf(x.h)} × ${nf(r.rate,2)} ${sym()}</span><b>${kc(x.h*r.rate)}</b></div>${num(r.bonus)?`<div class="r"><span>${esc(j.bn||"Доплата")} × ${x.z}</span><b>${kc(x.z*r.bonus)}</b></div>`:""}
-    <div class="r dim"><span>Податки й відрахування</span><b>−${kc(x.g-x.n)}</b></div><div class="r"><span>Чистими</span><b>${kc(x.n)}</b></div>`}).join("")+`<div class="r big2"><span>Разом чистими</span><b>${kc(s.n)}</b></div>`}
+  $("#cbr").innerHTML=S.jobs.map(j=>{const r=R(j.id,CY,CM),x=mSum(CY,CM,j.id);if(j.pt!=="h")return(x.n+x.pn)?`<div class="r"><span>${esc(j.n)}${j.pt==="m"?", зарплата":""}</span><b>${kc(x.n+x.pn)}</b></div>`:"";if(!x.w&&!x.pw&&multi())return"";return`${multi()?`<div class="sub"><span class="dot" style="background:${j.c}"></span>${esc(j.n)}</div>`:""}
+    <div class="r"><span>${hf(x.h)} × ${nf(r.rate,2)} ${sym(j.cur)}</span><b>${kc(x.h*r.rate,j.cur)}</b></div>${num(r.bonus)?`<div class="r"><span>${esc(j.bn||"Доплата")} × ${x.z}</span><b>${kc(x.z*r.bonus,j.cur)}</b></div>`:""}
+    <div class="r dim"><span>Податки й відрахування</span><b>−${kc(x.g-x.n)}</b></div><div class="r"><span>Чистими</span><b>${kc(x.n)}</b></div>`}).join("")+(()=>{const gs=S.gigs.filter(g=>g.d&&g.d.startsWith(mk(CY,CM))&&num(g.a));return gs.length?`<div class="r"><span>Разові підробітки × ${gs.length}</span><b>${kc(gs.reduce((t,g)=>t+toM(gigNet(g),g.cur),0))}</b></div>`:""})()+`<div class="r big2"><span>Разом чистими</span><b>${kc(s.n)}</b></div>`}
 function renderRates(){
-  $("#crt").innerHTML=S.jobs.map(j=>{const r=R(j.id,CY,CM);return`${multi()?`<div class="sub"><span class="dot" style="background:${j.c}"></span>${esc(j.n)}</div>`:""}
-    <div class="f"><label>Брутто за годину, ${sym()}</label><input data-mj="${j.id}" data-mf="rate" inputmode="decimal" value="${r.rate}"></div>
+  $("#crt").innerHTML=S.jobs.map(j=>{const r=R(j.id,CY,CM);if(j.pt!=="h")return"";return`${multi()?`<div class="sub"><span class="dot" style="background:${j.c}"></span>${esc(j.n)}</div>`:""}
+    <div class="f"><label>Брутто за годину, ${sym(j.cur)}</label><input data-mj="${j.id}" data-mf="rate" inputmode="decimal" value="${r.rate}"></div>
     <div class="f"><label>Після податків, %</label><input data-mj="${j.id}" data-mf="mult" inputmode="decimal" value="${Math.round(r.mult*1000)/10}"></div>
-    <div class="f"><label>${esc(j.bn||"Доплата")}, ${sym()}</label><input data-mj="${j.id}" data-mf="bonus" inputmode="decimal" value="${r.bonus}"></div>`}).join("")}
+    <div class="f"><label>${esc(j.bn||"Доплата")}, ${sym(j.cur)}</label><input data-mj="${j.id}" data-mf="bonus" inputmode="decimal" value="${r.bonus}"></div>`}).join("")}
 function renderYear(){$("#yt").textContent=YY;
   $("#ymg").innerHTML=MN.map((n,m)=>{const s=mSum(YY,m),c=YY===TD.getFullYear()&&m===TD.getMonth();return`<button class="tile${c?" cur":""}" data-m="${m}"><b>${n}</b><span class="num">${s.w||s.pw?kc(s.n+s.pn):"—"}</span><small>${s.w||s.pw?hf(s.h+s.ph):"порожньо"}</small></button>`}).join("")}
 
 /* ---------- день ---------- */
 const dKey=()=>ds(new Date(CY,CM,cd));
 function dayObj(){const k=dKey();return S.days[k]}
-function newShift(j){const t=S.tpl.find(x=>x.j===(j||S.jobs[0].id))||S.tpl[0];if(t)return{id:uid(),j:t.j,s:t.s,e:t.e,z:false};const s=S.cfg.ls||"08:00";return{id:uid(),j:j||S.jobs[0].id,s,e:mt(tm(s)+(num(S.cfg.last)||8)*60),z:false}}
+function newShift(j){const t=S.tpl.find(x=>x.j===(j||S.jobs[0].id))||S.tpl[0];if(t)return{id:uid(),j:t.j,s:t.s,e:t.e,z:false};if(!S.cfg.ls)return{id:uid(),j:j||S.jobs[0].id,s:"",e:"",h:0,z:false};const s=S.cfg.ls;return{id:uid(),j:j||S.jobs[0].id,s,e:mt(tm(s)+(num(S.cfg.last)||8)*60),z:false}}
 function autoZ(x,k){const j=job(x.j),wd=pk(k).getDay();x.z=!!(num(R(x.j,CY,CM).bonus)&&(j.zd||[]).includes(wd));return x}
 function fixOptions(k,o){const d=pk(k),y=d.getFullYear(),m=d.getMonth(),A=o.a,B=o.b,nA=shN(A,y,m),nB=shN(B,y,m),opts=[];
   const lenB=shH(B)*60,ns=tm(A.s)+shH(A)*60,ne=ns+lenB,dayLen=(ne-tm(A.s))/60,lenA=shH(A)*60,as=tm(B.s)-lenA,dayLen2=(tm(B.s)+lenB-as)/60;
@@ -794,37 +868,63 @@ function fixOptions(k,o){const d=pk(k),y=d.getFullYear(),m=d.getMonth(),A=o.a,B=
   opts.push({id:`keep:${keep.id}`,l:`Лишити тільки «${esc(job(keep.j).n)}»`,v:Math.max(nA,nB),long:shH(keep)});
   opts.sort((p,q)=>q.v-p.v||p.long-q.long);rec=opts[0];
   return{opts,rec,txt:rec.id.startsWith("mv")?`Найвигідніше — лишити обидві й зсунути одну: разом ${kc(both)}${rec.long>11?`, але день вийде ${hf(rec.long)}, тож подбай про відпочинок наступного дня`:""}.`:`Обидві не вміщуються без дуже довгого дня. Вигідніше лишити «${esc(job(keep.j).n)}»: на ${kc(diff)} більше${multi()?"":""}.`}}
-function rs(){const k=dKey(),day=S.days[k],sh=shOf(k),w=sh.length>0,fut=k>TK,dt=new Date(CY,CM,cd),wd=dt.getDay();
+const shTxt=x=>{const J=job(x.j),p=paidH(x),H=shH(x);if(J.pt!=="h")return J.pt==="m"?"входить у зарплату":"";return`${p!==H?`оплачується ${hf(p)}, `:""}≈ ${kc(shN(x,CY,CM),J.cur)}`};
+function rs(){const k=dKey(),day=S.days[k],sh=shOf(k),w=sh.length>0,fut=k>TK,dt=new Date(CY,CM,cd),wd=dt.getDay(),gg=S.gigs.filter(g=>g.d===k);
   $("#st").textContent=DL[wd][0].toUpperCase()+DL[wd].slice(1)+", "+dLong(dt);
   $("#sfut").hidden=!(fut&&w);
   $("#bw").classList.toggle("on",w);$("#bv").classList.toggle("on",isOff(k));
   $("#enr").hidden=!w||fut;if(w)$$("#enb button").forEach(b=>b.classList.toggle("on",+b.dataset.f===day.f));
-  if(!w){$("#shb").innerHTML="";return}
-  const mj=multi();let h=sh.map((x,i)=>{const r=R(x.j,CY,CM),tp=S.tpl.filter(t=>!mj||t.j===x.j),p=paidH(x),H=shH(x);
+  const mj=multi();let h="";
+  if(w){h+=sh.map((x,i)=>{const J=job(x.j),r=R(x.j,CY,CM),tp=S.tpl.filter(t=>!mj||t.j===x.j),H=shH(x),showZ=J.pt==="h"&&num(r.bonus)>0;
     return`<div class="shc" data-i="${i}">${sh.length>1?`<div class="shn">Зміна ${i+1}<button class="lnk" data-rm="${x.id}">Прибрати</button></div>`:""}
-    ${mj?`<div class="jch">${S.jobs.map(j=>`<button data-sj="${j.id}" class="${x.j===j.id?"on":""}"><i style="background:${j.c}"></i>${esc(j.n)}</button>`).join("")}</div>`:""}
-    ${tp.length?`<div class="tpl">${tp.map(t=>`<button data-tp="${t.id}" class="${x.s===t.s&&x.e===t.e?"on":""}">${esc(t.n)}<small>${t.s}–${t.e}</small></button>`).join("")}</div>`:""}
+    ${mj?`<div class="jseg">${S.jobs.map(j=>`<button data-sj="${j.id}" class="${x.j===j.id?"on":""}"><i style="background:${j.c}"></i><span>${esc(j.n)}</span></button>`).join("")}</div>`:""}
     <div class="tt"><label><small>Початок</small><input type="time" step="300" data-fs="s" value="${x.s||""}"></label><label><small>Кінець</small><input type="time" step="300" data-fs="e" value="${x.e||""}"></label></div>
+    ${tp.length?`<div class="tpl2">${tp.map(t=>`<button data-tp="${t.id}" class="${x.s===t.s&&x.e===t.e?"on":""}">${esc(t.n)}<span>${t.s}–${t.e}</span></button>`).join("")}</div>`:""}
     ${x.s&&x.e?"":`<div class="f" style="margin-top:8px"><label>Або просто години</label><input data-fh inputmode="decimal" value="${num(x.h)||""}"></div>`}
-    <div class="shd"><b>${H?hm(H*60):"—"}</b><span>${p!==H?`оплачується ${hf(p)}, `:""}≈ ${kc(shN(x,CY,CM))}</span></div>
-    ${num(r.bonus)?`<div class="zr"><div><b>${esc(job(x.j).bn||"Доплата")}</b><small>+${kc(r.bonus)} брутто</small></div><button class="sw" data-z role="switch" aria-checked="${x.z?"true":"false"}" aria-label="${esc(job(x.j).bn||"Доплата")}"></button></div>`:""}</div>`}).join("");
-  const ov=overlaps(k);if(ov.length){const f=fixOptions(k,ov[0]);h+=`<div class="warn"><b>⚠️ Зміни накладаються на ${hm(ov[0].min)}</b><p>${f.txt}</p>${f.opts.map(o=>`<button class="btn${o===f.rec?"":" q"}" data-fx="${o.id}">${o.l}${o===f.rec?" ✓":""}</button>`).join("")}</div>`}
-  const sr=shortRests(dt,dt)[0];if(sr&&!ov.length)h+=`<div class="warn"><b>🌙 Лише ${hm(sr.g)} відпочинку після попередньої зміни</b><p>Твій мінімум — ${num(S.cfg.rest)} год. Можна пізніше почати або раніше закінчити вчора.</p></div>`;
-  h+=`<button class="btn q" data-add style="width:100%;justify-content:center">＋ Ще зміна${mj?" (інша робота)":""}</button>`;
+    <div class="shd"><b data-dur>${H?hm(H*60):"—"}</b><span data-net>${shTxt(x)}</span></div>
+    ${showZ?`<div class="zr"><div><b>${esc(J.bn||"Доплата")}</b><small>${J.bd?esc(J.bd)+", ":""}+${kc(r.bonus,J.cur)} брутто</small></div><button class="sw" data-z role="switch" aria-checked="${x.z?"true":"false"}" aria-label="${esc(J.bn||"Доплата")}"></button></div>`:""}</div>`}).join("");
+    const ov=overlaps(k);if(ov.length){const f=fixOptions(k,ov[0]);h+=`<div class="warn"><b>⚠️ Зміни накладаються на ${hm(ov[0].min)}</b><p>${f.txt}</p>${f.opts.map(o=>`<button class="btn${o===f.rec?"":" q"}" data-fx="${o.id}">${o.l}${o===f.rec?" ✓":""}</button>`).join("")}</div>`}
+    const sr=shortRests(dt,dt)[0];if(sr&&!ov.length)h+=`<div class="warn"><b>🌙 Лише ${hm(sr.g)} відпочинку після попередньої зміни</b><p>Твій мінімум — ${num(S.cfg.rest)} год. Можна пізніше почати або раніше закінчити вчора.</p></div>`;
+    h+=`<button class="btn q" data-add style="width:100%;justify-content:center">＋ Ще зміна${mj?" (інша робота)":""}</button>`}
+  if(gg.length)h+=`<div class="sub">Разові підробітки</div>`+gg.map(g=>`<button class="tp" data-gig="${g.id}"><b class="em">💼</b><div><strong>${esc(g.n||"Разовий підробіток")}</strong><span>${kc(gigNet(g),g.cur)} чистими${g.pd&&g.pd!==g.d?`, виплата ${dLong(pk(g.pd))}`:""}</span></div><i class="chev"></i></button>`).join("");
+  h+=`<button class="btn q" data-newgig style="width:100%;justify-content:center">＋ Разовий дохід</button>`;
   $("#shb").innerHTML=h}
+
+/* ---------- кілька днів ---------- */
+let SELM=false,SEL=new Set(),SD=null;
+function selMode(on){SELM=on;const sb=$("#selbtn");if(sb)sb.classList.toggle("on",on);SEL=new Set();$("#grid").classList.toggle("selm",on);renderCalBody();renderSelBar()}
+function renderSelBar(){const bar=$("#selbar");bar.hidden=!(SELM&&V==="cal");if(bar.hidden)return;const mj=multi();
+  bar.innerHTML=`<div class="g selb"><div class="selh"><b>${SEL.size?`Обрано ${SEL.size} ${pl(SEL.size,W_DAY)}`:"Тапни або веди пальцем по днях"}</b><button class="ib" data-act="selx" aria-label="Скасувати">×</button></div>
+   <div class="tpl2 sel2">${S.tpl.map(t=>`<button data-selt="${t.id}" ${SEL.size?"":"disabled"}>${mj?`<i style="background:${job(t.j).c}"></i>`:""}${esc(t.n)}<span>${t.s}–${t.e}</span></button>`).join("")}<button data-selo ${SEL.size?"":"disabled"}>🌿 Вихідний</button><button data-selc ${SEL.size?"":"disabled"}>Очистити</button></div></div>`}
+function applySel(kind,tid){[...SEL].forEach(d=>{const k=ds(new Date(CY,CM,d));if(kind==="o")S.days[k]={o:1};else if(kind==="c")delete S.days[k];else{const t=S.tpl.find(x=>x.id===tid);if(!t)return;const x=autoZ({id:uid(),j:t.j,s:t.s,e:t.e,z:false},k);x.h=shH(x);S.days[k]={sh:[x]}}});save();selMode(false)}
+function updSelCells(){$$("#grid .d[data-d]").forEach(b=>b.classList.toggle("sel",SEL.has(+b.dataset.d)))}
+function dayAt(x,y){const el=document.elementFromPoint(x,y),b=el&&el.closest(".d[data-d]");return b?+b.dataset.d:null}
+
+/* ---------- разові підробітки ---------- */
+let GG=null;
+function openGig(id,k){if(id)GG=id;else{const g={id:uid(),n:"",a:"",cur:S.cur,tx:"net",p:85,d:k||TK,pd:"",j:""};S.gigs.push(g);GG=g.id}renderGig();openS($("#gs"))}
+function renderGig(){const g=S.gigs.find(x=>x.id===GG);if(!g)return;
+  $("#gsb").innerHTML=`<div class="g il noi"><label class="ir"><span class="lb">Що за робота</span><input class="nm" data-gf="n" value="${esc(g.n)}" placeholder="Наприклад, зйомка" inputmode="text" style="text-align:right"></label><label class="ir"><span class="lb">Сума, ${sym(g.cur)}</span><input data-gf="a" inputmode="decimal" value="${g.a||""}" placeholder="0"></label></div>
+   <div class="pick" style="padding:0 0 14px">${CUR.map(c=>`<button data-gcur="${c[0]}" class="${g.cur===c[0]?"on":""}">${c[0]}</button>`).join("")}</div>
+   <div class="g il"><div class="pick seg3"><button data-gtx="net" class="${g.tx!=="gross"?"on":""}">Вже чистими</button><button data-gtx="gross" class="${g.tx==="gross"?"on":""}">Ще оподатковується</button></div>${g.tx==="gross"?`<div class="noi">${inRow("Лишається після податків, %",'data-gf="p"',g.p||85)}</div>`:""}</div>
+   <div class="g il noi"><label class="ir"><span class="lb">Дата роботи</span><input type="date" data-gf="d" value="${g.d||""}"></label><label class="ir"><span class="lb">Дата виплати</span><input type="date" data-gf="pd" value="${g.pd||""}"></label></div>
+   ${!g.pd?`<p class="foot">Без дати виплати гроші зарахуються в день роботи й до того ж місяця.</p>`:""}
+   ${num(g.a)?`<p class="lead" style="margin:0 2px 4px">Чистими: <b>${kc(gigNet(g),g.cur)}</b>${g.cur!==S.cur?` ≈ ${kc(toM(gigNet(g),g.cur))}`:""}</p>`:""}
+   <div class="acts"><button data-gdel>Видалити</button><button class="pri" data-act="close">Готово</button></div>`}
+
 function setDay(o){const k=dKey();if(o)S.days[k]=o;else delete S.days[k];save();renderCal();rs()}
 function updShift(id,patch){const k=dKey(),day=S.days[k];if(!day||!day.sh)return;day.sh=day.sh.map(x=>{if(x.id!==id)return x;const y={...x,...patch};if(y.s&&y.e)y.h=shH(y);return y});
   const x=day.sh.find(q=>q.id===id);if(x&&x.s&&x.e){S.cfg.ls=x.s;S.cfg.last=shH(x)}setDay(day)}
 let openSheet=null;
 function openS(el){openSheet=el;$("#ov").classList.add("on");el.classList.add("on")}
-function closeS(){const was=openSheet;$("#ov").classList.remove("on");$$(".sh").forEach(x=>x.classList.remove("on"));openSheet=null;if(was&&(was.id==="sh"||was.id==="ss")&&["home","cal","care","money","an"].includes(V))refresh()}
+function closeS(){const was=openSheet;if(was&&was.id==="gs"){const g=S.gigs.find(x=>x.id===GG);if(g&&!num(g.a)&&!g.n){S.gigs=S.gigs.filter(x=>x.id!==GG);saveLocal()}}$("#ov").classList.remove("on");$$(".sh").forEach(x=>x.classList.remove("on"));openSheet=null;if(was&&(was.id==="sh"||was.id==="ss"||was.id==="gs")&&["home","cal","care","money","an"].includes(V))refresh();updBell()}
 function openDay(k){const d=pk(k);CY=d.getFullYear();CM=d.getMonth();cd=d.getDate();if(V!=="cal")go("cal");rs();openS($("#sh"))}
 
 /* ---------- автоплан ---------- */
 let AP={p:"m",t:0,j:"best",res:null};
 function planRange(p){const y=TD.getFullYear(),m=TD.getMonth();if(p==="w"){const a=addD(monday(TD),7);return[a,addD(a,6)]}if(p==="n")return[new Date(y,m+1,1),new Date(y,m+2,0)];return[addD(TD,1),new Date(y,m,dim(y,m))]}
 function tplList(jp){let T=S.tpl.filter(t=>jp==="best"||t.j===jp);if(!T.length){const j=jp==="best"?bestJob():jp,s=S.cfg.ls||"08:00";T=[{id:"_",n:"Зміна",j,s,e:mt(tm(s)+8*60)}]}return T}
-function runPlan(){const[a,b]=planRange(AP.p),nr=norm(),off=num(S.cfg.off)||2,maxRun=Math.max(3,7-off),T=tplList(AP.j),picked={},pj={},y=a.getFullYear(),m=a.getMonth();
+function runPlan(){const[a,b]=planRange(AP.p),nr=norm(),off=offv(),maxRun=Math.max(3,7-off),T=tplList(AP.j),picked={},pj={},y=a.getFullYear(),m=a.getMonth();
   let need=Infinity;if(AP.p!=="w"&&num(AP.t)>0){const s=mSum(y,m);need=Math.max(0,num(AP.t)-(s.n+s.pn))}
   const val=(t,d)=>{const x={j:t.j,s:t.s,e:t.e,z:false};autoZ(x,ds(d));return{x,v:shN(x,d.getFullYear(),d.getMonth()),h:paidH(x)}};
   const worked=k=>isWd(k)||!!picked[k];
@@ -850,7 +950,7 @@ function renderAP(){const mo=MN[TD.getMonth()].toLowerCase(),nm=MN[(TD.getMonth(
    ${multi()?`<div class="pick" style="padding:12px 0 0">${[["best","Найвигідніше"],...S.jobs.map(j=>[j.id,j.n])].map(([k,l])=>`<button data-apj="${k}" class="${AP.j===k?"on":""}">${esc(l)}</button>`).join("")}</div>`:""}
    <div class="aps">${r.L.length?r.L.map(([k,x])=>{const d=pk(k);return`<div class="r"><span><b style="font-weight:650">${DS[d.getDay()]}, ${dLong(d)}</b><small>${multi()?esc(job(x.j).n)+", ":""}${x.s}–${x.e}${x.z?", "+esc(job(x.j).bn||"доплата"):""}</small></span><b>${kc(shN(x,d.getFullYear(),d.getMonth()))}</b></div>`}).join(""):`<p class="soft">Вільних днів, що вміщуються в норму й відпочинок, не знайшлось.</p>`}</div>
    ${r.L.length?`<div class="tot"><span>${r.L.length} ${pl(r.L.length,W_SH)}, ${hf(r.H)}</span><span>${kc(r.N)}</span></div>`:""}
-   ${r.left>0?`<div class="warn"><p>До цілі лишиться ${kc(r.left)}: більше змін не вміщується у твою норму, ${num(S.cfg.off)} ${pl(num(S.cfg.off),["вихідний","вихідні","вихідних"])} на тиждень і ${num(S.cfg.rest)} год відпочинку між змінами. Краще трохи знизити ціль, ніж перепрацьовувати.</p></div>`:r.L.length&&AP.p!=="w"&&num(AP.t)>0?`<p class="soft" style="margin:8px 2px 0">З цим планом ціль закривається 🎉</p>`:""}
+   ${r.left>0?`<div class="warn"><p>До цілі лишиться ${kc(r.left)}: більше змін не вміщується у твою норму, ${offv()} ${pl(offv(),["вихідний","вихідні","вихідних"])} на тиждень і ${num(S.cfg.rest)} год відпочинку між змінами. Краще трохи знизити ціль, ніж перепрацьовувати.</p></div>`:r.L.length&&AP.p!=="w"&&num(AP.t)>0?`<p class="soft" style="margin:8px 2px 0">З цим планом ціль закривається 🎉</p>`:""}
    <div class="acts"><button data-act="close">Скасувати</button><button class="pri" data-act="applyplan" ${r.L.length?"":"disabled"}>Додати в графік</button></div>`}
 function openAP(){AP={p:"m",t:target(),j:"best",res:null};const s=mSum(TD.getFullYear(),TD.getMonth());if(dim(TD.getFullYear(),TD.getMonth())-TD.getDate()<3)AP.p="w";renderAP();openS($("#ap"))}
 function applyPlan(){if(!AP.res)return;AP.res.L.forEach(([k,x])=>{if(!S.days[k])S.days[k]={sh:[x]}});save();closeS();const d=AP.res.L[0]?pk(AP.res.L[0][0]):TD;CY=d.getFullYear();CM=d.getMonth();go("cal")}
@@ -875,7 +975,7 @@ function insights(st,cov){const t=[],nr=norm();if(!st.w)return t;
   else if(z.n>=5&&z.spread>90)t.push(["⏰","Режим сну стрибає",`Час відходу до сну гуляє на ±${hm(z.spread)}.`,"rhythm"]);
   if(st.pw>nr*1.1)t.push(["🫶","Вище твоєї норми",`У середньому ${hf(st.pw)} на тиждень при нормі ${nr}.`,"pace"]);
   if(st.short)t.push(["🌙","Мало сну між змінами",`${st.short} ${pl(st.short,W_T)} відпочинок був коротший за ${num(S.cfg.rest)} годин.`,"sleep"]);
-  if(st.lg>=3&&st.lgH/st.lg>=.5)t.push(["⏳","Довгі зміни даються важко",`${st.lgH} із ${st.lg} днів від 10 годин ти позначив як важкі.`,"long"]);
+  if(st.lg>=3&&st.lgH/st.lg>=.5)t.push(["⏳","Довгі зміни даються важко",`${st.lgH} із ${st.lg} днів від 10 годин ти ${gx("позначив","позначила")} як важкі.`,"long"]);
   else if(st.late>=3)t.push(["🌙","Пізні завершення",`${st.late} ${pl(st.late,W_SH)} закінчились після 22:00.`,"sleep"]);
   if(st.tight>=2)t.push(["🗓","Тижні майже без вихідних",`${st.tight} ${pl(st.tight,W_WK)} мали менше вихідних, ніж ти хочеш.`,"rest"]);
   if(st.pw<nr*.6&&cov!==null&&cov<1.2)t.push(["⚡","Є місце для ще однієї зміни",`Одна зміна на тиждень зверху — це ~${kc(netRate(AY,AM)*avgShift()*4.3)} на місяць.`,"pace"]);
@@ -902,7 +1002,7 @@ function renderAn(){
   else if(!s.w)$("#a-lv").innerHTML=`<p class="soft" style="margin:0">Немає даних за цей місяць.</p><button class="btn q" data-act="months">Інші місяці</button>`;
   else{const li=level(cov),ph=p.w?level(p.n/base):null;
     $("#a-lv").innerHTML=`<div class="lvn"><i style="background:var(--lv${li})"></i>${LV[li][1]}</div>${scaleH(cov,li)}
-    <p class="lead" style="margin-top:14px">${LVT[li]}${ph===null?"":ph<li?" Ти піднявся на рівень 🙌":ph>li?" Минулого місяця було краще — нічого, наздоженеш.":""}</p>
+    <p class="lead" style="margin-top:14px">${LVT[li]}${ph===null?"":ph<li?" Ти "+gx("піднявся","піднялася")+" на рівень 🙌":ph>li?" Минулого місяця було краще — нічого, наздоженеш.":""}</p>
     <button class="btn q" data-act="months">Підсумок по місяцях <i class="chev"></i></button>`}
   const sv=$("#a-sv"),key=mk(AY,AM),done=S.sv[key],A=saveAdvice(AY,AM);
   if(!base)sv.innerHTML=`<p class="lead">Скажи, скільки йде на оренду, їжу й транспорт, — і я порахую чесну суму.</p><button class="btn" data-sp="base">Заповнити</button>`;
@@ -916,7 +1016,7 @@ function renderAn(){
     <div class="r"><span><span class="dot" style="background:var(--acc)"></span>Відкласти</span><b>${kc(A.save)}</b></div>
     <div class="r"><span><span class="dot" style="background:var(--acc2)"></span>На життя</span><b>${kc(A.life)}</b></div>
     ${G.map(x=>`<div class="gl"><div class="gh"><b style="font-weight:650">${esc(x.g.n)}</b><span>${x.eta}</span></div><div class="pbar"><i class="f1" style="width:${Math.min(100,num(x.g.s)/x.t*100)}%"></i></div></div>`).join("")}
-    ${A.save>0?`<button class="btn${done?" q":""}" id="svb" data-a="${A.save}">${done?`Відкладено ✓ Скасувати?`:`Я відклав ${kc(A.save)}`}</button>`:""}`;
+    ${A.save>0?`<button class="btn${done?" q":""}" id="svb" data-a="${A.save}">${done?`Відкладено ✓ Скасувати?`:`Я ${gx("відклав","відклала")} ${kc(A.save)}`}</button>`:""}`;
     countTo($("#svbig"),A.save,kc)}
   const st=stats(new Date(AY,AM,1),new Date(AY,AM,dim(AY,AM)));
   $("#a-ld").innerHTML=!st.w?`<p class="soft" style="margin:0">Немає змін — немає й навантаження.</p>`:
@@ -931,14 +1031,14 @@ function renderAn(){
     ${isCur?'<button class="btn q" data-go="home">Як іде зараз</button>':""}`}}
 
 /* ---------- турбота ---------- */
-function sleepCard(){const L=[],mx=600,goal=S.cfg.sg*60;for(let i=6;i>=0;i--){const d=addD(TD,-i);L.push({d,m:slDur(S.sleep[ds(d)])})}
+function sleepCard(){const L=[],mx=600,goal=sgv()*60;for(let i=6;i>=0;i--){const d=addD(TD,-i);L.push({d,m:slDur(S.sleep[ds(d)])})}
   const last=L[6].m,z=sleepStats(addD(TD,-6),TD);
   return`<div class="g card"><div class="slh"><div><div class="mut">Сон минулої ночі</div><div class="slb num" id="slb">${last?hm(last):"не записано"}</div></div><button class="btn" data-act="sleep" style="margin:0">Записати</button></div>
   <div class="slbars">${L.map((x,i)=>`<button data-sl="${ds(x.d)}" aria-label="${x.d.getDate()} ${MG[x.d.getMonth()]}"><i class="${x.m?x.m<420?"lo":"":"no"}" style="height:${x.m?Math.min(100,x.m/mx*100):4}%;animation-delay:${i*40}ms"></i></button>`).join("")}<em style="bottom:${goal/mx*100}%"></em></div>
   <div class="sldays">${L.map(x=>`<span>${DS[x.d.getDay()]}</span>`).join("")}</div>
-  <p class="soft">${z.n?`У середньому за тиждень — ${hm(z.avg)}. Пунктир — твоя мета ${nf(S.cfg.sg)} год.`:"Записуй, коли лягаєш і встаєш, — я врахую це в порадах."}</p></div>`}
+  <p class="soft">${z.n?`У середньому за тиждень — ${hm(z.avg)}. Пунктир — твоя мета ${nf(sgv())} год.`:"Записуй, коли лягаєш і встаєш, — я врахую це в порадах."}</p></div>`}
 let SK=TD;
-function rsS(){const k=ds(SK),e=S.sleep[k],p=addD(SK,-1);
+function rsS(){$("#sbl").textContent=gx("Ліг","Лягла");$("#swl").textContent=gx("Встав","Встала");const k=ds(SK),e=S.sleep[k],p=addD(SK,-1);
   $("#sst").textContent=`Ніч з ${p.getDate()}${p.getMonth()!==SK.getMonth()?" "+MG[p.getMonth()]:""} на ${SK.getDate()} ${MG[SK.getMonth()]}`;
   $("#sb").value=e?e.b:S.cfg.lb;$("#sw2").value=e?e.w:S.cfg.lw;
   const m=slDur({b:$("#sb").value,w:$("#sw2").value});$("#sd").innerHTML=m?hm(m):"—";$("#sd").classList.toggle("dn",!!m&&m<420);
@@ -972,7 +1072,9 @@ function renderMoney(){const c=cashflow(),old=S.bal.d?dd(pk(S.bal.d),TD):0;
    </div>`;
   h+=`<button class="g cbig" data-go="sim" style="margin-top:12px"><b class="em">🔮</b><div><strong>А що, якщо?</strong><span>Подивись, що дадуть ще кілька змін — і чого вони коштуватимуть.</span></div><i class="chev"></i></button>`;
   const sl=[...S.slips].sort((a,b)=>a.m<b.m?1:-1);
-  h+=`<h2>Паски й виплати</h2><div class="g card">${sl.length?sl.map(x=>{const[y,m]=x.m.split("-").map(Number),calc=mSum(y,m-1,x.j).n,df=num(x.net)-calc;return`<button class="tp" data-slip="${x.id}"><b class="em">${x.files&&x.files.length?"📎":"🧾"}</b><div><strong>${MN[m-1]} ${y}${multi()?`, ${esc(job(x.j).n)}`:""}</strong><span>${num(x.net)?kc(x.net)+(calc?` — ${Math.abs(df)<calc*.01?"збігається з розрахунком ✓":(df>0?"на ":"на ")+kc(Math.abs(df))+(df>0?" більше":" менше")+" за розрахунок"}`:""):"суми ще не внесено"}</span></div><i class="chev"></i></button>`}).join(""):`<p class="lead" style="margin:0">Тут зберігатимуться твої паски, щоб не губились у пошті. А я звірю їх із розрахунком.</p>`}
+  const GL=[...S.gigs].filter(g=>num(g.a)).sort((p,q)=>(q.d||"")<(p.d||"")?-1:1).slice(0,6);
+  h+=`<h2>Разові підробітки</h2><div class="g card">${GL.length?GL.map(g=>`<button class="tp" data-gig="${g.id}"><b class="em">💼</b><div><strong>${esc(g.n||"Разовий підробіток")}</strong><span>${g.d?dLong(pk(g.d))+", ":""}${kc(gigNet(g),g.cur)} чистими${g.cur!==S.cur?` ≈ ${kc(toM(gigNet(g),g.cur))}`:""}</span></div><i class="chev"></i></button>`).join(""):`<p class="lead" style="margin:0">Разова зйомка, переклад, допомога з переїздом — усе, що не за графіком.</p>`}<button class="btn" data-newgig>＋ Додати підробіток</button></div>`;
+  h+=`<h2>Паски й виплати</h2><div class="g card">${sl.length?sl.map(x=>{const[y,m]=x.m.split("-").map(Number),calc=jobMonth(x.j,y,m-1).n,df=num(x.net)-calc;return`<button class="tp" data-slip="${x.id}"><b class="em">${x.files&&x.files.length?"📎":"🧾"}</b><div><strong>${MN[m-1]} ${y}${multi()?`, ${esc(job(x.j).n)}`:""}</strong><span>${num(x.net)?kc(x.net,jc(x.j))+(calc?` — ${Math.abs(df)<calc*.01?"збігається з розрахунком ✓":(df>0?"на ":"на ")+kc(Math.abs(df),jc(x.j))+(df>0?" більше":" менше")+" за розрахунок"}`:""):"суми ще не внесено"}</span></div><i class="chev"></i></button>`}).join(""):`<p class="lead" style="margin:0">Тут зберігатимуться твої паски, щоб не губились у пошті. А я звірю їх із розрахунком.</p>`}
    <button class="btn" data-act="newslip">＋ Додати пасок</button></div>`;
   const G=S.goals.filter(g=>goalT(g)>0);
   if(G.length)h+=`<h2>Цілі</h2><div class="g card">${G.map(g=>{const t=goalT(g);return`<div class="gl"><div class="gh"><b style="font-weight:650">${esc(g.n)}</b><span>${kc(num(g.s))} із ${kc(t)}</span></div><div class="pbar"><i class="f1" style="width:${Math.min(100,num(g.s)/t*100)}%"></i></div></div>`}).join("")}<button class="btn q" data-sp="goals">Змінити цілі</button></div>`;
@@ -983,22 +1085,22 @@ function renderMoney(){const c=cashflow(),old=S.bal.d?dd(pk(S.bal.d),TD):0;
 let SL=null,UPL=0,UPE="";
 function newSlip(){const[y,m]=prevM(),j=S.jobs[0].id,s=mSum(y,m,j),x={id:uid(),j,m:mk(y,m),pd:"",g:"",tax:"",net:"",bon:[],files:[]};S.slips.push(x);save();openSlip(x.id)}
 function openSlip(id){SL=id;UPE="";go("slip")}
-function renderSlip(){const x=S.slips.find(s=>s.id===SL);if(!x){go("money");return}const[y,m]=x.m.split("-").map(Number),mm=m-1,c=mSum(y,mm,x.j),r=R(x.j,y,mm),bon=x.bon.reduce((s,b)=>s+num(b.a),0);
+function renderSlip(){const x=S.slips.find(s=>s.id===SL);if(!x){go("money");return}const[y,m]=x.m.split("-").map(Number),mm=m-1,c=jobMonth(x.j,y,mm),CJ=jc(x.j),r=R(x.j,y,mm),bon=x.bon.reduce((s,b)=>s+num(b.a),0);
   let h=`<div class="sh2"><button class="ib g" data-act="slipback" aria-label="Назад">‹</button><h1>Пасок</h1></div>
   ${multi()?`<div class="pick" style="padding:0 0 12px">${S.jobs.map(j=>`<button data-slj="${j.id}" class="${x.j===j.id?"on":""}">${esc(j.n)}</button>`).join("")}</div>`:""}
   <div class="g il noi"><div class="ir"><span class="lb">Період</span><button class="ib" data-slm="-1" aria-label="Раніше" style="width:34px;height:34px">‹</button><b style="min-width:120px;text-align:center">${MN[mm]} ${y}</b><button class="ib" data-slm="1" aria-label="Пізніше" style="width:34px;height:34px">›</button></div>
    <label class="ir"><span class="lb">Дата виплати</span><input type="date" data-sf="pd" value="${x.pd||""}" style="width:150px"></label></div>
-  <div class="g il noi">${[["g","Брутто"],["tax","Податки й внески"],["net","Чистими до виплати"]].map(([k,l])=>`<label class="ir"><span class="lb">${l}, ${sym()}</span><input data-sf="${k}" inputmode="decimal" value="${x[k]||""}" placeholder="${k==="g"?Math.round(c.g+bon)||"0":k==="net"?Math.round(c.n)||"0":"0"}"></label>`).join("")}</div>
+  <div class="g il noi">${[["g","Брутто"],["tax","Податки й внески"],["net","Чистими до виплати"]].map(([k,l])=>`<label class="ir"><span class="lb">${l}, ${sym(CJ)}</span><input data-sf="${k}" inputmode="decimal" value="${x[k]||""}" placeholder="${k==="g"?Math.round(c.g+bon)||"0":k==="net"?Math.round(c.n)||"0":"0"}"></label>`).join("")}</div>
   <p class="ghd">Премії й доплати</p><div class="g il noi">${x.bon.map(b=>`<div class="ir"><input class="nm" data-bn="${b.id}" data-bf="n" value="${esc(b.n)}" placeholder="Назва" inputmode="text"><input data-bn="${b.id}" data-bf="a" inputmode="decimal" value="${b.a||""}" placeholder="0" style="width:96px"><button class="x" data-brm="${b.id}" aria-label="Видалити">×</button></div>`).join("")}<button class="ir" data-act="addbon" style="color:var(--at);font-weight:600">＋ Додати премію</button></div>
   <p class="ghd">Документи</p><div class="g card">${ASSETS?`<div class="files">${(x.files||[]).map(f=>`<div class="fl">${/^image\//.test(f.t)?`<a data-fid="${f.id}" target="_blank" rel="noopener"><img data-fid="${f.id}" alt="${esc(f.n)}"></a>`:`<a class="pdf" data-fid="${f.id}" target="_blank" rel="noopener">📄<span>${esc(f.n)}</span></a>`}<button class="x" data-frm="${f.id}" aria-label="Видалити файл">×</button></div>`).join("")}</div>
    <label class="btn q" style="cursor:pointer">${UPL?"Завантажую…":"＋ Фото або PDF"}<input type="file" id="slf" accept="image/*,application/pdf" multiple hidden></label>${UPE?`<p class="soft dn">${UPE}</p>`:""}`:`<p class="soft" style="margin:0">Цей браузер не дозволяє зберігати файли. Суми можна вносити й без них.</p>`}</div>`;
   setTimeout(fillFiles,0);
   const net=num(x.net),g=num(x.g);
   if(net||g){const items=[];const eg=c.g+bon;
-    if(g&&eg&&Math.abs(g-eg)>eg*.01)items.push(`Брутто в пасці ${g>eg?"більше":"менше"} за розрахунок на ${kc(Math.abs(g-eg))}.${g>eg?" Можливо, є премія чи зміни, які ти не відмітив.":" Перевір, чи всі відмічені зміни справді оплачені."}`);
+    if(g&&eg&&Math.abs(g-eg)>eg*.01)items.push(`Брутто в пасці ${g>eg?"більше":"менше"} за розрахунок на ${kc(Math.abs(g-eg),CJ)}.${g>eg?" Можливо, є премія чи зміни, які ти не "+gx("відмітив","відмітила")+".":" Перевір, чи всі відмічені зміни справді оплачені."}`);
     let fix="";if(net&&g){const pct=net/g;if(Math.abs(pct-r.mult)>.005){fix=`<button class="btn" data-act="fixpct" data-arg="${pct}">Рахувати ${nf(pct*100)}% після податків з ${MG[mm]}</button>`;items.push(`За пасом після податків лишається ${nf(pct*100)}%, а я рахував ${nf(r.mult*100)}%.`)}}
     if(!fix&&net&&c.n&&Math.abs(net-c.n)<=c.n*.01)items.push("Чистими — точно як я рахував ✓");
-    h+=`<h2>Звірка</h2><div class="g card"><div class="kv" style="margin:0 0 10px"><div><small>Мій розрахунок</small><b>${kc(c.n)}</b></div><div><small>У пасці</small><b>${net?kc(net):"—"}</b></div><div><small>Різниця</small><b class="${net-c.n<0?"dn":"up"}">${net?(net-c.n>=0?"+":"−")+kc(Math.abs(net-c.n)):"—"}</b></div></div>${items.map(t=>`<p class="lead" style="margin:6px 0">${t}</p>`).join("")}${fix}</div>`}
+    h+=`<h2>Звірка</h2><div class="g card"><div class="kv" style="margin:0 0 10px"><div><small>Мій розрахунок</small><b>${kc(c.n,CJ)}</b></div><div><small>У пасці</small><b>${net?kc(net,CJ):"—"}</b></div><div><small>Різниця</small><b class="${net-c.n<0?"dn":"up"}">${net?(net-c.n>=0?"+":"−")+kc(Math.abs(net-c.n),CJ):"—"}</b></div></div>${items.map(t=>`<p class="lead" style="margin:6px 0">${t}</p>`).join("")}${fix}</div>`}
   h+=`<button class="btn dang" id="sldel" style="margin-top:18px">Видалити пасок</button>`;
   $("#v-slip").innerHTML=h}
 async function uploadFiles(fl){const x=S.slips.find(s=>s.id===SL);if(!x||!ASSETS)return;UPL=1;UPE="";renderSlip();
@@ -1018,7 +1120,7 @@ function renderSim(){if(!SIM)SIM={ds:1,h:Math.round(avgShift()),j:bestJob(),rp:0
   else if(h1>nr)risks.push(["ry","Вище твоєї норми",`${hf(h1)} на тиждень — на ${hf(h1-nr)} більше, ніж тобі комфортно. Втома накопичується, а за годину ти заробляєш стільки ж.`]);
   if(off1<1)risks.push(["rr","Жодного вихідного","Без вільного дня відновлення не встигає. Це найшвидший шлях до вигорання."]);
   else if(off1<off)risks.push(["ry",`${nf(off1,0)} ${pl(off1,["вихідний","вихідні","вихідних"])} замість ${off}`,`Менше часу${funTxt()?` на ${funTxt()}`:" на себе"} і на відновлення.`]);
-  if(SIM.ds>0&&z.n&&z.avg<num(S.cfg.sg)*60)risks.push(["ry","Сну вже бракує",`Ти спиш у середньому ${hm(z.avg)} при меті ${nf(num(S.cfg.sg))} год. Додаткові зміни найчастіше забирають саме сон.`]);
+  if(SIM.ds>0&&z.n&&z.avg<sgv()*60)risks.push(["ry","Сну вже бракує",`Ти спиш у середньому ${hm(z.avg)} при меті ${nf(sgv())} год. Додаткові зміни найчастіше забирають саме сон.`]);
   if(SIM.ds>0&&wdN>=6)risks.push(["ry","Короткі перерви між змінами","Коли робочих днів 6–7, частіше виходить менше "+num(S.cfg.rest)+" год між змінами — особливо, якщо чергуються вечірні й ранкові."]);
   if(num(j.yl)&&SIM.ds>0){const u=yearUse(j.id,y),left=num(j.yl)-u.h-u.p,hw=SIM.ds*SIM.h+(sumR(addD(TD,-55),TD,j.id).h/8);if(hw>0){const wks=left/hw,d=addD(TD,Math.round(wks*7));if(d<=new Date(y,11,31))risks.push(["ry","Річний ліміт годин",`На «${esc(j.n)}» лишилось ${hf(Math.max(0,left))}. З таким темпом вичерпаєш приблизно ${dLong(d)}.`])}}
   const good=[];if(net1>net0)good.push(`+${kc(net1-net0)} чистими на місяць.`);const l0=lv(net0,base),l1=lv(net1,b1);if(l0!==null&&l1>l0)good.push(`Рівень зросте з «${LV[l0][1]}» до «${LV[l1][1]}».`);if(e0&&e1&&e1<e0)good.push(`Цілі збереш на ${e0-e1} ${pl(e0-e1,W_M)} раніше.`);else if(!e0&&e1)good.push(`З’явиться змога відкладати ~${kc(s1)} на місяць.`);
@@ -1034,53 +1136,73 @@ function renderSim(){if(!SIM)SIM={ds:1,h:Math.round(avgShift()),j:bestJob(),rp:0
    ${risks.length?risks.map(x=>`<div class="risk ${x[0]}"><b>${x[1]}</b><p>${x[2]}</p></div>`).join(""):`<p class="lead" style="margin:12px 0 0">Навантаження лишається в межах норми й вихідних 🌿</p>`}</div>
   ${SIM.ds>0?`<button class="btn" data-act="autoplan" style="width:100%;justify-content:center;margin-top:16px">Скласти такий план</button>`:""}`}
 /* ---------- налаштування ---------- */
-const IC={work:'<rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M8.5 7V5.5A1.5 1.5 0 0 1 10 4h4a1.5 1.5 0 0 1 1.5 1.5V7M3 12.5h18"/>',tpl:'<rect x="4" y="4" width="16" height="6" rx="2"/><rect x="4" y="14" width="16" height="6" rx="2"/>',load:'<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',base:'<path d="M4 11 12 4.5 20 11v8.5H4z"/><path d="M10 19.5v-5h4v5"/>',goals:'<circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1"/>',target:'<path d="M4 18l5.5-5.5 4 4L20 9"/><path d="M15 9h5v5"/>',cur:'<circle cx="9" cy="9" r="5.5"/><path d="M14.5 9.6A5.5 5.5 0 1 1 9.6 14.5"/>',sleep:'<path d="M19.5 14.5A8 8 0 1 1 9.5 4.5a6.5 6.5 0 0 0 10 10z"/>',rest:'<path d="M5 19c0-8 5-13 14-14-1 9-6 14-14 14z"/><path d="M5 19l7-7"/>',look:'<circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4 7 17M17 7l1.4-1.4"/>',data:'<path d="M12 4v10.5M7.5 10l4.5 4.5 4.5-4.5M5 19.5h14"/>',intro:'<path d="M12 3.5v4M12 16.5v4M3.5 12h4M16.5 12h4M6.3 6.3l2.5 2.5M15.2 15.2l2.5 2.5M6.3 17.7l2.5-2.5M15.2 8.8l2.5-2.5"/>'};
+const IC={work:'<rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M8.5 7V5.5A1.5 1.5 0 0 1 10 4h4a1.5 1.5 0 0 1 1.5 1.5V7M3 12.5h18"/>',tpl:'<rect x="4" y="4" width="16" height="6" rx="2"/><rect x="4" y="14" width="16" height="6" rx="2"/>',load:'<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',base:'<path d="M4 11 12 4.5 20 11v8.5H4z"/><path d="M10 19.5v-5h4v5"/>',goals:'<circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1"/>',target:'<path d="M4 18l5.5-5.5 4 4L20 9"/><path d="M15 9h5v5"/>',cur:'<circle cx="9" cy="9" r="5.5"/><path d="M14.5 9.6A5.5 5.5 0 1 1 9.6 14.5"/>',sleep:'<path d="M19.5 14.5A8 8 0 1 1 9.5 4.5a6.5 6.5 0 0 0 10 10z"/>',rest:'<path d="M5 19c0-8 5-13 14-14-1 9-6 14-14 14z"/><path d="M5 19l7-7"/>',look:'<circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4 7 17M17 7l1.4-1.4"/>',data:'<path d="M12 4v10.5M7.5 10l4.5 4.5 4.5-4.5M5 19.5h14"/>',bug:'<path d="M5 18.5V6.5A2.5 2.5 0 0 1 7.5 4h9A2.5 2.5 0 0 1 19 6.5v7a2.5 2.5 0 0 1-2.5 2.5H9z"/><path d="M12 7.8v3.6M12 13.9v.2"/>',intro:'<path d="M12 3.5v4M12 16.5v4M3.5 12h4M16.5 12h4M6.3 6.3l2.5 2.5M15.2 15.2l2.5 2.5M6.3 17.7l2.5-2.5M15.2 8.8l2.5-2.5"/>'};
 const ico=(k,c)=>`<span class="ico" style="background:${c}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${IC[k]}</svg></span>`;
 const THN={auto:"Як у системі",dark:"Темна",light:"Світла"};
 let SP=null;
 const nav=(k,c,l,v,i)=>`<button class="ir" data-sp="${k}">${ico(i||k,c)}<span class="lb">${l}</span><span class="vl">${v}</span><i class="chev"></i></button>`;
 const inRow=(l,attr,val,ph="",mode="decimal")=>`<label class="ir"><span class="lb">${l}</span><input ${attr} inputmode="${mode}" value="${esc(val)}" placeholder="${esc(ph)}"></label>`;
 const TITLES={profile:"Профіль",jobs:"Роботи",tpl:"Шаблони змін",load:"Навантаження",base:"Базові витрати",goals:"Цілі накопичень",target:"Ціль на місяць",cur:"Валюта",sleep:"Сон",rest:"Відпочинок",look:"Вигляд",data:"Дані й копія"};
-function renderSet(){const el=$("#v-set"),c=S.cfg,y=TD.getFullYear(),m=TD.getMonth();
+const PHL=["Особистий","Робочий","Допоміжний","Інший"];
+const avHTML=(sz)=>S.prof&&S.prof.av?`<img class="av" data-fid="${S.prof.av}" alt="Фото профілю" style="width:${sz}px;height:${sz}px">`:`<span class="avl" style="width:${sz}px;height:${sz}px">${logo()}</span>`;
+const ctPick=(sel,attr)=>[["CZ","Чехія"],["PL","Польща"],["","Інше"]].map(([c,l])=>`<p class="ghd" style="margin:10px 4px 6px">${l}</p><div class="pick" style="padding:0 0 4px">${CT.filter(x=>x[2]===c).map(([k,lb])=>`<button ${attr}="${k}" class="${sel===k?"on":""}">${lb}</button>`).join("")}</div>`).join("");
+function renderSet(){const el=$("#v-set"),c=S.cfg,y=TD.getFullYear(),m=TD.getMonth(),a=age();
   const hd=(t,back)=>`<div class="sh2"><button class="ib g" data-act="${back}" aria-label="Назад">‹</button><h1>${t}</h1></div>`;
   if(!SP){el.innerHTML=hd("Налаштування","home")+
-   `<button class="g il prof" data-sp="profile">${logo()}<div><strong>${esc(S.name||"Без імені")}</strong><span>Як до тебе звертатись</span></div><i class="chev"></i></button><div style="height:22px"></div>
-   <div class="g il">${nav("jobs","#7cb518","Роботи",S.jobs.length===1?R(S.jobs[0].id,y,m).rate+" "+sym()+"/год":S.jobs.length,"work")}${nav("tpl","#2e9e5b","Шаблони змін",S.tpl.length)}${nav("load","#1a9cc7","Навантаження",c.week+" год/тиж")}</div>
+   `<button class="g il prof" data-sp="profile">${avHTML(56)}<div><strong>${esc(S.name||"Без імені")}</strong><span>${a?a+" "+pl(a,["рік","роки","років"])+", ":""}профіль і контакти</span></div><i class="chev"></i></button><div style="height:22px"></div>
+   <div class="g il">${nav("jobs","#7cb518","Роботи",S.jobs.length===1?(S.jobs[0].pt==="h"?R(S.jobs[0].id,y,m).rate+" "+sym(S.jobs[0].cur)+"/год":S.jobs[0].pt==="m"?"щомісяця":"разові"):S.jobs.length,"work")}${nav("tpl","#2e9e5b","Шаблони змін",S.tpl.length)}${nav("load","#1a9cc7","Навантаження",c.wkU?"ще з’ясовуємо":num(c.week)?c.week+" год/тиж":"не задано")}</div>
    <div class="g il">${nav("base","#e08a1e","Базові витрати",baseSum()?kc(baseSum()):"не задано")}${nav("goals","#e0457b","Цілі накопичень",S.goals.length)}${nav("target","#c27a00","Ціль на місяць",target()?kc(target()):"—")}${nav("cur","#8a6d3b","Валюта",S.cur)}</div>
-   <div class="g il">${nav("sleep","#5b6ee1","Сон",nf(num(c.sg))+" год")}${nav("rest","#3aa17e","Відпочинок",(c.fun||[]).length||"")}</div>
-   <div class="g il">${nav("look","#7c5cd6","Вигляд",THN[c.theme])}${nav("data","#8a8f86","Дані й копія","")}<button class="ir" data-act="intro">${ico("intro","#e8b10c")}<span class="lb">Пройти опитувальник ще раз</span><i class="chev"></i></button><button class="ir" data-act="beta">${ico("data","#d9466e")}<span class="lb">Повідомити про проблему</span><span class="vl">beta</span><i class="chev"></i></button></div>`;return}
-  if(SP.startsWith("job:")){const j=S.jobs.find(x=>x.id===SP.slice(4));if(!j){SP="jobs";return renderSet()}const r=R(j.id,y,m);
+   <div class="g il">${nav("sleep","#5b6ee1","Сон",num(c.sg)?nf(num(c.sg))+" год":"не задано")}${nav("rest","#3aa17e","Відпочинок",(c.fun||[]).length||"")}</div>
+   <div class="g il">${nav("look","#7c5cd6","Вигляд",THN[c.theme])}${nav("data","#8a8f86","Дані й копія","")}<button class="ir" data-act="intro">${ico("intro","#e8b10c")}<span class="lb">Пройти опитувальник ще раз</span><i class="chev"></i></button><button class="ir" data-act="beta">${ico("bug","#d9466e")}<span class="lb">Повідомити про проблему</span><span class="vl">beta</span><i class="chev"></i></button></div>
+   <div class="verf"><b>MySal ${VER}</b><button class="lnk2" data-act="changelog">Що нового</button></div>`;fillFiles();return}
+  if(SP.startsWith("job:")){const j=S.jobs.find(x=>x.id===SP.slice(4));if(!j){SP="jobs";return renderSet()}const r=R(j.id,y,m),S2=sym(j.cur);
     el.innerHTML=hd(esc(j.n)||"Робота","jobs")+`<div class="g il noi">${inRow("Назва",`data-jf="n" data-jid="${j.id}"`,j.n,"Робота","text")}<div class="pick" style="padding:10px 14px 14px">${JC.map(cl=>`<button class="sw8${j.c===cl?" on":""}" data-jc="${cl}" data-jid="${j.id}" style="background:${cl}" aria-label="Колір"></button>`).join("")}</div></div>
-    <p class="ghd">Тип договору</p><div class="g il"><div class="pick">${CT.map(([k,l])=>`<button data-jct="${k}" data-jid="${j.id}" class="${j.ct===k?"on":""}">${l}</button>`).join("")}</div></div>
-    <p class="ghd">Оплата</p><div class="g il noi">${inRow(`Брутто за годину, ${sym()}`,`data-jr="rate" data-jid="${j.id}"`,r.rate)}${inRow("Після податків, %",`data-jpct data-jid="${j.id}"`,Math.round(r.mult*1000)/10)}${inRow("Неоплачувана перерва, хв",`data-jf="brk" data-jid="${j.id}"`,j.brk||"","немає")}${inRow("Річний ліміт годин",`data-jf="yl" data-jid="${j.id}"`,j.yl||"","немає")}</div>
-    <p class="foot">Ставки діють з ${MG[m]}. Перерва віднімається від змін довших за 6 год.</p>
-    <p class="ghd">Доплата за окремі зміни</p><div class="g il noi">${inRow("Назва",`data-jf="bn" data-jid="${j.id}"`,j.bn||"","Наприклад, нічна","text")}${inRow(`Сума за зміну, ${sym()}`,`data-jr="bonus" data-jid="${j.id}"`,r.bonus||"","0")}<div class="pick d7">${[1,2,3,4,5,6,0].map(d=>`<button data-jzd="${d}" data-jid="${j.id}" class="${(j.zd||[]).includes(d)?"on":""}">${DS[d]}</button>`).join("")}</div></div>
-    <p class="ghd">Виплата</p><div class="g il noi">${inRow("День зарплати",`data-jf="pd" data-jid="${j.id}"`,j.pd||"","1–31")}<div class="pick seg3">${[[0,"За цей місяць"],[1,"За попередній"]].map(([k,l])=>`<button data-jlag="${k}" data-jid="${j.id}" class="${num(j.lag)===k?"on":""}">${l}</button>`).join("")}</div></div>
+    <p class="ghd">Тип договору</p><div class="g il" style="padding:0 14px 10px">${ctPick(j.ct,`data-jid="${j.id}" data-jct`)}</div>
+    <p class="ghd">Як платять</p><div class="g il"><div class="pick seg3">${PT.map(([k,l])=>`<button data-jpt="${k}" data-jid="${j.id}" class="${j.pt===k?"on":""}">${l}</button>`).join("")}</div><div class="pick" style="padding:0 14px 12px">${CUR.map(cc=>`<button data-jcur="${cc[0]}" data-jid="${j.id}" class="${j.cur===cc[0]?"on":""}">${cc[0]}</button>`).join("")}</div></div>
+    ${j.pt==="h"?`<div class="g il noi">${inRow(`Брутто за годину, ${S2}`,`data-jr="rate" data-jid="${j.id}"`,r.rate)}${inRow("Після податків, %",`data-jpct data-jid="${j.id}"`,Math.round(r.mult*1000)/10)}${inRow("Неоплачувана перерва, хв",`data-jf="brk" data-jid="${j.id}"`,j.brk||"","немає")}${inRow("Річний ліміт годин",`data-jf="yl" data-jid="${j.id}"`,j.yl||"","немає")}</div><p class="foot">Ставки діють з ${MG[m]}. Перерва віднімається від змін довших за 6 год.</p>`:""}
+    ${j.pt==="m"?`<div class="g il noi">${inRow(`Чистими на місяць, ${S2}`,`data-jr="mon" data-jid="${j.id}"`,r.mon||"","0")}${inRow(`Брутто на місяць, ${S2}`,`data-jr="mg" data-jid="${j.id}"`,r.mg||"","необов’язково")}</div><p class="foot">Зміни для цієї роботи рахуються як години навантаження, а гроші — як місячна зарплата.</p>`:""}
+    ${j.pt==="g"?`<p class="foot" style="margin-top:0">Разові підробітки додаєш у «Гроші» або прямо в графіку — з сумою й датою.</p>`:""}
+    ${j.pt!=="g"?`<p class="ghd">Доплата за окремі зміни</p><div class="g il noi">${inRow("Назва",`data-jf="bn" data-jid="${j.id}"`,j.bn||"","Наприклад, нічна","text")}${inRow("За що",`data-jf="bd" data-jid="${j.id}"`,j.bd||"","Короткий опис","text")}${inRow(`Сума за зміну, ${S2}`,`data-jr="bonus" data-jid="${j.id}"`,r.bonus||"","0")}<div class="pick d7">${[1,2,3,4,5,6,0].map(d=>`<button data-jzd="${d}" data-jid="${j.id}" class="${!j.zs&&(j.zd||[]).includes(d)?"on":""}">${DS[d]}</button>`).join("")}</div><div class="pick" style="padding-top:0"><button data-jzs data-jid="${j.id}" class="${j.zs?"on":""}">Ситуативно — відмічатиму сам</button></div></div>
+    <p class="ghd">Виплата</p><div class="g il noi">${inRow("День зарплати",`data-jf="pd" data-jid="${j.id}"`,j.pd||"","1–31","numeric")}<div class="pick seg3">${[[0,"За цей місяць"],[1,"За попередній"]].map(([k,l])=>`<button data-jlag="${k}" data-jid="${j.id}" class="${j.lag!==""&&num(j.lag)===k?"on":""}">${l}</button>`).join("")}</div></div>`:""}
     ${S.jobs.length>1?`<button class="btn dang" id="jdel" data-jid="${j.id}">Видалити роботу</button>`:""}`;return}
   let h="";
-  if(SP==="profile")h=`<div class="g il noi">${inRow("Звертання",'data-c="name"',S.name,"Денисе","text")}</div><p class="foot">Так я вітаюсь на головній. Пиши в кличному відмінку.</p>`;
-  if(SP==="jobs")h=`<div class="g il">${S.jobs.map(j=>`<button class="ir" data-sp="job:${j.id}"><span class="ico" style="background:${j.c}"></span><span class="lb">${esc(j.n)}<small class="mut" style="display:block;font-size:13.5px">${(CT.find(x=>x[0]===j.ct)||["",""])[0]}, ${R(j.id,y,m).rate} ${sym()}/год</small></span><i class="chev"></i></button>`).join("")}</div><button class="btn q" data-act="addjob">＋ Додати роботу</button>`;
+  if(SP==="profile")h=`<div class="g il" style="padding:18px;display:flex;align-items:center;gap:16px"><label class="avb">${avHTML(76)}<input type="file" id="avf" accept="image/*" hidden></label><div><b style="font-size:17px">Фото профілю</b><br><label class="lnk2" style="cursor:pointer">${S.prof.av?"Змінити":"Додати фото"}<input type="file" id="avf2" accept="image/*" hidden></label>${S.prof.av?` <button class="lnk2" data-act="avdel" style="color:var(--dn)">Прибрати</button>`:""}</div></div>
+   <div class="g il noi">${inRow("Звертання",'data-c="name"',S.name,"Наприклад, "+gx("Денисе","Олено"),"text")}<label class="ir"><span class="lb">Дата народження</span><input type="date" data-pf="bd" value="${S.prof.bd||""}"></label></div>
+   <p class="foot">${a?`Тобі ${a} ${pl(a,["рік","роки","років"])} — враховую це в порадах про сон і відпочинок.`:"Вік допомагає точніше радити про сон і відпочинок."}</p>
+   <p class="ghd">Рід у текстах</p><div class="g il"><div class="pick seg3">${[["m","Чоловік"],["f","Жінка"]].map(([k,l])=>`<button data-sx="${k}" class="${S.prof.sx===k?"on":""}">${l}</button>`).join("")}</div></div>
+   <p class="ghd">Телефони</p><div class="g il noi">${S.prof.ph.map(p=>`<div class="ir"><select data-phl="${p.id}" aria-label="Тип номера">${PHL.map(l=>`<option${p.t===l?" selected":""}>${l}</option>`).join("")}</select><input type="tel" class="nm" data-phn="${p.id}" value="${esc(p.n)}" placeholder="Наприклад, +420 777 123 456" style="text-align:right"><button class="x" data-phrm="${p.id}" aria-label="Видалити">×</button></div>`).join("")}<button class="ir" data-act="addph" style="color:var(--at);font-weight:600">＋ Додати номер</button></div>`;
+  if(SP==="jobs")h=`<div class="g il">${S.jobs.map(j=>`<button class="ir" data-sp="job:${j.id}"><span class="ico" style="background:${j.c}"></span><span class="lb">${esc(j.n)}<small class="mut" style="display:block;font-size:13.5px">${(CT.find(x=>x[0]===j.ct)||["",""])[1].split(" — ")[0]}, ${j.pt==="h"?R(j.id,y,m).rate+" "+sym(j.cur)+"/год":j.pt==="m"?kc(num(R(j.id,y,m).mon),j.cur)+"/міс":"разові"}</small></span><i class="chev"></i></button>`).join("")}</div><button class="btn q" data-act="addjob">＋ Додати роботу</button>`;
   if(SP==="tpl")h=S.tpl.map(t=>`<div class="g il noi"><div class="ir"><input class="nm" data-tf="n" data-tid="${t.id}" value="${esc(t.n)}" placeholder="Назва" inputmode="text" style="font-weight:650"><button class="x" data-trm="${t.id}" aria-label="Видалити">×</button></div>
     <label class="ir"><span class="lb">Початок</span><input type="time" step="300" data-tf="s" data-tid="${t.id}" value="${t.s}"></label><label class="ir"><span class="lb">Кінець</span><input type="time" step="300" data-tf="e" data-tid="${t.id}" value="${t.e}"></label>
     ${multi()?`<div class="pick">${S.jobs.map(j=>`<button data-tj="${j.id}" data-tid="${t.id}" class="${t.j===j.id?"on":""}">${esc(j.n)}</button>`).join("")}</div>`:""}</div>`).join("")+`<button class="btn q" data-act="addtpl">＋ Додати шаблон</button>`;
-  if(SP==="load")h=`<div class="g il noi">${inRow("Норма на тиждень, год",'data-c="week"',c.week)}${inRow("Відпочинок між змінами, год",'data-c="rest"',c.rest)}</div><p class="foot">11 годин — мінімальний щоденний відпочинок за правилами ЄС і чеським трудовим кодексом.</p>
+  if(SP==="load")h=`<div class="g il noi">${inRow("Норма на тиждень, год",'data-c="week"',c.wkU||!num(c.week)?"":c.week,c.wkU?"ще з’ясовуємо":"Наприклад, 40")}${inRow("Відпочинок між змінами, год",'data-c="rest"',c.rest)}</div><p class="foot">11 годин — мінімальний щоденний відпочинок за правилами ЄС і чеським трудовим кодексом.${a!==null&&a<18?" До 18 років діють окремі обмеження робочого часу — уточни їх у роботодавця.":""}</p>
    <p class="ghd">Скільки вихідних на тиждень тобі потрібно</p><div class="g il"><div class="pick seg3">${[1,2,3].map(v=>`<button data-off="${v}" class="${num(c.off)===v?"on":""}">${v}</button>`).join("")}</div></div>`;
-  if(SP==="sleep")h=`<div class="g il noi">${inRow("Мета сну, год",'data-c="sg"',c.sg)}<label class="ir"><span class="lb">Зазвичай лягаю</span><input type="time" data-ct="lb" value="${c.lb}"></label><label class="ir"><span class="lb">Зазвичай встаю</span><input type="time" data-ct="lw" value="${c.lw}"></label>${inRow("Від підйому до зміни, хв",'data-c="prep"',c.prep)}</div><p class="foot">З цього рахую, коли лягати перед ранньою зміною.</p>`;
+  if(SP==="sleep"){const rr=recSleep();h=`<div class="g il noi">${inRow("Мета сну, год",'data-c="sg"',num(c.sg)||"","Наприклад, 8")}<label class="ir"><span class="lb">Зазвичай лягаю</span><input type="time" data-ct="lb" value="${c.lb}"></label><label class="ir"><span class="lb">Зазвичай встаю</span><input type="time" data-ct="lw" value="${c.lw}"></label></div><p class="foot">${a?`У твоєму віці рекомендують ${rr[0]}–${rr[1]} годин сну.`:"Дорослим зазвичай рекомендують 7–9 годин сну."}</p>
+   <p class="ghd">Від підйому до початку зміни</p><div class="g il"><div class="stp"><button data-prep="-15" aria-label="Менше">−</button><b>${num(c.prep)?hm(num(c.prep)):"не задано"}</b><button data-prep="15" aria-label="Більше">+</button></div></div><p class="foot">З цього рахую, коли лягати перед ранньою зміною.</p>`}
   if(SP==="rest")h=`<p class="ghd">Що тебе відновлює</p><div class="g il"><div class="pick">${FUN.map(([k,l])=>`<button data-fun="${k}" class="${(c.fun||[]).includes(k)?"on":""}">${l}</button>`).join("")}</div></div><p class="foot">Підкажу щось із цього, коли попереду вихідний.</p>`;
-  if(SP==="cur")h=`<div class="g il noi">${CUR.map(([k,s,l])=>`<button class="ir" data-cur="${k}"><span class="lb">${l}<small class="mut" style="display:block;font-size:13.5px">${k}, ${s}</small></span>${S.cur===k?'<i class="ck"></i>':""}</button>`).join("")}</div>`;
-  if(SP==="base")h=`<div class="g il noi">${S.base.map(b=>`<div class="ir"><input class="nm" data-b="${b.id}" data-f="n" value="${esc(b.n)}" placeholder="Назва" aria-label="Назва" inputmode="text"><input data-b="${b.id}" data-f="d" inputmode="numeric" value="${b.d||""}" placeholder="день" aria-label="День оплати" style="width:52px"><input data-b="${b.id}" data-f="a" inputmode="decimal" value="${b.a||""}" placeholder="0 ${sym()}" aria-label="Сума" style="width:88px"><button class="x" data-rb="${b.id}" aria-label="Видалити">×</button></div>`).join("")}
+  if(SP==="cur")h=`<div class="g il noi">${CUR.map(([k,s2,l])=>`<button class="ir" data-cur="${k}"><span class="lb">${l}<small class="mut" style="display:block;font-size:13.5px">${k}, ${s2}</small></span>${S.cur===k?'<i class="ck"></i>':""}</button>`).join("")}</div><p class="foot">Основна валюта — у ній підсумки. Доходи в інших валютах я переводжу за курсом нижче. При зміні основної валюти перерахую витрати, цілі й залишок.</p>
+   <p class="ghd">Приблизні курси</p><div class="g il noi">${CUR.filter(x=>x[0]!==S.cur).map(x=>inRow(`1 ${x[0]} у ${S.cur}`,`data-fx="${x[0]}"`,nf(toM(1,x[0]),x[0]==="UAH"?3:2))).join("")}</div><p class="foot">Курси вбудовані приблизно, без інтернету вони самі не оновлюються. Онови, якщо курс помітно змінився.</p>`;
+  if(SP==="base")h=`<div class="g il noi">${S.base.map(b=>`<div class="ir"><input class="nm" data-b="${b.id}" data-f="n" value="${esc(b.n)}" placeholder="Наприклад, оренда" aria-label="Назва" inputmode="text"><input data-b="${b.id}" data-f="d" inputmode="numeric" value="${b.d||""}" placeholder="день" aria-label="День оплати" style="width:52px"><input data-b="${b.id}" data-f="a" inputmode="decimal" value="${b.a||""}" placeholder="сума" aria-label="Сума" style="width:80px"><button class="x" data-rb="${b.id}" aria-label="Видалити">×</button></div>`).join("")}
    <button class="ir" data-act="addb" style="color:var(--at);font-weight:600">＋ Додати витрату</button></div><p class="foot">«День» — коли платиш (наприклад, оренда 15-го). Без дня — щоденні витрати, вони входять у суму «можна витрачати на день».</p>
    <div class="g il noi"><div class="ir"><span class="lb"><b>Разом на місяць</b></span><b id="btot">${kc(baseSum())}</b></div></div>`;
   if(SP==="goals")h=S.goals.map(g=>`<div class="g il noi"><div class="ir"><input class="nm" data-g="${g.id}" data-f="n" value="${esc(g.n)}" aria-label="Назва цілі" inputmode="text" style="font-weight:650">${g.id==="cush"?"":`<button class="x" data-rg="${g.id}" aria-label="Видалити">×</button>`}</div>${inRow(`Потрібно, ${sym()}`,`data-g="${g.id}" data-f="t"`,g.t||"",g.id==="cush"?(Math.round(baseSum()*3)||"авто"):"0")}${inRow(`Вже зібрано, ${sym()}`,`data-g="${g.id}" data-f="s"`,g.s||"","0")}</div>`).join("")+`<button class="btn q" data-act="addg" style="margin:0 0 10px">＋ Додати ціль</button><p class="foot" style="margin-top:6px">Збираються по черзі, зверху вниз. Подушка без суми — 3 місяці базових витрат.</p>`;
   if(SP==="target")h=`<div class="g il noi">${inRow(`Чистими на місяць, ${sym()}`,'data-c="target"',c.target||"",autoTarget()||"0")}</div><p class="foot">Лиши порожнім — візьму базові витрати × 1,5.</p>`;
   if(SP==="look")h=`<div class="g il noi">${Object.entries(THN).map(([k,l])=>`<button class="ir" data-th="${k}"><span class="lb">${l}</span>${c.theme===k?'<i class="ck"></i>':""}</button>`).join("")}</div>`;
   if(SP==="data")h=`<div class="g il noi"><button class="ir" data-act="bkp"><span class="lb">Зберегти резервну копію</span><i class="chev"></i></button><label class="ir" style="cursor:pointer"><span class="lb">Відновити з копії</span><i class="chev"></i><input type="file" id="rst" accept="application/json,.json" hidden></label></div>
-   <p class="foot">Копія — це файл із графіком, сном і грошима. Фото пасків у неї не входять.</p>
+   <p class="foot">Копія — це файл із графіком, сном і грошима. Фото пасків у неї не входять.${S.lastBk?` Остання копія: ${dLong(pk(S.lastBk))}.`:""}</p>
    <div class="g il noi"><button class="ir" data-act="exp"><span class="lb">Скопіювати дані текстом</span><i class="chev"></i></button><button class="ir" data-act="imp"><span class="lb">Вставити дані текстом</span><i class="chev"></i></button></div>
    <div id="io" hidden><textarea id="iot" spellcheck="false"></textarea><button class="btn" id="iog"></button></div>
-   <p class="foot" style="margin-top:0">Усе зберігається лише на цьому телефоні й нікуди не надсилається. Час від часу зберігай резервну копію.</p>
-   <div class="g il noi">${S.demo?'<button class="ir" data-act="undemo"><span class="lb">Прибрати демо-дані</span></button>':'<button class="ir" data-act="demo"><span class="lb">Показати демо-дані</span></button>'}<button class="ir" id="wipe" style="color:var(--dn)"><span class="lb">Стерти все</span></button></div>`;
-  el.innerHTML=hd(TITLES[SP]||"","setmain")+h}
+   <p class="foot" style="margin-top:0">Усе зберігається лише на цьому телефоні й нікуди не надсилається.</p>
+   <div class="g il noi">${S.demo?'<button class="ir" data-act="undemo"><span class="lb">Прибрати демо-дані</span></button>':'<button class="ir" data-act="demo"><span class="lb">Показати демо-дані</span></button>'}<button class="ir" id="wipe" style="color:var(--dn)"><span class="lb">Стерти все</span></button></div>${(()=>{try{return localStorage.getItem(OLDK)}catch(e){return null}})()?`<div class="g il noi"><button class="ir" id="oldrst"><span class="lb">Відновити дані з версії 0.6</span><i class="chev"></i></button></div><p class="foot">Версія 0.7 стартує з чистого аркуша. Попередні дані збережені на телефоні — їх можна повернути.</p>`:""}`;
+  el.innerHTML=hd(TITLES[SP]||"","setmain")+h;fillFiles()}
+/* ---------- збереження налаштувань ---------- */
+let SETBK=null,SDIRTY=false,CONF=null;
+function updSave(){const b=$("#savebar"),on=V==="set"&&SP&&SP!=="data";b.hidden=!on;document.body.classList.toggle("hasbar",!!on);if(on){const x=$("#svbtn");x.disabled=!SDIRTY;if(SDIRTY)x.textContent="Зберегти"}}
+function commitSet(){SETBK=null;SDIRTY=false;saveLocal();if(V==="set"&&SP&&SP!=="data")SETBK=JSON.stringify(S);updSave();const x=$("#svbtn");x.textContent="Збережено ✓";x.disabled=true}
+function dropSet(){if(SETBK){S=migrate(JSON.parse(SETBK));applyTheme()}SETBK=null;SDIRTY=false}
+function leaveSP(next){const doit=()=>{if(next==null){SETBK=null;SDIRTY=false;SP=null}else SP=next;if(V!=="set")go("set");else{renderSet();scrollTo(0,0);enter($("#v-set"),"b");updSave()}};
+  if(SDIRTY&&next==null){CONF=doit;openS($("#cf"))}else{if(next==null)SETBK=null;doit()}}
+
 function setRate(jid,o){const y=TD.getFullYear(),m=TD.getMonth(),k=mk(y,m),t=S.rates[jid]||(S.rates[jid]={});t[k]={...R(jid,y,m),...o};Object.keys(t).forEach(x=>{if(x>k)delete t[x]})}
 function setBound(e){const t=e.target,d=t.dataset;
   if(d.c){if(d.c==="name")S.name=t.value.trim();else S.cfg[d.c]=num(t.value)}
@@ -1088,7 +1210,13 @@ function setBound(e){const t=e.target,d=t.dataset;
   else if(d.b){const b=S.base.find(x=>x.id===d.b);if(b)b[d.f]=d.f==="n"?t.value:d.f==="d"?(Math.min(31,Math.round(num(t.value)))||""):num(t.value);const bt=$("#btot");if(bt)bt.textContent=kc(baseSum())}
   else if(d.g){const g=S.goals.find(x=>x.id===d.g);if(g)g[d.f]=d.f==="n"?t.value:num(t.value)}
   else if(d.jf){const j=S.jobs.find(x=>x.id===d.jid);if(!j)return;j[d.jf]=d.jf==="n"||d.jf==="bn"?t.value:num(t.value)}
-  else if(d.jr){const v=num(t.value);if(!v&&d.jr!=="bonus")return;setRate(d.jid,{[d.jr]:v})}
+  else if(d.jr){const v=num(t.value);if(!v&&d.jr==="rate")return;setRate(d.jid,{[d.jr]:v})}
+  else if(d.op){onbPay(d.op,d.jid,num(t.value))}
+  else if(d.pf){S.prof[d.pf]=t.value}
+  else if(d.phn){const p=S.prof.ph.find(q=>q.id===d.phn);if(p)p.n=t.value}
+  else if(d.phl){const p=S.prof.ph.find(q=>q.id===d.phl);if(p)p.t=t.value}
+  else if(d.fx){const v=num(t.value);if(!v)return;S.fx[d.fx]=(num(S.fx[S.cur])||FX0[S.cur])/v}
+  else if(d.gf){const g=S.gigs.find(q=>q.id===(d.gid||GG));if(!g)return;g[d.gf]=d.gf==="n"||d.gf==="d"||d.gf==="pd"?t.value:num(t.value)}
   else if("jpct" in d){const v=num(t.value);if(!v||v>100)return;setRate(d.jid,{mult:v/100})}
   else if(d.tf){const x=S.tpl.find(q=>q.id===d.tid);if(x&&(d.tf==="n"||t.value))x[d.tf]=t.value}
   else if(d.ob){S.base[+d.ob].a=num(t.value)}
@@ -1098,67 +1226,108 @@ function setBound(e){const t=e.target,d=t.dataset;
   save()}
 function arm(btn,label,fn){if(btn.dataset.armed){fn();return}btn.dataset.armed=1;const lb=btn.querySelector(".lb")||btn,o=lb.textContent;lb.textContent=label;setTimeout(()=>{if(btn.isConnected){delete btn.dataset.armed;lb.textContent=o}},3500)}
 /* ---------- опитувальник ---------- */
-let OS=0,OB={bonus:null,j2:null};
-const SEC=["","Про тебе","Робота","Робота","Робота","Робота","Робота","Робота","Робота","Робота","Гроші","Гроші","Життя","Життя","Сон","Як я влаштований","Твій план"];
-function onbSteps(){const j=S.jobs[0],r=R(j.id,TD.getFullYear(),TD.getMonth()),c=S.cfg,nx=(l="Далі")=>`<div class="oacts"><button class="btn" data-ob="next">${l}</button>${OS?'<button class="btn q" data-ob="prev">Назад</button>':""}</div>`;
-  switch(OS){
-  case 0:return`<span class="hero">${logo()}</span><h1 class="fr" style="text-align:center">Привіт! Я MySal</h1><p style="text-align:center">Допоможу планувати зміни так, щоб і добре заробляти, і встигати відпочивати, і трохи відкладати. Спершу кілька питань — хвилини на три.</p><div class="betanote"><b>🧪 Це бета-версія</b><span>Щось може працювати не так. Якщо помітиш баг чи нестиковку — зроби скрін і надішли автору апки. Кнопка «beta» біля логотипа нагадає, як це зробити.</span></div><div class="oacts"><button class="btn" data-ob="next">Почнімо</button><button class="btn q" data-ob="demo">Спершу подивитись на демо</button></div>`;
-  case 1:return`<h1 class="fr">Як до тебе звертатись?</h1><p>Так я вітатимусь щодня.</p><input class="big-in" data-c="name" value="${esc(S.name)}" placeholder="Наприклад, Денисе">${nx()}`;
-  case 2:return`<h1 class="fr">У якій валюті тобі платять?</h1><p>Усі суми в апці будуть у ній.</p><div class="g il noi">${CUR.map(([k,s,l])=>`<button class="ir" data-obcur="${k}"><span class="lb">${l}</span><span class="vl">${s}</span>${S.cur===k?'<i class="ck"></i>':""}</button>`).join("")}</div>${nx()}`;
-  case 3:return`<h1 class="fr">Де ти працюєш?</h1><p>Назва — для тебе, а тип договору підкаже, які є обмеження.</p><input class="big-in" data-jf="n" data-jid="${j.id}" value="${esc(j.n)}" placeholder="Наприклад, Пекарня" style="margin-bottom:14px"><div class="g il"><div class="pick">${CT.map(([k,l])=>`<button data-obct="${k}" class="${j.ct===k?"on":""}">${l}</button>`).join("")}</div></div>${j.ct==="DPP"?`<p class="soft">На DPP — не більше 300 годин на рік в одного роботодавця. Я стежитиму за лімітом.</p>`:""}${nx()}`;
-  case 4:return`<h1 class="fr">Скільки тобі платять?</h1><p>Брутто за годину й скільки з нього лишається після податків. Не знаєш точно — постав приблизно, потім звіримо з паском.</p><div class="g il noi">${inRow(`Брутто за годину, ${sym()}`,`data-jr="rate" data-jid="${j.id}"`,r.rate)}${inRow("Після податків, %",`data-jpct data-jid="${j.id}"`,Math.round(r.mult*1000)/10)}</div>${nx()}`;
-  case 5:{const on=OB.bonus===null?num(r.bonus)>0:OB.bonus;return`<h1 class="fr">Чи є доплати за окремі зміни?</h1><p>Наприклад, за нічні, вихідні чи доставку в певні дні.</p><div class="g il"><div class="pick seg3"><button data-obb="1" class="${on?"on":""}">Так</button><button data-obb="0" class="${on?"":"on"}">Ні</button></div></div>
-    ${on?`<div class="g il noi">${inRow("Назва",`data-jf="bn" data-jid="${j.id}"`,j.bn||"","Нічна","text")}${inRow(`Сума за зміну, ${sym()}`,`data-jr="bonus" data-jid="${j.id}"`,r.bonus||"","0")}</div><p class="ghd">У які дні</p><div class="g il"><div class="pick d7">${[1,2,3,4,5,6,0].map(d=>`<button data-jzd="${d}" data-jid="${j.id}" class="${(j.zd||[]).includes(d)?"on":""}">${DS[d]}</button>`).join("")}</div></div>`:""}${nx()}`}
-  case 6:return`<h1 class="fr">Чи є неоплачувана перерва?</h1><p>Наприклад, обід, який не входить в оплачувані години.</p><div class="g il"><div class="pick seg3">${[0,15,30,45,60].map(v=>`<button data-obbrk="${v}" class="${num(j.brk)===v?"on":""}">${v?v+" хв":"Немає"}</button>`).join("")}</div></div>${nx()}`;
-  case 7:return`<h1 class="fr">Які в тебе зазвичай зміни?</h1><p>Збережу їх як шаблони — потім одним тапом у календарі.</p>${S.tpl.map(t=>`<div class="g il noi"><div class="ir"><input class="nm" data-tf="n" data-tid="${t.id}" value="${esc(t.n)}" placeholder="Назва" inputmode="text" style="font-weight:650"><button class="x" data-trm="${t.id}" aria-label="Видалити">×</button></div><div class="tt" style="margin:0;padding:0 10px 10px"><label><small>Початок</small><input type="time" step="300" data-tf="s" data-tid="${t.id}" value="${t.s}"></label><label><small>Кінець</small><input type="time" step="300" data-tf="e" data-tid="${t.id}" value="${t.e}"></label></div></div>`).join("")}${S.tpl.length<4?'<button class="btn q" data-ob="addtpl">＋ Ще шаблон</button>':""}${nx()}`;
-  case 8:return`<h1 class="fr">Коли приходить зарплата?</h1><p>Так я покажу, скільки можна витрачати до виплати.</p><div class="g il noi">${inRow("День місяця",`data-jf="pd" data-jid="${j.id}"`,j.pd||"","1–31","numeric")}<div class="pick seg3">${[[0,"За цей місяць"],[1,"За попередній"]].map(([k,l])=>`<button data-jlag="${k}" data-jid="${j.id}" class="${num(j.lag)===k?"on":""}">${l}</button>`).join("")}</div></div>${nx()}`;
-  case 9:{const j2=S.jobs[1];return`<h1 class="fr">Маєш ще одну роботу?</h1><p>Я попереджатиму, якщо зміни накладаються, і підкажу, яка вигідніша.</p><div class="g il"><div class="pick seg3"><button data-obj2="0" class="${j2?"":"on"}">Ні, одна</button><button data-obj2="1" class="${j2?"on":""}">Так, є ще</button></div></div>
-    ${j2?`<div class="g il noi">${inRow("Назва",`data-jf="n" data-jid="${j2.id}"`,j2.n,"Підробіток","text")}${inRow(`Брутто за годину, ${sym()}`,`data-jr="rate" data-jid="${j2.id}"`,R(j2.id,TD.getFullYear(),TD.getMonth()).rate)}${inRow("Після податків, %",`data-jpct data-jid="${j2.id}"`,Math.round(R(j2.id,TD.getFullYear(),TD.getMonth()).mult*1000)/10)}${inRow("День зарплати",`data-jf="pd" data-jid="${j2.id}"`,j2.pd||"","1–31","numeric")}</div><div class="g il"><div class="pick">${CT.map(([k,l])=>`<button data-obct2="${k}" class="${j2.ct===k?"on":""}">${l}</button>`).join("")}</div></div>`:""}${nx()}`}
-  case 10:return`<h1 class="fr">Обов’язкові витрати</h1><p>Скільки щомісяця йде на базу і коли платиш. З цього я порахую ціль і запас до зарплати.</p><div class="g il noi">${S.base.map(b=>`<div class="ir"><input class="nm" data-b="${b.id}" data-f="n" value="${esc(b.n)}" inputmode="text"><input data-b="${b.id}" data-f="d" inputmode="numeric" value="${b.d||""}" placeholder="день" style="width:52px"><input data-b="${b.id}" data-f="a" inputmode="decimal" value="${b.a||""}" placeholder="0 ${sym()}" style="width:88px"></div>`).join("")}<button class="ir" data-ob="addb" style="color:var(--at);font-weight:600">＋ Ще витрата</button></div><p class="soft">«День» — коли платиш, наприклад оренда 15-го. Їжу й дрібне лиши без дня.</p>${nx()}`;
-  case 11:{const g=S.goals.find(x=>x.id!=="cush");return`<h1 class="fr">Твої гроші зараз</h1><p>Скільки на рахунку сьогодні і на що хочеш відкладати. Можна пропустити.</p><div class="g il noi"><label class="ir"><span class="lb">На рахунку зараз, ${sym()}</span><input id="obbal" inputmode="decimal" value="${S.bal.d?Math.round(num(S.bal.a)):""}" placeholder="0"></label></div>
-    <p class="ghd">Ціль, на яку відкладаєш</p><div class="g il noi">${g?`${inRow("Назва",`data-g="${g.id}" data-f="n"`,g.n,"Наприклад, відпустка","text")}${inRow(`Скільки потрібно, ${sym()}`,`data-g="${g.id}" data-f="t"`,g.t||"","0")}`:""}</div><p class="soft">Подушку безпеки я додам сам — 3 місяці базових витрат.</p>${nx()}`}
-  case 12:return`<h1 class="fr">Скільки тобі комфортно працювати?</h1><p>Годин на тиждень і скільки вихідних тобі потрібно.</p><div class="g il"><div class="pick seg3">${[20,30,35,40,45,50].map(v=>`<button data-obw="${v}" class="${num(c.week)===v?"on":""}">${v} год</button>`).join("")}</div></div><p class="ghd">Вихідних на тиждень</p><div class="g il"><div class="pick seg3">${[1,2,3].map(v=>`<button data-off="${v}" class="${num(c.off)===v?"on":""}">${v}</button>`).join("")}</div></div>${nx()}`;
-  case 13:return`<h1 class="fr">Що тебе відновлює?</h1><p>Обери кілька — я нагадуватиму про це перед вихідними.</p><div class="g il"><div class="pick">${FUN.map(([k,l])=>`<button data-fun="${k}" class="${(c.fun||[]).includes(k)?"on":""}">${l}</button>`).join("")}</div></div>${nx()}`;
-  case 14:return`<h1 class="fr">Про сон</h1><p>Коли зазвичай лягаєш і встаєш, скільки хочеш спати і скільки часу треба від підйому до зміни.</p><div class="tt" style="margin:0 0 14px"><label><small>Лягаю</small><input type="time" data-ct="lb" value="${c.lb}"></label><label><small>Встаю</small><input type="time" data-ct="lw" value="${c.lw}"></label></div>
-    <p class="ghd">Мета сну</p><div class="g il"><div class="pick seg3">${[7,7.5,8,8.5,9].map(v=>`<button data-obsg="${v}" class="${num(c.sg)===v?"on":""}">${nf(v)}</button>`).join("")}</div></div><p class="ghd">Від підйому до початку зміни</p><div class="g il"><div class="pick seg3">${[30,45,60,90].map(v=>`<button data-obprep="${v}" class="${num(c.prep)===v?"on":""}">${v} хв</button>`).join("")}</div></div>${nx()}`;
-  case 15:return`<h1 class="fr">Ось як я влаштований</h1>
-   <div class="oinfo"><b class="em">🏠</b><div><strong>Огляд</strong><span>Скільки заробив цього тижня й місяця і що робити далі.</span></div></div>
-   <div class="oinfo"><b class="em">🗓</b><div><strong>Графік</strong><span>Тапни день, щоб додати зміну. Пунктир — план, жовта крапка — доплата. Тут же «Скласти план» і копія тижня.</span></div></div>
-   <div class="oinfo"><b class="em">💳</b><div><strong>Гроші</strong><span>Скільки можна витрачати до зарплати, паски й «А що, якщо?».</span></div></div>
+let OS=0,OB={bonus:null,mode:null,j2a:null,tga:false};
+const PT=[["h","Погодинно"],["m","Щомісяця"],["g","Разова робота"]];
+const SECN={me:"Про тебе",cur:"Робота",job:"Робота",pay:"Робота",bonus:"Робота",brk:"Робота",tpl:"Робота",payday:"Робота",j2:"Робота",base:"Гроші",target:"Гроші",goals:"Гроші",norm:"Життя",fun:"Життя",sleep:"Сон",tour:"Як я влаштований",done:"Готово"};
+const GEX=[["Відпустка","15 000"],["Ноутбук","25 000"],["Курси","8 000"]];
+function oKeys(){const j=S.jobs[0],K=["hi","me","cur","job","pay"];if(j.pt!=="g")K.push("bonus");if(j.pt==="h")K.push("brk");if(j.pt!=="g")K.push("tpl","payday");K.push("j2","base","target","goals","norm","fun","sleep","tour","done");return K}
+const ccur=ct=>{const x=CT.find(q=>q[0]===ct);return x&&x[2]?CCUR[x[2]]:null};
+function payFields(j,mode){const r=R(j.id,TD.getFullYear(),TD.getMonth()),S2=sym(j.cur);
+  if(!mode)return"";
+  if(j.pt==="h")return mode==="net"?inRow(`Чистими за годину, ${S2}`,`data-op="hn" data-jid="${j.id}"`,Math.round(r.rate*r.mult*100)/100||"","Наприклад, 170"):inRow(`Брутто за годину, ${S2}`,`data-op="hg" data-jid="${j.id}"`,r.rate||"","Наприклад, 200")+inRow(`Чистими за годину, ${S2}`,`data-op="hn2" data-jid="${j.id}"`,r.rate?Math.round(r.rate*r.mult*100)/100:"","Наприклад, 170");
+  if(j.pt==="m")return mode==="net"?inRow(`Чистими на місяць, ${S2}`,`data-op="mn" data-jid="${j.id}"`,r.mon||"","Наприклад, 30 000"):inRow(`Брутто на місяць, ${S2}`,`data-op="mg" data-jid="${j.id}"`,r.mg||"","Наприклад, 36 000")+inRow(`Чистими на місяць, ${S2}`,`data-op="mn" data-jid="${j.id}"`,r.mon||"","Наприклад, 30 000");
+  return""}
+function onbSteps(key){const j=S.jobs[0],c=S.cfg,a=age(),nx=(l="Далі")=>`<div class="oacts"><button class="btn" data-ob="next">${l}</button>${OS?'<button class="btn q" data-ob="prev">Назад</button>':""}</div>`;
+  switch(key){
+  case"hi":return`<span class="hero">${logo()}</span><h1 class="fr" style="text-align:center">Привіт! Я MySal</h1><p style="text-align:center">Допоможу планувати роботу так, щоб і добре заробляти, і встигати відпочивати, і трохи відкладати. Спершу кілька питань — хвилин на п’ять.</p><div class="betanote"><b>🧪 Це бета-версія</b><span>Щось може працювати не так. Якщо помітиш баг чи нестиковку — зроби скрін і надішли автору апки. Кнопка «beta» біля логотипа нагадає, як це зробити.</span></div><div class="oacts"><button class="btn" data-ob="next">Почнімо</button><button class="btn q" data-ob="demo">Спершу подивитись на демо</button></div>`;
+  case"me":return`<h1 class="fr">Розкажи про себе</h1><p>Ім’я — щоб вітатись, рід — щоб правильно до тебе звертатись, вік — щоб точніше радити про сон і відпочинок. Решта — за бажанням.</p>
+    <div class="g il" style="padding:16px;display:flex;align-items:center;gap:14px"><label class="avb">${avHTML(64)}<input type="file" id="avf" accept="image/*" hidden></label><span class="mut">Тапни, щоб додати фото</span></div>
+    <div class="g il noi">${inRow("Як до тебе звертатись",'data-c="name"',S.name,"Наприклад, "+gx("Денисе","Олено"),"text")}<label class="ir"><span class="lb">Дата народження</span><input type="date" data-pf="bd" value="${S.prof.bd||""}"></label></div>
+    <p class="ghd">Як до тебе звертатись у текстах</p><div class="g il"><div class="pick seg3">${[["m","Чоловік"],["f","Жінка"]].map(([k,l])=>`<button data-sx="${k}" class="${S.prof.sx===k?"on":""}">${l}</button>`).join("")}</div></div>
+    <div class="g il noi">${S.prof.ph.map(p=>`<div class="ir"><select data-phl="${p.id}" aria-label="Тип номера">${PHL.map(l=>`<option${p.t===l?" selected":""}>${l}</option>`).join("")}</select><input type="tel" class="nm" data-phn="${p.id}" value="${esc(p.n)}" placeholder="Наприклад, +420 777 123 456" style="text-align:right"><button class="x" data-phrm="${p.id}" aria-label="Видалити">×</button></div>`).join("")}<button class="ir" data-ob="addph" style="color:var(--at);font-weight:600">＋ Номер телефону</button></div>${nx()}`;
+  case"cur":return`<h1 class="fr">Основна валюта</h1><p>У ній я показуватиму всі підсумки. Якщо частина доходу в іншій валюті — переведу за приблизним курсом.</p><div class="g il noi">${CUR.map(([k,s2,l])=>`<button class="ir" data-obcur="${k}"><span class="lb">${l}</span><span class="vl">${s2}</span>${S.curSet&&S.cur===k?'<i class="ck"></i>':""}</button>`).join("")}</div>${nx()}`;
+  case"job":{const cc=ccur(j.ct);return`<h1 class="fr">Де ти працюєш?</h1><p>Назва — для тебе, а тип співпраці підкаже, які є обмеження.</p><input class="big-in" data-jf="n" data-jid="${j.id}" value="${esc(j.n==="Основна робота"?"":j.n)}" placeholder="Наприклад, Пекарня" style="margin-bottom:6px">
+    ${cc&&cc!==S.cur&&j.cur!==cc?`<div class="warn" style="margin:6px 0 12px"><b>Тут, мабуть, платять у ${cc}</b><p>Основна валюта зараз — ${S.cur}. Як зробимо?</p><button class="btn" data-obcc="main">Зробити ${cc} основною</button><button class="btn q" data-obcc="job">Лише ця робота в ${cc}</button></div>`:""}<div class="g il" style="padding:0 14px 12px">${ctPick(j.ct,"data-obct")}</div>
+    ${j.ct==="DPP"?`<p class="soft">На DPP — не більше 300 годин на рік в одного роботодавця. Я стежитиму за лімітом.</p>`:""}${j.ct==="gig"?`<p class="soft">Разові підробітки додаватимеш із сумою й датою — я врахую їх у доході того місяця.</p>`:""}${nx()}`}
+  case"pay":{if(j.pt==="g"){let g=S.gigs[0];return`<h1 class="fr">Перший разовий підробіток</h1><p>Можна пропустити й додати пізніше в «Гроші» або в графіку.</p><div class="g il"><div class="pick seg3">${PT.map(([k,l])=>`<button data-obpt="${k}" class="${j.pt===k?"on":""}">${l}</button>`).join("")}</div></div>${g?`<div class="g il noi"><label class="ir"><span class="lb">Що за робота</span><input class="nm" data-gf="n" data-gid="${g.id}" value="${esc(g.n)}" placeholder="Наприклад, зйомка" style="text-align:right"></label>${inRow(`Сума, ${sym(g.cur)}`,`data-gf="a" data-gid="${g.id}"`,g.a||"","Наприклад, 2 000")}</div><div class="g il"><div class="pick seg3"><button data-obgtx="net" class="${g.tx==="net"?"on":""}">Вже чистими</button><button data-obgtx="gross" class="${g.tx==="gross"?"on":""}">Ще оподатковується</button></div>${g.tx==="gross"?`<div class="noi">${inRow("Лишається після податків, %",`data-gf="p" data-gid="${g.id}"`,g.p||"","Наприклад, 85")}</div>`:""}</div><div class="g il noi"><label class="ir"><span class="lb">Дата роботи</span><input type="date" data-gf="d" data-gid="${g.id}" value="${g.d||""}"></label><label class="ir"><span class="lb">Дата виплати</span><input type="date" data-gf="pd" data-gid="${g.id}" value="${g.pd||""}"></label></div>${!g.pd?`<p class="soft">Без дати виплати гроші зарахуються в день роботи й до того ж місяця.</p>`:""}`:`<button class="btn q" data-ob="addgig">＋ Додати підробіток</button>`}${nx()}`}
+    return`<h1 class="fr">Як тобі платять?</h1><p>Обери, як рахується оплата, і внеси, що знаєш. Потім звіримо з паском.</p><div class="g il"><div class="pick seg3">${PT.map(([k,l])=>`<button data-obpt="${k}" class="${j.pt===k?"on":""}">${l}</button>`).join("")}</div><div class="pick seg3" style="padding-top:0">${[["net","Знаю лише чисті"],["gn","Знаю брутто й чисті"]].map(([k,l])=>`<button data-obmode="${k}" class="${OB.mode===k?"on":""}">${l}</button>`).join("")}</div></div>
+    ${j.pt&&OB.mode?`<div class="g il noi">${payFields(j,OB.mode)}</div>`:""}${j.cur!==S.cur?`<p class="soft">Ця робота — у ${j.cur}. Я переводитиму в ${S.cur}.</p>`:""}${nx()}`}
+  case"bonus":{const on=OB.bonus===true,r=R(j.id,TD.getFullYear(),TD.getMonth());return`<h1 class="fr">Чи є доплати за окремі зміни?</h1><p>Наприклад, за нічні, вихідні чи доставку.</p><div class="g il"><div class="pick seg3"><button data-obb="1" class="${OB.bonus===true?"on":""}">Так</button><button data-obb="0" class="${OB.bonus===false?"on":""}">Ні</button></div></div>
+    ${on?`<div class="g il noi">${inRow("Назва",`data-jf="bn" data-jid="${j.id}"`,j.bn||"","Наприклад, нічна","text")}${inRow("За що саме",`data-jf="bd" data-jid="${j.id}"`,j.bd||"","Наприклад, розвезення по точках","text")}${inRow(`Сума за зміну, ${sym(j.cur)}`,`data-jr="bonus" data-jid="${j.id}"`,r.bonus||"","Наприклад, 250")}</div><p class="ghd">У які дні</p><div class="g il"><div class="pick d7">${[1,2,3,4,5,6,0].map(d=>`<button data-jzd="${d}" data-jid="${j.id}" class="${!j.zs&&(j.zd||[]).includes(d)?"on":""}">${DS[d]}</button>`).join("")}</div><div class="pick" style="padding-top:0"><button data-obzs class="${j.zs?"on":""}">Ситуативно — відмічатиму сам</button></div></div>`:""}${nx()}`}
+  case"brk":return`<h1 class="fr">Чи є неоплачувана перерва?</h1><p>Наприклад, обід, який не входить в оплачувані години.</p><div class="g il"><div class="pick seg3">${[0,15,30,45,60].map(v=>`<button data-obbrk="${v}" class="${j.brk!==""&&num(j.brk)===v?"on":""}">${v?v+" хв":"Немає"}</button>`).join("")}</div></div>${nx()}`;
+  case"tpl":return`<h1 class="fr">Які в тебе зазвичай зміни?</h1><p>Збережу їх як шаблони — потім одним тапом у графіку, навіть для кількох днів одразу.</p>${S.tpl.map(t=>`<div class="g il noi"><div class="ir"><input class="nm" data-tf="n" data-tid="${t.id}" value="${esc(t.n)}" placeholder="Наприклад, ранкова" inputmode="text" style="font-weight:650"><button class="x" data-trm="${t.id}" aria-label="Видалити">×</button></div><div class="tt" style="margin:0;padding:0 10px 10px"><label><small>Початок</small><input type="time" step="300" data-tf="s" data-tid="${t.id}" value="${t.s}"></label><label><small>Кінець</small><input type="time" step="300" data-tf="e" data-tid="${t.id}" value="${t.e}"></label></div></div>`).join("")}${S.tpl.length<4?`<button class="btn q" data-ob="addtpl">＋ ${S.tpl.length?"Ще шаблон":"Додати шаблон"}</button>`:""}${nx()}`;
+  case"payday":return`<h1 class="fr">Коли приходить зарплата?</h1><p>Так я покажу, скільки можна витрачати до виплати.</p><div class="g il noi">${inRow("День місяця",`data-jf="pd" data-jid="${j.id}"`,j.pd||"","Наприклад, 15","numeric")}<div class="pick seg3">${[[0,"За цей місяць"],[1,"За попередній"]].map(([k,l])=>`<button data-jlag="${k}" data-jid="${j.id}" class="${j.lag!==""&&num(j.lag)===k?"on":""}">${l}</button>`).join("")}</div></div>${nx()}`;
+  case"j2":{const j2=S.jobs[1];return`<h1 class="fr">Маєш ще одну роботу?</h1><p>Я попереджатиму, якщо зміни накладаються, і підкажу, яка вигідніша.</p><div class="g il"><div class="pick seg3"><button data-obj2="0" class="${!j2&&OB.j2a===false?"on":""}">Ні, одна</button><button data-obj2="1" class="${j2?"on":""}">Так, є ще</button></div></div>
+    ${j2?`<div class="g il noi">${inRow("Назва",`data-jf="n" data-jid="${j2.id}"`,j2.n,"Наприклад, кав’ярня","text")}</div><div class="g il"><div class="pick seg3">${PT.map(([k,l])=>`<button data-obpt2="${k}" class="${j2.pt===k?"on":""}">${l}</button>`).join("")}</div><div class="pick" style="padding:0 14px 12px">${CUR.map(cc=>`<button data-obcur2="${cc[0]}" class="${j2.cur===cc[0]?"on":""}">${cc[0]}</button>`).join("")}</div></div>${j2.pt&&j2.pt!=="g"?`<div class="g il noi">${payFields(j2,"net")}${inRow("День зарплати",`data-jf="pd" data-jid="${j2.id}"`,j2.pd||"","Наприклад, 10","numeric")}</div>`:`<p class="soft">Разові підробітки додаси пізніше — з сумою й датою.</p>`}<div class="g il" style="padding:0 14px 12px">${ctPick(j2.ct,"data-obct2")}</div>`:""}${nx()}`}
+  case"base":if(!S.base.length)for(let i=0;i<3;i++)S.base.push({id:uid(),n:"",a:0,d:""});return`<h1 class="fr">Обов’язкові витрати</h1><p>Скільки щомісяця йде на базу і коли платиш. «День» — наприклад, оренда 15-го. Їжу й дрібне лиши без дня.</p><div class="g il noi">${S.base.map((b,i)=>`<div class="ir brow"><input class="nm" data-b="${b.id}" data-f="n" value="${esc(b.n)}" inputmode="text" placeholder="Наприклад, ${["оренда","їжа","транспорт","зв’язок","спорт","інше"][i%6]}"><input data-b="${b.id}" data-f="d" inputmode="numeric" value="${b.d||""}" placeholder="день" aria-label="День оплати" style="width:52px"><input data-b="${b.id}" data-f="a" inputmode="decimal" value="${b.a||""}" placeholder="сума" aria-label="Сума" style="width:80px"></div>`).join("")}<button class="ir" data-ob="addb" style="color:var(--at);font-weight:600">＋ Ще витрата</button></div>${nx()}`;
+  case"target":{const at=autoTarget();return`<h1 class="fr">Скільки хочеш заробляти на місяць?</h1><p>Чистими, у ${S.cur}. На цьому стоятиме план і поради.</p><input class="big-in" data-c="target" inputmode="decimal" value="${num(c.target)||""}" placeholder="Наприклад, 30 000"><div class="pick" style="padding:12px 0 0"><button data-obtg="auto" class="${OB.tga?"on":""}">Не знаю — порахуй сам</button></div><p class="soft" style="margin-top:12px">${at?`Тоді візьму базові витрати × 1,5 — це ${kc(at)}. Так лишається запас і на життя, і на заощадження.`:"Якщо не знаєш — я порахую від базових витрат, щойно вони будуть."}</p>${nx()}`}
+  case"goals":{const G=S.goals.filter(g=>g.id!=="cush");return`<h1 class="fr">Твої гроші й цілі</h1><p>Скільки на рахунку сьогодні і на що хочеш відкладати. Можна пропустити.</p><div class="g il noi"><label class="ir"><span class="lb">На рахунку зараз, ${sym()}</span><input id="obbal" inputmode="decimal" value="${S.bal.d?Math.round(num(S.bal.a)):""}" placeholder="Наприклад, 12 000"></label></div>
+    <p class="ghd">Цілі накопичень</p>${G.map((g,i)=>`<div class="g il noi"><div class="ir"><input class="nm" data-g="${g.id}" data-f="n" value="${esc(g.n)}" placeholder="Наприклад, ${GEX[i%3][0].toLowerCase()}" inputmode="text" style="font-weight:650"><button class="x" data-obgrm="${g.id}" aria-label="Видалити">×</button></div>${inRow(`Скільки потрібно, ${sym()}`,`data-g="${g.id}" data-f="t"`,g.t||"","Наприклад, "+GEX[i%3][1])}</div>`).join("")}${G.length<3?`<button class="btn q" data-ob="addgoal">＋ Додати ціль</button>`:""}<p class="soft" style="margin-top:12px">Подушку безпеки я додам сам — 3 місяці базових витрат.</p>${nx()}`}
+  case"norm":{const fix=j.pt==="m";return`<h1 class="fr">${fix?"Скільки годин на тиждень за договором?":"Скільки тобі комфортно працювати?"}</h1><p>${fix?"Це твоя норма — я стежитиму, щоб переробки не накопичувались.":"Годин на тиждень. Не знаєш — нічого, через місяць я сам підкажу твій темп."}</p><div class="g il"><div class="pick seg3">${[20,30,35,40,45,50].map(v=>`<button data-obw="${v}" class="${!c.wkU&&num(c.week)===v?"on":""}">${v}</button>`).join("")}</div>${fix?"":`<div class="pick" style="padding-top:0"><button data-obw="0" class="${c.wkU?"on":""}">Не знаю — підкажи через місяць</button></div>`}</div><p class="ghd">Вихідних на тиждень</p><div class="g il"><div class="pick seg3">${[1,2,3].map(v=>`<button data-off="${v}" class="${num(c.off)===v?"on":""}">${v}</button>`).join("")}</div></div>${a!==null&&a<18?`<p class="soft">До 18 років діють окремі обмеження робочого часу — уточни їх у роботодавця.</p>`:""}${nx()}`}
+  case"fun":return`<h1 class="fr">Що тебе відновлює?</h1><p>Обери кілька — я нагадуватиму про це перед вихідними.</p><div class="g il"><div class="pick">${FUN.map(([k,l])=>`<button data-fun="${k}" class="${(c.fun||[]).includes(k)?"on":""}">${l}</button>`).join("")}</div></div>${nx()}`;
+  case"sleep":{const rr=recSleep();return`<h1 class="fr">Про сон</h1><p>Коли зазвичай лягаєш і встаєш, скільки хочеш спати і скільки часу треба від підйому до зміни.</p><div class="tt" style="margin:0 0 14px"><label><small>Лягаю</small><input type="time" data-ct="lb" value="${c.lb}"></label><label><small>Встаю</small><input type="time" data-ct="lw" value="${c.lw}"></label></div>
+    <p class="ghd">Мета сну${a?`, для твого віку радять ${rr[0]}–${rr[1]} год`:""}</p><div class="g il"><div class="pick seg3">${[7,7.5,8,8.5,9,10].filter(v=>v<=Math.max(9,rr[1])).map(v=>`<button data-obsg="${v}" class="${num(c.sg)===v?"on":""}">${nf(v)}</button>`).join("")}</div></div>
+    <p class="ghd">Від підйому до початку зміни</p><div class="g il"><div class="stp"><button data-prep="-15" aria-label="Менше">−</button><b>${num(c.prep)?hm(num(c.prep)):"не задано"}</b><button data-prep="15" aria-label="Більше">+</button></div></div>${nx()}`}
+  case"tour":return`<h1 class="fr">Ось як я влаштований</h1>
+   <div class="oinfo"><b class="em">🏠</b><div><strong>Огляд</strong><span>Скільки ти вже заробляєш і що робити далі.</span></div></div>
+   <div class="oinfo"><b class="em">🗓</b><div><strong>Графік</strong><span>Тапни день, щоб додати зміну. «Кілька днів» — заповнити багато днів одразу. Пунктир — план.</span></div></div>
+   <div class="oinfo"><b class="em">💳</b><div><strong>Гроші</strong><span>Скільки можна витрачати до зарплати, паски, підробітки й «А що, якщо?».</span></div></div>
    <div class="oinfo"><b class="em">📊</b><div><strong>Аналіз</strong><span>Розбір минулого місяця: рівень, скільки відкласти, навантаження.</span></div></div>
-   <div class="oinfo"><b class="em">💛</b><div><strong>Турбота</strong><span>Щоденник сну й поради про відпочинок і гроші, підібрані під тебе.</span></div></div>${nx()}`;
-  case 16:{const tg=target(),av=S.tpl.length?S.tpl.reduce((s,t)=>s+shH(t),0)/S.tpl.length:8,nr=norm(),per=tg?tg/(netRate()*av)/4.33:0,n=Math.ceil(per),fs=S.tpl.filter(t=>t.s).sort((a,b)=>tm(a.s)-tm(b.s))[0],c2=cashflow();
-    return`<h1 class="fr">Твій план готовий 🎉</h1><p>Ось що виходить з твоїх відповідей. Усе можна змінити в налаштуваннях.</p>
-    ${tg?`<div class="oinfo"><b class="em">🎯</b><div><strong>Ціль — ${kc(tg)} чистими на місяць</strong><span>Це ~${n} ${pl(n,W_SH)} на тиждень по ${nf(av)} год. ${n*av<=nr?"Вміщується в твою норму 👌":"Це більше за твою норму — ціль можна знизити."}</span></div></div>`:""}
+   <div class="oinfo"><b class="em">💛</b><div><strong>Турбота</strong><span>Щоденник сну й поради, підібрані під тебе.</span></div></div>
+   <div class="oinfo"><b class="em">👆</b><div><strong>Свайпи</strong><span>Гортай між вкладками вліво-вправо, а свайп праворуч повертає назад.</span></div></div>${nx()}`;
+  case"done":{const tg=target(),av=S.tpl.length?S.tpl.reduce((s2,t)=>s2+shH(t),0)/S.tpl.length:8,nr=norm(),hr0=R(j.id,TD.getFullYear(),TD.getMonth()).rate,per=tg&&j.pt==="h"&&hr0?tg/(netRate()*av)/4.33:0,n=Math.ceil(per),fs=S.tpl.filter(t=>t.s).sort((p,q)=>tm(p.s)-tm(q.s))[0],c2=cashflow();
+    return`<h1 class="fr">Усе готово 🎉</h1><p>Ось з чого ти стартуєш. Усе можна змінити в налаштуваннях.</p>
+    ${tg?`<div class="oinfo"><b class="em">🎯</b><div><strong>Ціль — ${kc(tg)} чистими на місяць</strong><span>${j.pt==="h"&&!hr0?"Внеси ставку в налаштуваннях роботи — і я порахую, скільки змін потрібно.":j.pt==="h"?`Це ~${n} ${pl(n,W_SH)} на тиждень по ${nf(av)} год. ${c.wkU?"Норму підкажу за місяць.":n*av<=nr?"Вміщується в твою норму 👌":"Це більше за твою норму — ціль можна знизити."}`:j.pt==="m"?`Зарплата — ${kc(toM(num(R(j.id,TD.getFullYear(),TD.getMonth()).mon),j.cur))} на місяць.`:"Додавай підробітки — я рахуватиму, скільки лишилось."}</span></div></div>`:""}
     ${c2.set?`<div class="oinfo"><b class="em">💳</b><div><strong>До зарплати — ~${kc(Math.max(0,c2.safe))} на день</strong><span>${c2.ni?`До ${dLong(c2.ni.d)}, з урахуванням рахунків.`:"Додай день зарплати, щоб я рахував точніше."}</span></div></div>`:""}
-    <div class="oinfo"><b class="em">🌿</b><div><strong>${num(c.off)} ${pl(num(c.off),["вихідний","вихідні","вихідних"])} на тиждень</strong><span>І не менше ${num(c.rest)} год між змінами.</span></div></div>
-    ${fs?`<div class="oinfo"><b class="em">🌙</b><div><strong>Перед зміною о ${fs.s} — у ліжко до ${mt(tm(fs.s)-num(c.prep)-num(c.sg)*60)}</strong><span>Щоб поспати ${nf(num(c.sg))} год і спокійно зібратись.</span></div></div>`:""}
-    <div class="oacts"><button class="btn" data-ob="plan">Скласти план змін</button><button class="btn q" data-ob="done">Почати з чистого графіка</button></div>`}}}
-function renderOnb(){const n=SEC.length;$("#odots").innerHTML=`<div class="oprog"><i style="width:${OS/(n-1)*100}%"></i></div>${SEC[OS]?`<span class="osec">${SEC[OS]}</span>`:""}`;$("#ost").innerHTML=`<div class="ostep">${onbSteps()}</div>`;$("#onb").scrollTop=0}
-function startOnb(){OS=0;OB={bonus:null};$("#onb").hidden=false;renderOnb()}
-function endOnb(){S.onb=true;S.goals.forEach(g=>{if(g.id!=="cush"&&!g.n)g.n="Ціль"});save();$("#onb").hidden=true;go("home")}
+    ${num(c.off)?`<div class="oinfo"><b class="em">🌿</b><div><strong>${num(c.off)} ${pl(num(c.off),["вихідний","вихідні","вихідних"])} на тиждень</strong><span>І не менше ${num(c.rest)} год між змінами.</span></div></div>`:""}
+    ${fs?`<div class="oinfo"><b class="em">🌙</b><div><strong>Перед зміною о ${fs.s} — у ліжко до ${mt(tm(fs.s)-prepv()-sgv()*60)}</strong><span>Щоб поспати ${nf(sgv())} год і спокійно зібратись.</span></div></div>`:""}
+    <div class="oacts"><button class="btn" data-ob="done">Почати</button></div>`}}}
+function renderOnb(){const K=oKeys();OS=Math.max(0,Math.min(OS,K.length-1));const key=K[OS];$("#odots").innerHTML=`<div class="oprog"><i style="width:${OS/(K.length-1)*100}%"></i></div>${SECN[key]?`<span class="osec">${SECN[key]}</span>`:""}`;$("#ost").innerHTML=`<div class="ostep">${onbSteps(key)}</div>`;$("#onb").scrollTop=0;fillFiles()}
+function startOnb(){OS=0;OB={bonus:null,mode:null,j2a:null,tga:false};$("#onb").hidden=false;renderOnb()}
+function endOnb(){if(!S.since)S.nt.ver=VER;S.curSet=true;S.jobs.forEach(j=>{if(!j.pt)j.pt="h";if(!j.ct)j.ct="other";if(j.brk==="")j.brk=0;if(j.lag==="")j.lag=num(j.pd)?1:0});S.base=S.base.filter(b=>b.n||num(b.a));S.tpl=S.tpl.filter(t=>t.s&&t.e).map(t=>({...t,n:t.n||"Зміна"}));S.onb=true;S.since=S.since||TK;S.goals=S.goals.filter(g=>g.id==="cush"||g.n||num(g.t));S.gigs=S.gigs.filter(g=>num(g.a));S.jobs.forEach(j=>{if(!j.n)j.n="Робота"});save();$("#onb").hidden=true;go("home");requestAnimationFrame(()=>moveInd(TABS.indexOf(V)))}
+function onbPay(op,jid,v){const j=S.jobs.find(x=>x.id===jid);if(!j)return;const y=TD.getFullYear(),m=TD.getMonth(),r={...R(jid,y,m)};
+  if(op==="hn"){r.rate=v;r.mult=1}if(op==="hg"){const net=r.rate*r.mult;r.rate=v;if(v&&net)r.mult=Math.min(1,net/v)}if(op==="hn2"){if(r.rate)r.mult=Math.min(1,v/r.rate)}
+  if(op==="mn"){r.mon=v;if(num(r.mg))r.mult=Math.min(1,v/r.mg)}if(op==="mg"){r.mg=v;if(num(r.mon)&&v)r.mult=Math.min(1,r.mon/v)}
+  const t=S.rates[jid]||(S.rates[jid]={});t[mk(y,m)]=r}
 function onbClick(e){const b=e.target.closest("button");if(!b)return;const d=b.dataset,j=S.jobs[0],c=S.cfg;
-  if(d.ob){const a=d.ob;if(a==="next"){if(OS===11){const v=$("#obbal");if(v&&v.value!==""){S.bal={a:num(v.value),d:TK};save()}}OS=Math.min(SEC.length-1,OS+1)}else if(a==="prev")OS=Math.max(0,OS-1);else if(a==="done")return endOnb();else if(a==="plan"){endOnb();return openAP()}else if(a==="demo")return demo();
-    else if(a==="addtpl"){S.tpl.push({id:uid(),n:"Зміна",j:j.id,s:"10:00",e:"18:00"});save()}else if(a==="addb"){S.base.push({id:uid(),n:"",a:0,d:""});save()}renderOnb();return}
-  if(d.obcur){S.cur=d.obcur;save();return renderOnb()}
-  if(d.obct){j.ct=d.obct;if(d.obct==="DPP"&&!num(j.yl))j.yl=300;if(d.obct!=="DPP"&&num(j.yl)===300)j.yl=0;save();return renderOnb()}
-  if(d.obct2){const j2=S.jobs[1];if(j2){j2.ct=d.obct2;j2.yl=d.obct2==="DPP"?300:0;save()}return renderOnb()}
-  if(d.obb){OB.bonus=d.obb==="1";if(!OB.bonus)setRate(j.id,{bonus:0});save();return renderOnb()}
-  if(d.obbrk){j.brk=+d.obbrk;save();return renderOnb()}
-  if(d.obj2){if(d.obj2==="1"&&!S.jobs[1]){const n={...newJob("Друга робота",JC[2]),ct:"part",zd:[],bn:""};S.jobs.push(n);S.rates[n.id]={[mk(TD.getFullYear(),TD.getMonth())]:{rate:150,mult:.85,bonus:0}}}if(d.obj2==="0"&&S.jobs[1]){const id=S.jobs[1].id;S.jobs=S.jobs.slice(0,1);delete S.rates[id];S.tpl.forEach(t=>{if(t.j===id)t.j=S.jobs[0].id})}save();return renderOnb()}
-  if(d.obw){c.week=+d.obw;save();return renderOnb()}
-  if(d.obsg){c.sg=+d.obsg;save();return renderOnb()}
-  if(d.obprep){c.prep=+d.obprep;save();return renderOnb()}
-  if(d.off){c.off=+d.off;save();return renderOnb()}
-  if(d.fun){const f=c.fun||(c.fun=[]);c.fun=f.includes(d.fun)?f.filter(x=>x!==d.fun):[...f,d.fun];save();return renderOnb()}
-  if(d.jzd){const x=S.jobs.find(q=>q.id===d.jid);x.zd=(x.zd||[]).includes(+d.jzd)?x.zd.filter(q=>q!==+d.jzd):[...(x.zd||[]),+d.jzd];save();return renderOnb()}
-  if(d.jlag!==undefined){const x=S.jobs.find(q=>q.id===d.jid);x.lag=+d.jlag;save();return renderOnb()}
-  if(d.trm){S.tpl=S.tpl.filter(t=>t.id!==d.trm);save();return renderOnb()}}
+  if(d.ob){const a=d.ob;if(a==="next"){if(oKeys()[OS]==="goals"){const v=$("#obbal");if(v&&v.value!==""){S.bal={a:num(v.value),d:TK}}}OS++}else if(a==="prev")OS--;else if(a==="done")return endOnb();else if(a==="demo")return demo();
+    else if(a==="addtpl")S.tpl.push({id:uid(),n:"",j:j.id,s:"",e:""});else if(a==="addb")S.base.push({id:uid(),n:"",a:0,d:""});
+    else if(a==="addph")S.prof.ph.push({id:uid(),t:PHL[S.prof.ph.length?1:0],n:""});else if(a==="addgoal")S.goals.push({id:uid(),n:"",t:0,s:0});
+    else if(a==="addgig")S.gigs.push({id:uid(),n:"",a:"",cur:j.cur,tx:"",p:"",d:"",pd:"",j:j.id});
+    save();renderOnb();return}
+  if(d.sx){S.prof.sx=d.sx}
+  else if(d.obcur){S.cur=d.obcur;S.curSet=true;S.jobs.forEach(x=>x.cur=d.obcur);S.gigs.forEach(g=>g.cur=d.obcur)}
+  else if(d.obct!==undefined){j.ct=d.obct;if(d.obct==="gig")j.pt="g";else if(j.pt==="g")j.pt="h";if(d.obct==="DPP"&&!num(j.yl))j.yl=300;if(d.obct!=="DPP"&&num(j.yl)===300)j.yl=0;const cc=ccur(d.obct);if(!cc||cc===S.cur)j.cur=S.cur}
+  else if(d.obcc){const cc=ccur(j.ct);if(d.obcc==="main"){convertMain(cc);S.jobs.forEach(x=>{if(x.cur!==cc)x.cur=cc})}else j.cur=cc}
+  else if(d.obct2!==undefined){const j2=S.jobs[1];if(j2){j2.ct=d.obct2;j2.yl=d.obct2==="DPP"?300:0;if(d.obct2==="gig")j2.pt="g";const cc=ccur(d.obct2);if(cc)j2.cur=cc}}
+  else if(d.obpt){j.pt=d.obpt;if(d.obpt==="g"&&!S.gigs.length)S.gigs.push({id:uid(),n:"",a:"",cur:j.cur,tx:"",p:"",d:"",pd:"",j:j.id});if(d.obpt!=="g"&&j.ct==="gig")j.ct="other"}
+  else if(d.obpt2){const j2=S.jobs[1];if(j2)j2.pt=d.obpt2}
+  else if(d.obcur2){const j2=S.jobs[1];if(j2)j2.cur=d.obcur2}
+  else if(d.obmode)OB.mode=d.obmode;
+  else if(d.obgtx){const g=S.gigs[0];if(g)g.tx=d.obgtx}
+  else if(d.obb){OB.bonus=d.obb==="1";if(!OB.bonus)setRate(j.id,{bonus:0})}
+  else if(d.obzs!==undefined){j.zs=!j.zs;if(j.zs)j.zd=[]}
+  else if(d.obbrk)j.brk=+d.obbrk;
+  else if(d.obj2){if(d.obj2==="1"&&!S.jobs[1]){const n={...newJob("",JC[2],S.cur),ct:"part",zd:[],bn:""};S.jobs.push(n);S.rates[n.id]={[mk(TD.getFullYear(),TD.getMonth())]:{rate:0,mult:1,bonus:0}}}OB.j2a=d.obj2==="1";if(d.obj2==="0"&&S.jobs[1]){const id=S.jobs[1].id;S.jobs=S.jobs.slice(0,1);delete S.rates[id];S.tpl.forEach(t=>{if(t.j===id)t.j=S.jobs[0].id})}}
+  else if(d.obtg){c.target=0;OB.tga=true}
+  else if(d.obgrm)S.goals=S.goals.filter(g=>g.id!==d.obgrm);
+  else if(d.obw!==undefined){if(+d.obw===0){c.wkU=true;c.week=40}else{c.wkU=false;c.week=+d.obw}}
+  else if(d.obsg)c.sg=+d.obsg;
+  else if(d.prep)c.prep=Math.max(10,Math.min(300,(num(c.prep)||60)+(num(c.prep)?+d.prep:0)));
+  else if(d.off)c.off=+d.off;
+  else if(d.fun){const f=c.fun||(c.fun=[]);c.fun=f.includes(d.fun)?f.filter(x=>x!==d.fun):[...f,d.fun]}
+  else if(d.jzd){const x=S.jobs.find(q=>q.id===d.jid);x.zs=false;x.zd=(x.zd||[]).includes(+d.jzd)?x.zd.filter(q=>q!==+d.jzd):[...(x.zd||[]),+d.jzd]}
+  else if(d.jlag!==undefined){const x=S.jobs.find(q=>q.id===d.jid);x.lag=+d.jlag}
+  else if(d.trm)S.tpl=S.tpl.filter(t=>t.id!==d.trm);
+  else if(d.phrm)S.prof.ph=S.prof.ph.filter(p=>p.id!==d.phrm);
+  else return;
+  save();renderOnb()}
+
 /* ---------- демо ---------- */
 function demo(){try{localStorage.setItem(KEY+"_bak",JSON.stringify(S))}catch(e){}
   const D=blank();D.name=S.name;D.cur=S.cur;D.demo=true;D.onb=true;D.cfg={...D.cfg,...S.cfg,fun:S.cfg.fun&&S.cfg.fun.length?S.cfg.fun:["walk","friends","nature"]};
   const y=TD.getFullYear(),m=TD.getMonth(),k0=mk(y,m-4);
-  D.jobs=[{...newJob("Пекарня",JC[0]),id:"j1",ct:"HPP",pd:15,lag:1,bn:"Závoz",zd:[2,5]},{...newJob("Підробіток",JC[2]),id:"j2",ct:"DPP",pd:10,lag:1,yl:300,bn:"",zd:[]}];
+  D.jobs=[{...newJob("Пекарня",JC[0],"CZK"),id:"j1",ct:"HPP",pt:"h",brk:0,pd:15,lag:1,bn:"Závoz",zd:[2,5]},{...newJob("Підробіток",JC[2],"CZK"),id:"j2",ct:"DPP",pt:"h",brk:0,pd:10,lag:1,yl:300,bn:"",zd:[]}];D.cur="CZK";D.curSet=true;D.prof=JSON.parse(JSON.stringify(S.prof||{}));D.cfg.sg=D.cfg.sg||8;D.cfg.prep=D.cfg.prep||60;D.cfg.off=D.cfg.off||2;D.cfg.week=D.cfg.week||40;
   D.rates={j1:{[k0]:{rate:190,mult:.89,bonus:250}},j2:{[k0]:{rate:150,mult:.85,bonus:0}}};
   D.tpl=[{id:uid(),n:"Ранкова",j:"j1",s:"06:00",e:"14:00"},{id:uid(),n:"Денна",j:"j1",s:"09:00",e:"18:00"},{id:uid(),n:"Вечірня",j:"j1",s:"14:00",e:"23:00"},{id:uid(),n:"Підробіток",j:"j2",s:"17:00",e:"21:00"}];
   D.base=[["Оренда",9500,15],["Їжа",4500,""],["Транспорт",550,1],["Зв’язок і підписки",450,5],["Інше",1000,""]].map(([n,a,d])=>({id:uid(),n,a,d}));
@@ -1181,23 +1350,72 @@ function demo(){try{localStorage.setItem(KEY+"_bak",JSON.stringify(S))}catch(e){
   const S0=S;S=D;const pr=new Date(y,m-1,1),cs=mSum(pr.getFullYear(),pr.getMonth(),"j1");D.slips=[{id:uid(),j:"j1",m:mk(pr.getFullYear(),pr.getMonth()),pd:ds(new Date(y,m,15)),g:Math.round(cs.g+800),tax:Math.round((cs.g+800)*.12),net:Math.round((cs.g+800)*.875),bon:[{id:uid(),n:"Премія за місяць",a:800}],files:[]}];
   save();$("#onb").hidden=true;go("home")}
 function undemo(){try{const b=localStorage.getItem(KEY+"_bak");if(b){S=migrate(JSON.parse(b));S.demo=false;localStorage.removeItem(KEY+"_bak")}else{const n=S.name;S=blank();S.name=n;S.onb=true}}catch(e){S=blank();S.onb=true}save();go("home")}
-const VER="0.5 beta";
+const VER="0.7 beta";
 async function backup(){const name="mysal-"+TK+".json",txt=JSON.stringify(S),blob=new Blob([txt],{type:"application/json"});
-  try{const f=new File([blob],name,{type:"application/json"});if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:"MySal — резервна копія"});return}}catch(e){if(e&&e.name==="AbortError")return}
-  const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1500)}
+  try{const f=new File([blob],name,{type:"application/json"});if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:"MySal — резервна копія"});S.lastBk=TK;saveLocal();updBell();return}}catch(e){if(e&&e.name==="AbortError")return}
+  const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1500);S.lastBk=TK;saveLocal();updBell()}
 function diagText(){return`MySal ${VER}\n${new Date().toLocaleString("uk-UA")}\nЕкран: ${V}\nРобіт: ${S.jobs.length}, днів у графіку: ${Object.keys(S.days).length}\nРежим: ${matchMedia("(display-mode: standalone)").matches||navigator.standalone?"застосунок":"браузер"}\n${navigator.userAgent}`}
 function shareDiag(){try{navigator.share({text:diagText()}).catch(()=>{})}catch(e){copyDiag()}}
 function copyDiag(){const t=diagText(),b=$("#fbc"),ta=$("#fbt"),fall=()=>{ta.value=t;ta.hidden=false;ta.select();try{document.execCommand("copy");b.textContent="Скопійовано ✓"}catch(e){b.textContent="Скопіюй текст нижче"}};try{navigator.clipboard.writeText(t).then(()=>{b.textContent="Скопійовано ✓"},fall)}catch(e){fall()}}
 /* ---------- навігація ---------- */
 let V="home";
-const VIEWS=["home","cal","money","an","care","art","set","slip","sim"];
-function go(v){V=v;VIEWS.forEach(x=>$("#v-"+x).hidden=x!==v);
-  const full=["set","art","slip","sim"].includes(v);$("#top").hidden=full;$("#tabs").hidden=full;
-  $$("#tabs button").forEach(b=>b.classList.toggle("on",b.dataset.v===v));
-  scrollTo(0,0);refresh();enter($("#v-"+v))}
-function enter(el){if(RM||!el)return;[...el.children].forEach((c,i)=>c.style.setProperty("--i",Math.min(i,10)));el.classList.remove("enter");void el.offsetWidth;el.classList.add("enter");clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove("enter"),1300)}
-function refresh(){applyTheme();({home:renderHome,cal:renderCal,money:renderMoney,an:renderAn,care:renderCare,set:renderSet,slip:renderSlip,sim:renderSim}[V]||(()=>{}))()}
-function openSP(k){SP=k;if(V!=="set")go("set");else{renderSet();scrollTo(0,0);enter($("#v-set"))}}
+const VIEWS=["home","cal","money","an","care","art","set","slip","sim"],TABS=["home","cal","money","an","care"],FULLV=["set","art","slip","sim"];
+function go(v,dir){const prev=V;V=v;VIEWS.forEach(x=>$("#v-"+x).hidden=x!==v);
+  const full=FULLV.includes(v);$("#top").hidden=full;$("#tabs").hidden=full;document.body.classList.toggle("full",full);
+  $$("#tabs button").forEach(b=>b.classList.toggle("on",b.dataset.v===v));if(!full)moveInd(TABS.indexOf(v),prev!==v);
+  if(v!=="cal"&&SELM)selMode(false);
+  scrollTo(0,0);refresh();enter($("#v-"+v),dir);updSave();renderSelBar()}
+function enter(el,dir){if(RM||!el)return;el.classList.remove("enter","sl-l","sl-r","sl-b");void el.offsetWidth;
+  if(dir){el.classList.add(dir==="l"?"sl-l":dir==="r"?"sl-r":"sl-b");clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove("sl-l","sl-r","sl-b"),500);return}
+  [...el.children].forEach((c,i)=>c.style.setProperty("--i",Math.min(i,10)));el.classList.add("enter");clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove("enter"),1300)}
+function refresh(){applyTheme();({home:renderHome,cal:renderCal,money:renderMoney,an:renderAn,care:renderCare,set:renderSet,slip:renderSlip,sim:renderSim}[V]||(()=>{}))();updBell()}
+function openSP(k){const sb=$("#svbtn");if(sb)sb.textContent="Зберегти";if(k&&k!=="data"&&!SETBK){SETBK=JSON.stringify(S);SDIRTY=false}SP=k;if(V!=="set")go("set");else{renderSet();scrollTo(0,0);enter($("#v-set"),"l");updSave()}}
+function goBack(){if(openSheet)return closeS();if(V==="set"){if(SP&&SP.startsWith("job:"))return leaveSP("jobs");if(SP)return leaveSP(null);return go("home","b")}if(V==="art")return go(BV,"b");if(V==="slip"||V==="sim")return go("money","b")}
+/* плаваюче виділення в нижньому меню */
+function indPos(i){const bs=$$("#tabs button");const b=bs[i];return b?{x:b.offsetLeft,w:b.offsetWidth}:{x:0,w:0}}
+function moveInd(i,anim,frac,j){const t=$("#tind");if(!t||i<0)return;const a=indPos(i);let x=a.x,w=a.w;if(frac!==undefined&&j!==undefined&&j>=0&&j<TABS.length){const b=indPos(j);x=a.x+(b.x-a.x)*frac;w=a.w+(b.w-a.w)*frac}
+  t.style.transition=frac!==undefined?"none":"";t.style.width=w+"px";t.style.transform=`translateX(${x}px)`;if(anim&&frac===undefined&&!RM){t.classList.remove("mv");void t.offsetWidth;t.classList.add("mv")}}
+window.addEventListener("resize",()=>moveInd(TABS.indexOf(V)));
+/* свайпи */
+let G=null;
+document.addEventListener("touchstart",e=>{if(openSheet||!$("#onb").hidden||e.touches.length!==1)return;const el=e.target;
+  if(el.closest("input,textarea,select,.jseg,.tpl2,.aps,.noswipe,#selbar")||(SELM&&el.closest("#grid")))return;const t=e.touches[0];G={x:t.clientX,y:t.clientY,dx:0,lock:null,full:FULLV.includes(V)}},{passive:true});
+document.addEventListener("touchmove",e=>{if(!G)return;const t=e.touches[0],dx=t.clientX-G.x,dy=t.clientY-G.y;
+  if(G.lock===null){if(Math.abs(dx)<12&&Math.abs(dy)<12)return;G.lock=Math.abs(dx)>Math.abs(dy)*1.4?"x":"y"}
+  if(G.lock!=="x")return;e.preventDefault();G.dx=dx;const sec=$("#v-"+V);sec.style.transition="none";
+  if(G.full){sec.style.transform=`translateX(${Math.max(0,dx)}px)`;return}
+  const i=TABS.indexOf(V),n=i+(dx<0?1:-1),ok=n>=0&&n<TABS.length;sec.style.transform=`translateX(${ok?dx*.55:dx*.18}px)`;sec.style.opacity=ok?String(1-Math.min(.45,Math.abs(dx)/700)):"1";
+  if(ok)moveInd(i,false,Math.min(1,Math.abs(dx)/(innerWidth*.6)),n)},{passive:false});
+document.addEventListener("touchend",()=>{if(!G)return;const g=G;G=null;if(g.lock!=="x")return;const sec=$("#v-"+V),reset=()=>{sec.style.transition="";sec.style.transform="";sec.style.opacity=""};
+  if(g.full){if(g.dx>90){sec.style.transition="transform .2s ease-out";sec.style.transform=`translateX(${innerWidth}px)`;setTimeout(()=>{reset();goBack()},190)}else{sec.style.transition="transform .22s ease";sec.style.transform="";setTimeout(reset,230)}return}
+  const i=TABS.indexOf(V),n=i+(g.dx<0?1:-1);
+  if(Math.abs(g.dx)>70&&n>=0&&n<TABS.length){sec.style.transition="transform .16s ease-in,opacity .16s";sec.style.transform=`translateX(${g.dx<0?-60:60}px)`;sec.style.opacity="0";setTimeout(()=>{reset();if(TABS[n]==="cal"){CY=TD.getFullYear();CM=TD.getMonth()}if(TABS[n]==="an")setA0();go(TABS[n],g.dx<0?"l":"r")},150)}
+  else{sec.style.transition="transform .22s ease,opacity .22s";sec.style.transform="";sec.style.opacity="";setTimeout(reset,230);moveInd(i)}});
+document.addEventListener("touchcancel",()=>{if(G){const sec=$("#v-"+V);sec.style.transform="";sec.style.opacity="";moveInd(TABS.indexOf(V));G=null}});
+/* ---------- сповіщення ---------- */
+const CHANGELOG={"0.7 beta":["Рід у профілі: тексти звертаються до тебе в правильному роді","Чистий старт: жодних готових даних і виборів за замовчуванням","«Стерти все» повністю обнуляє апку й запускає опитувальник","Дані з 0.6 можна повернути в «Дані й копія»"],"0.6 beta":["Свайпи між вкладками і свайп праворуч, щоб повернутися назад","Нижнє меню з плаваючим виділенням","«Кілька днів» у графіку: шаблон, вихідний чи очищення одразу для багатьох днів","Час зміни тепер обирається за один раз","Місячна зарплата, разові підробітки й кілька валют","Новий опитувальник: профіль, оплата, ціль заробітку, цілі накопичень, сон","Сповіщення і кнопка «Зберегти» в налаштуваннях"]};
+function notifs(){const L=[],add=(id,e,t,s2,act,arg)=>L.push({id,e,t,s:s2,act,arg});if(!S.onb)return L;
+  if(S.nt.ver!==VER&&CHANGELOG[VER])add("upd-"+VER,"🆕","Оновлення "+VER,"Що змінилось:","changelog");
+  const E=payEvents(TD,2);E.filter(x=>x.t==="in").forEach(x=>{const n=dd(TD,x.d);add("pay-"+ds(x.d)+x.n,"💰",n===0?"Сьогодні виплата":n===1?"Завтра виплата":"Скоро виплата",`${esc(x.n)}: ~${kc(x.a)}`,"go","money")});
+  E.filter(x=>x.t==="out").forEach(x=>{const n=dd(TD,x.d);add("bill-"+ds(x.d)+x.n,"🧾",n===0?"Сьогодні платіж":n===1?"Завтра платіж":"Скоро платіж",`${dLong(x.d)}: ${esc(x.n)}, ${kc(x.a)}`,"go","money")});
+  const cr=cashRisk();if(cr)add("cash-"+TK,"💸",cr.t,cr.s,"go","money");
+  for(let i=0;i<14;i++){const k=ds(addD(TD,i));if(overlaps(k).length){add("ov-"+k,"⚠️","Зміни накладаються",`${dLong(pk(k))} — подивимось, як краще?`,"day",k);break}}
+  const wd=TD.getDay(),nm=addD(monday(TD),7);if((wd===5||wd===6||wd===0)&&!sumR(nm,addD(nm,6)).pw&&S.jobs.some(j=>j.pt!=="g"))add("plan-"+ds(nm),"🗓","Розпишемо наступний тиждень?","Можу запропонувати план змін.","autoplan");
+  const z=sleepStats(addD(TD,-2),TD);if(z.n>=3&&z.avg<360)add("sl-"+TK,"😴","Три ночі з недосипом",`У середньому ${hm(z.avg)}. Сьогодні варто лягти раніше.`,"art","sleep");
+  if(hasData()&&(!S.lastBk||dd(pk(S.lastBk),TD)>=14))add("bk-"+ds(monday(TD)),"💾","Час зберегти копію","Дані живуть лише на телефоні — збережи резервну копію.","bkp");
+  S.jobs.forEach(j=>{if(j.pt==="g"||!num(j.pd))return;const y=TD.getFullYear(),m=TD.getMonth(),d=new Date(y,m,Math.min(num(j.pd),dim(y,m)));if(TD<d||dd(d,TD)>10)return;const pm=new Date(y,m-num(j.lag),1),per=mk(pm.getFullYear(),pm.getMonth());if(slipFor(j.id,per)||!jobMonth(j.id,pm.getFullYear(),pm.getMonth()).n)return;add("slip-"+j.id+per,"🧾","Додай пасок",`${esc(j.n)}, ${MN[pm.getMonth()].toLowerCase()} — звіримо з розрахунком.`,"newslip",j.id+"|"+per)});
+  if(S.cfg.wkU&&S.since&&dd(pk(S.since),TD)>=28){const st=stats(addD(TD,-27),TD);if(st.w>=8){let v=Math.max(10,Math.round(st.pw/5)*5);if(st.er>=5&&st.fe<1.8)v=Math.max(10,v-5);add("norm-"+mk(TD.getFullYear(),TD.getMonth()),"🎯","Твій комфортний темп",`За місяць ти ${gx("працював","працювала")} ~${hf(st.pw)} на тиждень${st.er>=5?`, самопочуття — ${feel(st.fe)}`:""}. Поставити норму ${v} год?`,"setnorm",v)}}
+  return L}
+function updBell(){const L=notifs(),n=L.filter(x=>!S.nt.read[x.id]).length,b=$("#bdg");if(b){b.hidden=!n;b.textContent=n>9?"9+":n}
+  try{if(S.nt.badge&&navigator.setAppBadge){n?navigator.setAppBadge(n):navigator.clearAppBadge()}}catch(e){}}
+function openNotifs(){const L=notifs();$("#ntl").innerHTML=(L.length?L.map(x=>`<button class="tp${S.nt.read[x.id]?"":" unr"}" data-nt="${x.id}"><b class="em">${x.e}</b><div><strong>${x.t}</strong><span>${x.s}</span>${x.act==="changelog"?`<ul class="chl">${CHANGELOG[VER].map(i=>`<li>${i}</li>`).join("")}</ul>`:""}</div>${x.act&&x.act!=="changelog"?'<i class="chev"></i>':""}</button>`).join(""):`<p class="lead" style="margin:6px 2px 12px">Поки тихо. Я напишу, коли буде щось важливе: виплати, платежі, накладки змін, сон чи нагадування про копію.</p>`)+
+   `<details class="g det" style="margin-top:14px"><summary>Що нового у ${VER}</summary><div class="in"><ul class="chl">${(CHANGELOG[VER]||[]).map(i=>`<li>${i}</li>`).join("")}</ul></div></details>`+
+   ("setAppBadge" in navigator&&"Notification" in window?`<div class="g il noi" style="margin-top:12px"><div class="ir"><span class="lb">Кількість на іконці застосунку</span><button class="sw" data-act="badge" role="switch" aria-checked="${S.nt.badge?"true":"false"}" aria-label="Кількість на іконці"></button></div></div>`:"");
+  openS($("#nt"));L.forEach(x=>S.nt.read[x.id]=1);if(S.nt.ver!==VER)S.nt.ver=VER;const ks=Object.keys(S.nt.read);if(ks.length>300)ks.slice(0,ks.length-300).forEach(k=>delete S.nt.read[k]);saveLocal();updBell()}
+function ntAct(id){const x=notifs().find(q=>q.id===id);if(!x||!x.act||x.act==="changelog")return;closeS();const a=x.act,g=x.arg;
+  if(a==="go")go(g);else if(a==="day")openDay(g);else if(a==="autoplan")openAP();else if(a==="art")openArt(g);else if(a==="bkp")backup();
+  else if(a==="newslip"){const[jid,per]=String(g).split("|");const s2={id:uid(),j:jid,m:per,pd:"",g:"",tax:"",net:"",bon:[],files:[]};S.slips.push(s2);save();openSlip(s2.id)}
+  else if(a==="setnorm"){S.cfg.week=+g;S.cfg.wkU=false;save();refresh()}}
 
 /* ---------- події ---------- */
 $$(".logo").forEach(x=>x.innerHTML=logo());
@@ -1209,17 +1427,19 @@ document.body.addEventListener("click",e=>{const t=e.target;let b;
   if(b=t.closest("[data-art]"))return openArt(b.dataset.art);
   if(b=t.closest("[data-sp]"))return openSP(b.dataset.sp);
   if(b=t.closest("[data-slip]"))return openSlip(b.dataset.slip);
+  if(b=t.closest("[data-gig]")){if(openSheet)closeS();return openGig(b.dataset.gig)}
+  if(b=t.closest("[data-newgig]")){const k=openSheet&&openSheet.id==="sh"?dKey():TK;if(openSheet)closeS();return openGig(null,k)}
   if(b=t.closest("[data-go]")){if(b.dataset.go==="cal"){CY=TD.getFullYear();CM=TD.getMonth()}if(b.dataset.go==="sim")SIM=null;closeS();return go(b.dataset.go)}
   if(b=t.closest("[data-act]")){const a=b.dataset.act,arg=b.dataset.arg;
-    const A={demo,undemo,home:()=>go("home"),setmain:()=>{SP=null;renderSet();scrollTo(0,0);enter($("#v-set"))},jobs:()=>openSP("jobs"),back:()=>go(BV),
-      months:()=>{monthsSheet();openS($("#ms"))},intro:startOnb,bkp:backup,share:shareDiag,beta:()=>{$("#fbc").textContent="Скопіювати";$("#fbs").hidden=!navigator.share;$("#fbt").hidden=true;openS($("#fb"))},diag:copyDiag,sleep:()=>openSleep(TD),autoplan:openAP,applyplan:applyPlan,close:closeS,copyweek:()=>{CW={src:-1,dst:1};renderCW();openS($("#cw"))},docopy:doCopy,
-      day:()=>openDay(arg),go:()=>go(arg),newslip:newSlip,slipback:()=>go("money"),simback:()=>go("money"),
+    const A={demo,undemo,home:()=>go("home","b"),setmain:()=>leaveSP(null),jobs:()=>leaveSP("jobs"),back:()=>go(BV,"b"),
+      months:()=>{monthsSheet();openS($("#ms"))},intro:startOnb,selmode:()=>selMode(!SELM),changelog:openNotifs,addph:()=>{S.prof.ph.push({id:uid(),t:PHL[S.prof.ph.length?1:0],n:""});save();renderSet()},avdel:async()=>{if(S.prof.av){try{await ASSETS.delete(S.prof.av)}catch(e){}S.prof.av="";save();renderSet()}},bkp:backup,share:shareDiag,beta:()=>{$("#fbc").textContent="Скопіювати";$("#fbs").hidden=!navigator.share;$("#fbt").hidden=true;openS($("#fb"))},diag:copyDiag,sleep:()=>openSleep(TD),autoplan:openAP,applyplan:applyPlan,close:closeS,copyweek:()=>{CW={src:-1,dst:1};renderCW();openS($("#cw"))},docopy:doCopy,
+      day:()=>openDay(arg),go:()=>go(arg),newslip:newSlip,slipback:()=>go("money","b"),simback:()=>go("money","b"),
       addbon:()=>{const x=S.slips.find(s=>s.id===SL);if(x){x.bon.push({id:uid(),n:"",a:0});save();renderSlip()}},
       fixpct:()=>{const x=S.slips.find(s=>s.id===SL);if(!x)return;const[y,m]=x.m.split("-").map(Number),k=mk(y,m-1),tt=S.rates[x.j]||(S.rates[x.j]={});tt[k]={...R(x.j,y,m-1),mult:+arg};Object.keys(tt).forEach(q=>{if(q>k)delete tt[q]});save();renderSlip()},
       addb:()=>{S.base.push({id:uid(),n:"",a:0,d:""});save();renderSet();const l=$$("#v-set .nm");if(l.length)l[l.length-1].focus()},
-      addg:()=>{S.goals.push({id:uid(),n:"Нова ціль",t:0,s:0});save();renderSet()},
-      addtpl:()=>{S.tpl.push({id:uid(),n:"Зміна",j:S.jobs[0].id,s:"10:00",e:"18:00"});save();renderSet()},
-      addjob:()=>{const n=newJob("Нова робота",JC[S.jobs.length%JC.length]);n.ct="part";n.zd=[];n.bn="";S.jobs.push(n);S.rates[n.id]={[mk(TD.getFullYear(),TD.getMonth())]:{rate:150,mult:.85,bonus:0}};save();openSP("job:"+n.id)},
+      addg:()=>{S.goals.push({id:uid(),n:"",t:0,s:0});save();renderSet()},
+      addtpl:()=>{S.tpl.push({id:uid(),n:"",j:S.jobs[0].id,s:"",e:""});save();renderSet()},
+      addjob:()=>{const n=newJob("",JC[S.jobs.length%JC.length],S.cur);S.jobs.push(n);S.rates[n.id]={};save();openSP("job:"+n.id)},
       exp:()=>{$("#io").hidden=false;$("#iot").value=JSON.stringify(S);$("#iog").textContent="Скопіювати";$("#iog").dataset.m="c";$("#iot").select()},
       imp:()=>{$("#io").hidden=false;$("#iot").value="";$("#iot").placeholder="Встав сюди скопійовані дані";$("#iog").textContent="Завантажити ці дані";$("#iog").dataset.m="i";$("#iot").focus()}};
     if(A[a])A[a]()}});
@@ -1229,7 +1449,19 @@ $("#cnx").onclick=()=>{CM++;if(CM>11){CM=0;CY++}renderCal()};
 $("#cmt").onclick=()=>{YY=CY;renderYear();openS($("#ys"))};
 $("#ypv").onclick=()=>{YY--;renderYear()};$("#ynx").onclick=()=>{YY++;renderYear()};
 $("#ymg").onclick=e=>{const b=e.target.closest("[data-m]");if(b){CY=YY;CM=+b.dataset.m;closeS();renderCal()}};
-$("#grid").onclick=e=>{const b=e.target.closest(".d[data-d]");if(b){cd=+b.dataset.d;rs();openS($("#sh"))}};
+$("#grid").onclick=e=>{const b=e.target.closest(".d[data-d]");if(!b)return;if(SELM){if(SD&&SD.moved)return;const d=+b.dataset.d;SEL.has(d)?SEL.delete(d):SEL.add(d);updSelCells();renderSelBar();return}cd=+b.dataset.d;rs();openS($("#sh"))};
+$("#grid").addEventListener("touchstart",e=>{if(!SELM)return;const t=e.touches[0],d=dayAt(t.clientX,t.clientY);if(!d)return;SD={a:d,add:!SEL.has(d),base:new Set(SEL),moved:false}},{passive:true});
+$("#grid").addEventListener("touchmove",e=>{if(!SELM||!SD)return;e.preventDefault();const t=e.touches[0],d=dayAt(t.clientX,t.clientY);if(!d)return;if(d!==SD.a)SD.moved=true;if(!SD.moved)return;const lo=Math.min(SD.a,d),hi=Math.max(SD.a,d),n=new Set(SD.base);for(let i=lo;i<=hi;i++)SD.add?n.add(i):n.delete(i);SEL=n;updSelCells();renderSelBar()},{passive:false});
+$("#grid").addEventListener("touchend",()=>{if(SD&&SD.moved)setTimeout(()=>{SD=null},50);else SD=null});
+$("#selbar").addEventListener("click",e=>{const b=e.target.closest("button");if(!b||b.disabled)return;if(b.dataset.selt)applySel("t",b.dataset.selt);else if("selo" in b.dataset)applySel("o");else if("selc" in b.dataset)applySel("c");else if(b.dataset.act==="selx")selMode(false)});
+$("#bell").onclick=openNotifs;
+$("#ntl").addEventListener("click",e=>{const b=e.target.closest("[data-nt]");if(b)return ntAct(b.dataset.nt);const s2=e.target.closest("[data-act=badge]");if(s2){if(S.nt.badge){S.nt.badge=false;try{navigator.clearAppBadge()}catch(er){}saveLocal();s2.setAttribute("aria-checked","false")}else{try{Notification.requestPermission().then(p=>{S.nt.badge=p==="granted";saveLocal();s2.setAttribute("aria-checked",S.nt.badge?"true":"false");updBell()})}catch(er){}}}});
+$("#svbtn").onclick=commitSet;
+$("#cf").addEventListener("click",e=>{const b=e.target.closest("[data-cf]");if(!b)return;const a=b.dataset.cf,fn=CONF;CONF=null;closeS();if(a==="save"){commitSet();SETBK=null;fn&&fn()}else if(a==="drop"){dropSet();fn&&fn()}});
+$("#gsb").addEventListener("input",e=>{if(e.target.dataset.gf){setBound(e)}});
+$("#gsb").addEventListener("focusout",e=>{if(e.target.dataset&&e.target.dataset.gf)setTimeout(()=>{const a=document.activeElement;if(a&&a.closest&&a.closest("#gsb")&&a.tagName==="INPUT")return;renderGig()},80)});
+$("#gsb").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;const g=S.gigs.find(x=>x.id===GG);if(!g)return;if(b.dataset.gcur){g.cur=b.dataset.gcur;save();renderGig()}else if(b.dataset.gtx){g.tx=b.dataset.gtx;save();renderGig()}else if("gdel" in b.dataset){S.gigs=S.gigs.filter(x=>x.id!==GG);GG=null;save();closeS()}});
+document.addEventListener("change",async e=>{const t=e.target;if(t.id!=="avf"&&t.id!=="avf2")return;const f=t.files&&t.files[0];if(!f||!ASSETS)return;try{const r=await ASSETS.upload(f);if(S.prof.av){try{await ASSETS.delete(S.prof.av)}catch(er){}}S.prof.av=r.id;save();if(!$("#onb").hidden)renderOnb();else renderSet()}catch(er){alert("Не вдалось зберегти фото.")}});
 $("#ov").onclick=closeS;$("#dn").onclick=closeS;$("#msx").onclick=closeS;
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&openSheet)closeS()});
 $("#bw").onclick=()=>{const k=dKey();if(isWd(k))return;setDay({sh:[autoZ(newShift(),k)]})};
@@ -1244,8 +1476,10 @@ $("#shb").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)
   else if(d.rm){day.sh=day.sh.filter(q=>q.id!==d.rm);setDay(day.sh.length?day:null)}
   else if("add" in d){const used=day.sh.map(q=>q.j),j=S.jobs.find(q=>!used.includes(q.id))||S.jobs[0],n=autoZ(newShift(j.id),k);const last=day.sh[day.sh.length-1];if(last&&last.e&&n.j===last.j){n.s=last.e;n.e=mt(tm(last.e)+4*60)}day.sh.push(n);setDay(day)}
   else if(d.fx){const[a,id,v]=d.fx.split(":");if(a==="keep")day.sh=day.sh.filter(q=>q.id===id);else{const q=day.sh.find(z=>z.id===id);if(q){const len=shH(q)*60;q.s=mt(+v);q.e=mt(+v+len)}}setDay(day)}});
-$("#shb").addEventListener("change",e=>{const t=e.target,card=t.closest(".shc");if(!card)return;const day=S.days[dKey()],x=day&&day.sh[+card.dataset.i];if(!x)return;
-  if(t.dataset.fs)updShift(x.id,{[t.dataset.fs]:t.value});else if("fh" in t.dataset)updShift(x.id,{h:num(t.value)})});
+function shQuiet(t){const card=t.closest(".shc");if(!card)return;const day=S.days[dKey()],x=day&&day.sh[+card.dataset.i];if(!x)return;if(t.dataset.fs){if(!t.value)return;x[t.dataset.fs]=t.value;if(t.dataset.fs==="s")S.cfg.ls=t.value}else x.h=num(t.value);if(x.s&&x.e){x.h=shH(x);S.cfg.last=x.h}save();const dEl=card.querySelector("[data-dur]"),nEl=card.querySelector("[data-net]");if(dEl)dEl.textContent=shH(x)?hm(shH(x)*60):"—";if(nEl)nEl.textContent=shTxt(x)}
+$("#shb").addEventListener("input",e=>{const t=e.target;if(t.dataset.fs||"fh" in t.dataset)shQuiet(t)});
+$("#shb").addEventListener("change",e=>{const t=e.target;if(t.dataset.fs||"fh" in t.dataset)shQuiet(t)});
+$("#shb").addEventListener("focusout",e=>{const t=e.target;if(!(t.dataset&&(t.dataset.fs||"fh" in t.dataset)))return;setTimeout(()=>{const a=document.activeElement;if(a&&a.closest&&a.closest("#shb")&&a.tagName==="INPUT")return;if(openSheet&&openSheet.id==="sh"){renderCalBody();rs()}},80)});
 $("#crt").addEventListener("input",e=>{const t=e.target,j=t.dataset.mj,f=t.dataset.mf;if(!j)return;let v=num(t.value);if(f==="mult"){if(!v||v>100)return;v=v/100}else if(f==="rate"&&!v)return;const tt=S.rates[j]||(S.rates[j]={});tt[mk(CY,CM)]={...R(j,CY,CM),[f]:v};save();renderCalBody()});
 $("#ap").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;if(b.dataset.ap){AP.p=b.dataset.ap;AP.res=null;if(AP.p==="n")AP.t=target();renderAP()}else if(b.dataset.apj){AP.j=b.dataset.apj;AP.res=null;renderAP()}});
 $("#ap").addEventListener("change",e=>{if(e.target.id==="apt"){AP.t=num(e.target.value);AP.res=null;renderAP()}});
@@ -1268,16 +1502,22 @@ $("#v-slip").addEventListener("click",e=>{const b=e.target.closest("button");if(
 $("#v-sim").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;const d=b.dataset;
   if(d.sim){const k=d.sim,s=+d.d;if(k==="ds")SIM.ds=Math.max(-3,Math.min(5,SIM.ds+s));if(k==="h")SIM.h=Math.max(2,Math.min(14,SIM.h+s));if(k==="rp")SIM.rp=Math.max(-30,Math.min(50,SIM.rp+5*s));if(k==="bx")SIM.bx+=500*s;renderSim()}
   else if(d.simj){SIM.j=d.simj;renderSim()}});
-$("#v-set").addEventListener("input",setBound);
-$("#v-set").addEventListener("change",e=>{if(e.target.dataset.jf==="n"||e.target.dataset.tf)renderSet()});
+$("#v-set").addEventListener("input",setBound);$("#v-set").addEventListener("change",e=>{if(e.target.tagName==="SELECT")setBound(e)});
+$("#v-set").addEventListener("change",e=>{const d=e.target.dataset;if(d.jf==="n"||d.pf||d.c==="sg")renderSet()});
 $("#v-set").addEventListener("click",e=>{const t=e.target,c=S.cfg;let b;
   if(b=t.closest("[data-th]")){c.theme=b.dataset.th;save();applyTheme();renderSet()}
-  else if(b=t.closest("[data-cur]")){S.cur=b.dataset.cur;save();renderSet()}
+  else if(b=t.closest("[data-jpt]")){const j=S.jobs.find(x=>x.id===b.dataset.jid);j.pt=b.dataset.jpt;if(j.pt==="m"&&!j.st)j.st=TK;save();renderSet()}
+  else if(b=t.closest("[data-jcur]")){const j=S.jobs.find(x=>x.id===b.dataset.jid);j.cur=b.dataset.jcur;save();renderSet()}
+  else if(b=t.closest("[data-jzs]")){const j=S.jobs.find(x=>x.id===b.dataset.jid);j.zs=!j.zs;if(j.zs)j.zd=[];save();renderSet()}
+  else if(b=t.closest("[data-prep]")){c.prep=Math.max(10,Math.min(300,(num(c.prep)||60)+(num(c.prep)?+b.dataset.prep:0)));save();renderSet()}
+  else if(b=t.closest("[data-sx]")){S.prof.sx=b.dataset.sx;save();renderSet()}
+  else if(b=t.closest("[data-phrm]")){S.prof.ph=S.prof.ph.filter(p=>p.id!==b.dataset.phrm);save();renderSet()}
+  else if(b=t.closest("[data-cur]")){convertMain(b.dataset.cur);save();renderSet()}
   else if(b=t.closest("[data-off]")){c.off=+b.dataset.off;save();renderSet()}
   else if(b=t.closest("[data-fun]")){const f=c.fun||(c.fun=[]);c.fun=f.includes(b.dataset.fun)?f.filter(x=>x!==b.dataset.fun):[...f,b.dataset.fun];save();renderSet()}
   else if(b=t.closest("[data-jc]")){const j=S.jobs.find(x=>x.id===b.dataset.jid);j.c=b.dataset.jc;save();renderSet()}
   else if(b=t.closest("[data-jct]")){const j=S.jobs.find(x=>x.id===b.dataset.jid);j.ct=b.dataset.jct;if(j.ct==="DPP"&&!num(j.yl))j.yl=300;save();renderSet()}
-  else if(b=t.closest("[data-jzd]")){const j=S.jobs.find(x=>x.id===b.dataset.jid),d=+b.dataset.jzd;j.zd=(j.zd||[]).includes(d)?j.zd.filter(x=>x!==d):[...(j.zd||[]),d];save();renderSet()}
+  else if(b=t.closest("[data-jzd]")){const j=S.jobs.find(x=>x.id===b.dataset.jid),d=+b.dataset.jzd;j.zs=false;j.zd=(j.zd||[]).includes(d)?j.zd.filter(x=>x!==d):[...(j.zd||[]),d];save();renderSet()}
   else if(b=t.closest("[data-jlag]")){const j=S.jobs.find(x=>x.id===b.dataset.jid);j.lag=+b.dataset.jlag;save();renderSet()}
   else if(b=t.closest("[data-tj]")){const x=S.tpl.find(q=>q.id===b.dataset.tid);x.j=b.dataset.tj;save();renderSet()}
   else if(b=t.closest("[data-trm]")){S.tpl=S.tpl.filter(q=>q.id!==b.dataset.trm);save();renderSet()}
@@ -1286,18 +1526,20 @@ $("#v-set").addEventListener("click",e=>{const t=e.target,c=S.cfg;let b;
   else if(b=t.closest("#jdel"))arm(b,"Точно видалити роботу? Тапни ще раз",()=>{const id=b.dataset.jid;S.jobs=S.jobs.filter(j=>j.id!==id);delete S.rates[id];for(const[k,dv]of Object.entries(S.days)){if(dv.sh){dv.sh=dv.sh.filter(x=>x.j!==id);if(!dv.sh.length)delete S.days[k]}}S.tpl=S.tpl.filter(x=>x.j!==id);if(!S.tpl.length)S.tpl=blank().tpl.map(x=>({...x,j:S.jobs[0].id}));save();openSP("jobs")})
   else if(b=t.closest("#iog")){if(b.dataset.m==="c"){$("#iot").select();try{navigator.clipboard.writeText($("#iot").value).then(()=>b.textContent="Скопійовано",()=>{document.execCommand("copy");b.textContent="Скопійовано"})}catch(er){document.execCommand("copy");b.textContent="Скопійовано"}}
     else arm(b,"Замінити все цими даними? Тапни ще раз",()=>{try{const p=JSON.parse($("#iot").value);if(!p||typeof p.days!=="object")throw 0;S=migrate(p);S.onb=true;save();go("home")}catch(er){b.textContent="Не схоже на дані MySal — перевір, що скопійовано все"}})}
-  else if(b=t.closest("#wipe"))arm(b,"Точно стерти все? Тапни ще раз",()=>{const n=S.name;S=blank();S.name=n;S.onb=true;try{localStorage.removeItem(KEY+"_bak")}catch(er){}save();SP=null;go("home")})});
+  else if(b=t.closest("#wipe"))arm(b,"Точно стерти все? Тапни ще раз",()=>{SETBK=null;SDIRTY=false;S=blank();try{localStorage.removeItem(KEY+"_bak");localStorage.removeItem(KEY)}catch(er){}try{IDB.p=null;indexedDB.deleteDatabase("mysal-files")}catch(er){}saveLocal();SP=null;go("home");startOnb()})
+  else if(b=t.closest("#oldrst"))arm(b,"Замінити поточні дані? Тапни ще раз",()=>{try{const p=JSON.parse(localStorage.getItem(OLDK));S=migrate(p);S.onb=true;saveLocal();SP=null;go("home")}catch(er){}})});
 $("#v-set").addEventListener("change",e=>{if(e.target.id!=="rst"||!e.target.files[0])return;const fr=new FileReader();fr.onload=()=>{try{const p=JSON.parse(fr.result);if(!p||typeof p.days!=="object")throw 0;S=migrate(p);S.onb=true;save();saveLocal();go("home")}catch(er){alert("Це не схоже на копію MySal.")}};fr.readAsText(e.target.files[0])});
-$("#onb").addEventListener("input",setBound);
+$("#onb").addEventListener("input",setBound);$("#onb").addEventListener("change",e=>{if(e.target.tagName==="SELECT")setBound(e)});
 $("#onb").addEventListener("click",onbClick);
-$("#sb").onchange=$("#sw2").onchange=()=>saveSleep();
+["#sb","#sw2"].forEach(q=>{const el=$(q);el.addEventListener("input",()=>saveSleepQ());el.addEventListener("change",()=>saveSleepQ());el.addEventListener("blur",()=>setTimeout(rsS,60))});
+function saveSleepQ(){const b=$("#sb").value,w=$("#sw2").value;if(!b||!w)return;const k=ds(SK);S.sleep[k]={...(S.sleep[k]||{}),b,w};S.cfg.lb=b;S.cfg.lw=w;save();const m=slDur({b,w});$("#sd").textContent=m?hm(m):"—";$("#ssv").hidden=false}
 $("#sqb").onclick=e=>{const b=e.target.closest("[data-q]");if(!b)return;const k=ds(SK),q=+b.dataset.q;if(S.sleep[k]&&S.sleep[k].q===q){delete S.sleep[k].q;save();rsS()}else saveSleep({q})};
 $("#ssp").onclick=()=>{SK=addD(SK,-1);rsS()};$("#ssn").onclick=()=>{if(ds(SK)<TK){SK=addD(SK,1);rsS()}};
 $("#scl").onclick=()=>{delete S.sleep[ds(SK)];save();rsS();refresh()};
 $("#sdn").onclick=()=>{if(!S.sleep[ds(SK)])saveSleep();closeS();refresh()};
 document.addEventListener("visibilitychange",()=>{if(!document.hidden){const t=today();if(ds(t)!==TK){TD=t;TK=ds(t)}refresh()}});
 
-load();setA0();go("home");if(!S.onb)startOnb();initCloud();
+load();setA0();go("home");requestAnimationFrame(()=>moveInd(TABS.indexOf(V)));if(!S.onb)startOnb();initCloud();
 </script>
 </body>
 </html>
