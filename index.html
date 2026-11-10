@@ -334,6 +334,13 @@ body.stopen{overflow:hidden}
 .wntips{display:grid;grid-template-columns:1fr 1fr;gap:8px}.wntips div{background:color-mix(in srgb,currentColor 9%,transparent);border-radius:18px;padding:12px}.wntips i{font-style:normal;font-size:22px}.wntips b{display:block;font-size:15px;margin-top:4px;line-height:1.15}.wntips span{display:block;font-size:12.5px;opacity:.7;margin-top:3px;line-height:1.3}
 .wnphone{position:relative;align-self:center;width:176px;height:224px;border-radius:28px;background:#141511;color:#FCF4E8;padding:16px;overflow:hidden;box-shadow:0 18px 40px rgba(0,0,0,.25);display:flex;align-items:flex-end;flex:none}.wnphone b{font-size:21px;font-weight:800;line-height:1.05;position:relative;z-index:1}.wnpb{position:absolute;top:10px;left:12px;right:12px;display:flex;gap:3px}.wnpb i{flex:1;height:2px;border-radius:2px;background:rgba(252,244,232,.3)}.wnpb i:first-child{background:#FCF4E8}
 @media (max-height:700px){.stc{padding-top:calc(env(safe-area-inset-top) + 72px)}.stc .sp1{font-size:14px;line-height:1.32;margin-top:6px}.stc .sh1{font-size:26px}.wnc{padding:8px 12px 9px}.wnc em{margin-bottom:4px}.wnc p{font-size:13px}.wnr{font-size:14px;padding:2px 0}.wnc.new .wnr:nth-of-type(n+4){display:none}.wnchips span:nth-child(n+4){display:none}.wnbig{font-size:24px}.wntips div{padding:9px}.wntips span{display:none}.wnphone{height:150px;width:150px}.wnbtn{padding:8px;margin-top:6px}}
+.wnseg3{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;padding:3px;border-radius:12px;background:#f1efe6;font-size:12px;font-weight:700;text-align:center;margin-bottom:6px}.wnseg3 span{padding:6px 2px;border-radius:9px;color:#6b6b63}.wnseg3 .on{background:#C9E85C;color:#141511}
+.wnchips span.on{background:#C9E85C}.wnmini{font-size:12.5px;background:#f1efe6;border-radius:999px;padding:3px 9px}
+.incs{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;padding:3px;border-radius:14px;background:var(--sf2);margin:0 0 12px}.incs button{border:0;background:none;border-radius:11px;padding:9px 4px;font:inherit;font-size:13.5px;font-weight:650;color:var(--mut);line-height:1.15}.incs button.on{background:var(--sheet);color:var(--ink);box-shadow:0 1px 4px rgba(0,0,0,.1)}
+.incchip{border:0;margin-left:6px;padding:2px 9px;border-radius:999px;background:var(--as);color:var(--at);font:inherit;font-size:12.5px;font-weight:700;vertical-align:1px}
+.sidev{font-size:36px;font-weight:780;letter-spacing:-.03em;margin:4px 0 0}
+.mini2{display:flex;gap:2px;padding:2px;border-radius:10px;background:var(--sf2);flex:none}.mini2 button{border:0;background:none;border-radius:8px;padding:6px 9px;font:inherit;font-size:13px;font-weight:650;color:var(--mut)}.mini2 button.on{background:var(--sheet);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.spdate{margin-top:12px}.spdate .lb{display:block;font-size:14px;color:var(--mut);margin:0 2px 6px}.spdate .pick{padding:0}.spdate input[type=date]{margin-top:8px;width:100%}
 .sg.sg4 button{display:flex;flex-direction:column;align-items:center;gap:1px;padding:8px 2px;font-size:12.5px;white-space:nowrap}.sg4 i{font-style:normal;font-size:18px;line-height:1.1}
 .sh{touch-action:pan-y}.grab{cursor:grab;padding:4px 0;background-clip:content-box;height:13px;width:46px}
 .nth{display:flex;justify-content:space-between;align-items:center;margin:0 2px 6px;min-height:22px}
@@ -795,28 +802,38 @@ function saveAdvice(y,m){const base=baseSum(),s=mSum(y,m);if(!base||!s.n)return 
 function yearUse(j,y){let h=0,p=0;for(let d=new Date(y,0,1);d<=new Date(y,11,31);d=addD(d,1)){const k=ds(d);shOf(k).forEach(x=>{if(x.j===j){if(k>TK)p+=paidH(x);else h+=paidH(x)}})}return{h,p}}
 /* очікувані виплати й рахунки */
 function slipFor(j,per){return S.slips.find(s=>s.j===j&&s.m===per)}
+/* Джерела доходу: основні й додаткові (наприклад, чеська робота й українські замовлення на інший рахунок).
+   Режим показу S.cfg.inc: all — усі, main — лише основні, side — лише додаткові. Витрати й рахунки однакові в усіх режимах */
+const INCM=[["all","Усі джерела"],["main","Основна робота"],["side","Додаткові"]];
+const jobSide=j=>!!(j&&j.side);
+const gigSide=g=>{if(g.side!==undefined)return!!g.side;const j=g.j&&S.jobs.find(x=>x.id===g.j);return j?jobSide(j):true};
+const incM=()=>S.cfg.inc||"all";
+const incOk=side=>{const m=incM();return m==="all"||(m==="side")===!!side};
+const hasSide=()=>S.jobs.some(jobSide)||S.gigs.some(g=>num(g.a)&&gigSide(g));
+const incLab=()=>incM()==="main"?"лише основна робота":incM()==="side"?"лише додаткові джерела":"";
+const incSeg=()=>`<div class="incs" role="radiogroup" aria-label="Який дохід показувати">${INCM.map(([k,l])=>`<button data-inc="${k}" role="radio" aria-checked="${incM()===k}" class="${incM()===k?"on":""}">${l}</button>`).join("")}</div>`;
 function gigNet(g){return g.tx==="gross"?num(g.a)*(num(g.p)||85)/100:num(g.a)}
 function sumR(a,b,jf){const o={h:0,g:0,n:0,w:0,wd:0,o:0,z:0,ph:0,pn:0,pw:0,sk:0,vc:0,byJ:{}},a0=ds(a),b0=ds(b),bj=id=>o.byJ[id]||(o.byJ[id]={h:0,n:0,ph:0,pn:0,w:0});
   const MJ=S.jobs.filter(j=>j.pt==="m"&&(!jf||j.id===jf));
   for(let d=a;d<=b;d=addD(d,1)){const k=ds(d),y=d.getFullYear(),m=d.getMonth(),fut=k>TK;
-    MJ.forEach(j=>{if(j.st&&k<j.st)return;const ab0=absOf(k);if(ab0&&ab0.j===j.id)return;const r=R(j.id,y,m),v=toM(num(r.mon),j.cur)/dim(y,m),q=bj(j.id);if(fut){o.pn+=v;q.pn+=v}else{o.n+=v;o.g+=toM(num(r.mg)||num(r.mon),j.cur)/dim(y,m);q.n+=v}});
+    MJ.forEach(j=>{if(j.st&&k<j.st)return;if(!incOk(jobSide(j)))return;const ab0=absOf(k);if(ab0&&ab0.j===j.id)return;const r=R(j.id,y,m),v=toM(num(r.mon),j.cur)/dim(y,m),q=bj(j.id);if(fut){o.pn+=v;q.pn+=v}else{o.n+=v;o.g+=toM(num(r.mg)||num(r.mon),j.cur)/dim(y,m);q.n+=v}});
     if(isOff(k)){if(!fut)o.o++;continue}
-    {const ab=absOf(k);if(ab){if(ab.t==="sick")o.sk++;else o.vc++;if(!jf||ab.j===jf){const v=toM(absVal(k,ab),job(ab.j).cur),q=bj(ab.j);if(fut){o.pn+=v;q.pn+=v}else{o.n+=v;o.g+=v;q.n+=v}}continue}}
+    {const ab=absOf(k);if(ab){if(ab.t==="sick")o.sk++;else o.vc++;if((!jf||ab.j===jf)&&incOk(jobSide(job(ab.j)))){const v=toM(absVal(k,ab),job(ab.j).cur),q=bj(ab.j);if(fut){o.pn+=v;q.pn+=v}else{o.n+=v;o.g+=v;q.n+=v}}continue}}
     let any=0;
-    for(const x of shOf(k)){if(jf&&x.j!==jf)continue;const cur=job(x.j).cur,g=toM(shG(x,y,m),cur),n=toM(shN(x,y,m),cur),h=paidH(x),q=bj(x.j);
+    for(const x of shOf(k)){if(jf&&x.j!==jf)continue;const ok=incOk(jobSide(job(x.j))),cur=job(x.j).cur,g=ok?toM(shG(x,y,m),cur):0,n=ok?toM(shN(x,y,m),cur):0,h=paidH(x),q=bj(x.j);
       if(fut||x.pl){o.ph+=h;o.pn+=n;o.pw++;q.ph+=h;q.pn+=n}else{any=1;o.h+=h;o.g+=g;o.n+=n;o.w++;q.h+=h;q.n+=n;q.w++;if(x.z)o.z++}}
     if(any&&!fut)o.wd++}
-  S.gigs.forEach(g=>{if(!g.d||g.d<a0||g.d>b0||!num(g.a))return;if(jf&&g.j!==jf)return;const v=toM(gigNet(g),g.cur),q=bj(g.j||"gig");if(g.d>TK){o.pn+=v;q.pn+=v}else{o.n+=v;o.g+=toM(num(g.a),g.cur);q.n+=v}});
+  S.gigs.forEach(g=>{if(!g.d||g.d<a0||g.d>b0||!num(g.a))return;if(jf&&g.j!==jf)return;if(!incOk(gigSide(g)))return;const v=toM(gigNet(g),g.cur),q=bj(g.j||"gig");if(g.d>TK){o.pn+=v;q.pn+=v}else{o.n+=v;o.g+=toM(num(g.a),g.cur);q.n+=v}});
   return o}
 function jobMonth(jid,y,m){const J=job(jid),r=R(jid,y,m),pre=mk(y,m);let g=0,n=0,h=0,z=0;if(J.pt==="m"){g=num(r.mg)||num(r.mon);n=num(r.mon)}
   for(let d=1;d<=dim(y,m);d++){{const k0=ds(new Date(y,m,d)),ab=absOf(k0);if(ab&&ab.j===jid){const v=absVal(k0,ab);if(J.pt==="m"){n-=num(r.mon)/dim(y,m);g-=(num(r.mg)||num(r.mon))/dim(y,m)}n+=v;g+=v}}for(const x of shOf(ds(new Date(y,m,d)))){if(x.j!==jid)continue;h+=paidH(x);if(x.z)z++;g+=shG(x,y,m);n+=shN(x,y,m)}}
   S.gigs.forEach(q=>{if(q.j===jid&&q.d&&q.d.startsWith(pre)&&(q.cur||S.cur)===J.cur){g+=num(q.a);n+=gigNet(q)}});return{g,n,h,z}}
 function payEvents(from,days){const E=[],fk=ds(from),ek=ds(addD(from,days));
   for(let i=0;i<=days;i++){const d=addD(from,i),y=d.getFullYear(),m=d.getMonth(),last=dim(y,m);
-    S.jobs.forEach(j=>{if(j.pt==="g")return;const pd=Math.min(num(j.pd)||0,last);if(!pd||d.getDate()!==pd)return;const pm=new Date(y,m-num(j.lag),1),per=mk(pm.getFullYear(),pm.getMonth()),sl=slipFor(j.id,per),raw=sl&&num(sl.net)?num(sl.net):jobMonth(j.id,pm.getFullYear(),pm.getMonth()).n;
+    S.jobs.forEach(j=>{if(j.pt==="g"||!incOk(jobSide(j)))return;const pd=Math.min(num(j.pd)||0,last);if(!pd||d.getDate()!==pd)return;const pm=new Date(y,m-num(j.lag),1),per=mk(pm.getFullYear(),pm.getMonth()),sl=slipFor(j.id,per),raw=sl&&num(sl.net)?num(sl.net):jobMonth(j.id,pm.getFullYear(),pm.getMonth()).n;
       if(raw>0)E.push({d,t:"in",n:j.n,a:toM(raw,j.cur),real:!!(sl&&num(sl.net)),per:pm,pt:j.pt})});
     S.base.forEach(b=>{const bd=num(b.d);if(!bd||!num(b.a))return;if(d.getDate()===Math.min(bd,last))E.push({d,t:"out",n:b.n||"Витрата",a:num(b.a),cat:catOf(b),ess:isEss(b)})})}
-  S.gigs.forEach(g=>{const k=g.pd||g.d;if(!k||k<fk||k>ek||!num(g.a))return;E.push({d:pk(k),t:"in",n:g.n||"Разовий підробіток",a:toM(gigNet(g),g.cur),real:true,gig:true})});
+  S.gigs.forEach(g=>{const k=g.pd||g.d;if(!k||k<fk||k>ek||!num(g.a)||!incOk(gigSide(g)))return;E.push({d:pk(k),t:"in",n:g.n||"Разовий підробіток",a:toM(gigNet(g),g.cur),real:true,gig:true})});
   const ord=e=>e.t==="in"?0:e.ess?1:2;return E.sort((a,b)=>a.d-b.d||ord(a)-ord(b)||b.a-a.a)}
 function bestJob(){let b=null,v=-1;const y=TD.getFullYear(),m=TD.getMonth();S.jobs.forEach(j=>{if(j.pt!=="h")return;const r=R(j.id,y,m),x=toM(r.rate*r.mult,j.cur);if(x>v){v=x;b=j.id}});return b||S.jobs[0].id}
 const age=()=>{const b=S.prof&&S.prof.bd;if(!b)return null;const d=pk(b);let a=TD.getFullYear()-d.getFullYear();if(TD.getMonth()<d.getMonth()||(TD.getMonth()===d.getMonth()&&TD.getDate()<d.getDate()))a--;return a>0&&a<120?a:null};
@@ -970,7 +987,7 @@ function renderHome(){hello();
   $("#emp").innerHTML=stPill()+pendCard()+budgetCard()+journeyCard();{const bb=dayBudget();if(bb)countTo($("#budl"),Math.max(0,bb.left),kc)}
   $$("#ps button").forEach(b=>b.classList.toggle("on",b.dataset.p===P));
   const x=per(),c=x.c;
-  $("#pl").textContent=x.lab;countTo($("#pn"),c.n,kc);
+  $("#pl").textContent=x.lab;if(incM()!=="all")$("#pl").insertAdjacentHTML("beforeend",` <button class="incchip" data-go="money">${incLab()}</button>`);countTo($("#pn"),c.n,kc);
   $("#pf").innerHTML=x.on&&c.pn?`з планом — <b>${kc(c.n+c.pn)}</b>`:"";$("#pf").hidden=!(x.on&&c.pn);
   $("#pd").innerHTML=x.p.n?dl(c.n,x.p.n,kc)+` <span class="mut">${x.cmp}</span>`:"";$("#pd").hidden=!x.p.n;
   countTo($("#ph"),c.h,hf);$("#phd").innerHTML=dl(c.h,x.p.h,hf);
@@ -1075,6 +1092,7 @@ function renderGig(){const g=S.gigs.find(x=>x.id===GG);if(!g)return;
   $("#gsb").innerHTML=`<div class="g il noi"><label class="ir"><span class="lb">Що за робота</span><input class="nm" data-gf="n" value="${esc(g.n)}" placeholder="Наприклад, зйомка" inputmode="text" style="text-align:right"></label><label class="ir"><span class="lb">Сума, ${sym(g.cur)}</span><input data-gf="a" inputmode="decimal" value="${g.a||""}" placeholder="0"></label></div>
    <div class="pick" style="padding:0 0 14px">${CUR.map(c=>`<button data-gcur="${c[0]}" class="${g.cur===c[0]?"on":""}">${c[0]}</button>`).join("")}</div>
    <div class="g il"><div class="pick seg3"><button data-gtx="net" class="${g.tx!=="gross"?"on":""}">Вже чистими</button><button data-gtx="gross" class="${g.tx==="gross"?"on":""}">Ще оподатковується</button></div>${g.tx==="gross"?`<div class="noi">${inRow("Лишається після податків, %",'data-gf="p"',g.p||85)}</div>`:""}</div>
+   <p class="ghd">Джерело доходу</p><div class="g il"><div class="pick seg3"><button data-gsd="0" class="${!gigSide(g)?"on":""}">Основне</button><button data-gsd="1" class="${gigSide(g)?"on":""}">Додаткове</button></div></div>
    <div class="g il noi"><label class="ir"><span class="lb">Дата роботи</span><input type="date" data-gf="d" value="${g.d||""}"></label><label class="ir"><span class="lb">Дата виплати</span><input type="date" data-gf="pd" value="${g.pd||""}"></label></div>
    ${!g.pd?`<p class="foot">Без дати виплати гроші зарахуються в день роботи й до того ж місяця.</p>`:""}
    ${num(g.a)?`<p class="lead" style="margin:0 2px 4px">Чистими: <b>${kc(gigNet(g),g.cur)}</b>${g.cur!==S.cur?` ≈ ${kc(toM(gigNet(g),g.cur))}`:""}</p>`:""}
@@ -1230,11 +1248,17 @@ function openArt(id){const a=ARTS[id];if(!a)return;if(V!=="art")BV=V;
   ${a.fact?`<div class="g card fact"><span>💡</span><span>${a.fact}</span></div>`:""}${id==="sickvac"?lawCards():""}`;
   go("art")}
 /* ---------- гроші: до зарплати ---------- */
-function renderMoney(){const c=cashflow(),old=S.bal.d?dd(pk(S.bal.d),TD):0;
-  let h=`<div class="g card"><div class="mut">На рахунку зараз</div><label class="balrow"><input id="bal" inputmode="decimal" value="${c.set?Math.round(c.bal):""}" placeholder="0" aria-label="Сума на рахунку"><span>${sym()}</span></label>
+function renderMoney(){const c=cashflow(),old=S.bal.d?dd(pk(S.bal.d),TD):0,showSeg=S.jobs.filter(j=>j.pt!=="g").length>1||S.gigs.some(g=>num(g.a))||hasSide();
+  let h=showSeg?incSeg()+(incM()!=="all"&&!hasSide()?`<p class="soft" style="margin:-4px 4px 12px">Поки жодне джерело не позначене як додаткове — <button class="lnk2" data-set="inc">познач у налаштуваннях</button>.</p>`:""):"";
+  if(incM()==="side"){const ms=mSum(TD.getFullYear(),TD.getMonth()),up=payEvents(addD(TD,1),45).filter(e=>e.t==="in");
+    h+=`<div class="g card"><div class="mut">Додаткові джерела, ${MN[TD.getMonth()].toLowerCase()}</div><div class="sidev num">${kc(ms.n)}</div>${ms.pn?`<p class="soft" style="margin:2px 0 0">і ще ${kc(ms.pn)} у плані</p>`:""}
+     ${up.length?`<div class="sub">Найближчі виплати</div>${up.slice(0,8).map(e=>evRow(e)).join("")}`:`<p class="soft">Найближчим часом виплат із додаткових джерел не видно.</p>`}
+     <p class="soft" style="margin-top:12px">Баланс і «можна витрачати на день» рахую з основного рахунку — вони в режимах «Основна робота» й «Усі джерела».</p></div>`}
+  else h+=`<div class="g card"><div class="mut">На рахунку зараз</div><label class="balrow"><input id="bal" inputmode="decimal" value="${c.set?Math.round(c.bal):""}" placeholder="0" aria-label="Сума на рахунку"><span>${sym()}</span></label>
    ${!c.set?`<p class="soft" style="margin:4px 0 0">Введи суму — і я покажу, скільки можна спокійно витрачати до зарплати.</p>`:old>3?`<p class="soft wa" style="margin:4px 0 0">Оновлено ${old} ${pl(old,W_DAY)} тому — перевір суму.</p>`:""}
    ${c.set?`<div class="safe"><small>Можна витрачати</small><b class="num" id="safe"></b><span>на день${c.ni?` до ${dLong(c.ni.d)}`:""}</span></div>`:""}
    ${c.E.length?`<div class="sub">Найближчі виплати й рахунки</div>${c.E.slice(0,8).map(e=>evRow(e,c.set?e.run:undefined)).join("")}`:`<p class="soft">Додай день виплати в налаштуваннях роботи й дні оплати витрат — тут з’явиться календар грошей.</p>`}
+   ${incM()==="main"&&hasSide()?`<p class="soft" style="margin-top:10px">Дохід із додаткових джерел сюди не входить.</p>`:""}
    </div>`;
   h+=weekCard();
   h+=`<button class="g cbig" data-go="yr" style="margin-top:12px"><b class="em">📑</b><div><strong>Річний підсумок</strong><span>Доходи по роботодавцях і місяцях, паски — одним звітом.</span></div><i class="chev"></i></button>`;
@@ -1247,7 +1271,7 @@ function renderMoney(){const c=cashflow(),old=S.bal.d?dd(pk(S.bal.d),TD):0;
   const G=S.goals.filter(g=>goalT(g)>0);
   if(G.length)h+=`<h2>Цілі</h2><div class="g card">${G.map(g=>{const t=goalT(g);return`<div class="gl"><div class="gh"><b style="font-weight:650">${esc(g.n)}</b><span>${kc(num(g.s))} із ${kc(t)}</span></div><div class="pbar"><i class="f1" style="width:${Math.min(100,num(g.s)/t*100)}%"></i></div></div>`}).join("")}<button class="btn q" data-sp="goals">Змінити цілі</button></div>`;
   $("#v-money").innerHTML=`<h1 class="fr ch1">Гроші</h1>`+h;
-  if(c.set)countTo($("#safe"),Math.max(0,c.safe),kc)}
+  if(c.set&&$("#safe"))countTo($("#safe"),Math.max(0,c.safe),kc)}
 
 /* ---------- паски ---------- */
 let SL=null,UPL=0,UPE="";
@@ -1344,8 +1368,8 @@ function ledger(a,b){const L=payEvents(a,dd(a,b)).map(e=>({...e,k:ds(e.d)})),a0=
 function balNow(){if(!S.bal.d)return null;const t0=S.bal.ts||0,from=addD(pk(S.bal.d),1);let b=num(S.bal.a);
   if(from<=TD)payEvents(from,dd(from,TD)).forEach(e=>{b+=e.t==="in"?e.a:-e.a});
   /* дохід, доданий після оновлення балансу з датою виплати в той самий день, теж зараховується */
-  S.gigs.forEach(g=>{const k=g.pd||g.d;if(k===S.bal.d&&k<=TK&&(g.ts||0)>t0&&num(g.a))b+=toM(gigNet(g),g.cur)});
-  (S.sp||[]).forEach(x=>{if((x.ts||0)>t0)b-=toM(num(x.a),x.cur)});return b}
+  S.gigs.forEach(g=>{const k=g.pd||g.d;if(k===S.bal.d&&k<=TK&&(g.ts||0)>t0&&num(g.a)&&incOk(gigSide(g)))b+=toM(gigNet(g),g.cur)});
+  (S.sp||[]).forEach(x=>{if((x.ts||0)>t0&&x.k>=S.bal.d)b-=toM(num(x.a),x.cur)});return b}
 /* Прогноз. Оцінка виплати за місяць, який ще триває (погодинна робота без паска), неточна — тому ризики й денну суму рахуємо лише до неї (H).
    Денна сума — найбільша, за якої баланс не піде в мінус ні до зарплати, ні після неї, коли спишуться рахунки (наприклад, оренда в день зарплати) */
 function cashflow(){const E=payEvents(addD(TD,1),45),set=!!S.bal.d,bal=set?balNow():0;let run=bal,min=Infinity,minAt=null;const rows=[];
@@ -1359,10 +1383,10 @@ function cashflow(){const E=payEvents(addD(TD,1),45),set=!!S.bal.d,bal=set?balNo
   {const v=(bal0+cumB)/days;if(v<=A){A=v;res=null}}
   return{E:rows,bal,set,min,minAt,ni,days,bills,H,res,safe:Math.max(0,A),risk:rows.filter(e=>e.d<H)}}
 function spentToday(){const t0=S.bal.ts||0;return(S.sp||[]).filter(x=>x.k===TK&&(x.ts||0)>t0).reduce((s,x)=>s+toM(num(x.a),x.cur),0)}
-function dayBudget(){if(!S.bal.d)return null;const c=cashflow(),sp=spentToday(),allow=c.safe;
+function dayBudget(){if(!S.bal.d||incM()==="side")return null;const c=cashflow(),sp=spentToday(),allow=c.safe;
   return{allow,spent:sp,left:allow-sp,until:c.ni?c.ni.d:null,days:c.days,bal:c.bal,res:c.res}}
 /* ризик: спершу обов’язкові платежі, потім решта */
-function cashRisk(){if(!S.bal.d)return null;const c=cashflow();let re=c.bal,rt=c.bal,hiE=null,loE=null;
+function cashRisk(){if(!S.bal.d||incM()==="side")return null;const c=cashflow();let re=c.bal,rt=c.bal,hiE=null,loE=null;
   for(const e of c.risk){if(e.t==="in"){re+=e.a;rt+=e.a;continue}rt-=e.a;if(e.ess){re-=e.a;if(re<0&&!hiE)hiE={e,v:-re}}if(rt<0&&!loE)loE={e,v:-rt}}
   if(hiE)return{lvl:"hi",t:"Може не вистачити на важливе",s:`${dLong(hiE.e.d)}: ${esc(hiE.e.n)} — бракуватиме ~${kc(hiE.v)}.`};
   if(loE)return{lvl:"lo",t:"Не все влізе до зарплати",s:`Обов’язкові платежі покриті, але ${dLong(loE.e.d)} на «${esc(loE.e.n)}» може забракнути ~${kc(loE.v)}. Можна перенести чи скоротити.`};
@@ -1389,17 +1413,21 @@ function budgetCard(){const b=dayBudget();if(!b)return"";
   return`<div class="g card bud"><div class="ph"><span class="mut">Сьогодні можна витратити</span><button class="btn" data-act="spend" style="margin:0;padding:9px 14px;white-space:nowrap;flex:none">＋ Витрата</button></div><div class="big" id="budl" style="margin:2px 0 2px;font-size:36px;${b.left<0?"color:var(--dn)":""}"></div>
    <p class="soft" style="margin:0">${b.left<0?`Сьогодні вже понад ліміт на ${kc(-b.left)} — завтра денна сума трохи зменшиться.`:`Із ${kc(b.allow)} на день${b.until?` до ${dLong(b.until)}`:""}.${b.spent?` Витрачено ${kc(b.spent)}.`:""}`}${b.res?` Частину відкладаю на «${esc(b.res.n)}» ${dLong(b.res.d)}.`:""}</p></div>`}
 let SPD="";
-let SPC="";
-function openSpend(){SPD="";SPC="";renderSpend();openS($("#spx"));setTimeout(()=>{const i=$("#spa");if(i)i.focus()},350)}
-function renderSpend(){const t0=S.bal.ts||0,L=(S.sp||[]).filter(x=>x.k===TK&&(x.ts||0)>t0).sort((a,b)=>b.ts-a.ts);
+let SPC="",SPK="0";
+function openSpend(){SPD="";SPC="";SPK="0";renderSpend();openS($("#spx"));setTimeout(()=>{const i=$("#spa");if(i)i.focus()},350)}
+function spKey(){if(SPK==="x"){const v=($("#spkd")||{}).value;return v&&v<=TK?v:TK}return ds(addD(TD,-num(SPK)))}
+function spkNote(){const el=$("#spkn");if(!el)return;const k=spKey();el.textContent=S.bal.d&&k<S.bal.d?`Баланс від ${dLong(pk(S.bal.d))} уже це враховує — запишу витрату лише в історію.`:k<TK?`Запишу на ${dLong(pk(k))}: баланс стане меншим, а денна сума на сьогодні перерахується.`:""}
+function renderSpend(){const k7=ds(addD(TD,-6)),L=(S.sp||[]).filter(x=>x.k>=k7).sort((a,b)=>a.k<b.k?1:a.k>b.k?-1:b.ts-a.ts).slice(0,15);
   $("#spb").innerHTML=`<label class="balrow"><input id="spa" inputmode="decimal" value="${SPD}" placeholder="Наприклад, 150" aria-label="Сума витрати"><span>${sym()}</span></label>
    ${(()=>{const B=S.bal.d===TK?[]:payEvents(TD,0).filter(e=>e.t==="out");return B.length?`<p class="soft" style="margin:6px 2px 0;font-size:14px">Сьогодні вже списано автоматично: ${B.map(e=>`${esc(e.n)} ${kc(e.a)}`).join(", ")}. Їх додавати не треба.</p>`:""})()}
    <div class="pick" style="padding:8px 0 4px">${[50,100,200,500].map(v=>`<button data-spq="${v}">+${v}</button>`).join("")}</div>
    <div class="g il noi" style="margin:10px 0 0"><label class="ir"><span class="lb">На що</span><input class="nm" id="spn" placeholder="Наприклад, продукти" inputmode="text" style="text-align:right"></label></div>
+   <div class="spdate"><span class="lb">Коли</span><div class="pick" id="spk">${[["0","Сьогодні"],["1","Вчора"],["2","Позавчора"],["x","Інший день"]].map(([k,l])=>`<button data-spk="${k}" class="${SPK===k?"on":""}">${l}</button>`).join("")}</div>
+    <input type="date" id="spkd" max="${TK}" value="${ds(addD(TD,-3))}" ${SPK==="x"?"":"hidden"} aria-label="Дата витрати"><p class="soft" id="spkn" style="margin:6px 2px 0;font-size:14px"></p></div>
     <div class="spc" id="spc">${["food","fun","tr","hlth","com","edu","sub","home","util","oth"].map(c=>`<button data-spc="${c}" class="${SPC===c?"on":""}">${catI(c)[1]} ${catI(c)[2]}</button>`).join("")}</div>
    <div class="acts"><button data-act="close">Скасувати</button><button class="pri" data-act="spsave">Записати</button></div>
-   ${L.length?`<div class="sub" style="margin-top:16px">Сьогодні</div>${L.map(x=>`<div class="r"><span>${esc(x.n||"Витрата")}<small>${new Date(x.ts).toTimeString().slice(0,5)}</small></span><b>−${kc(x.a,x.cur)} <button class="x" data-sprm="${x.id}" aria-label="Видалити" style="margin-left:6px">×</button></b></div>`).join("")}`:""}`}
-function saveSpend(){const a=num($("#spa").value);if(!a)return;(S.sp=S.sp||[]).push({id:uid(),a,cur:S.cur,k:TK,ts:Date.now(),n:$("#spn").value.trim(),cat:SPC||catOf({n:$("#spn").value})});if(S.sp.length>2000)S.sp=S.sp.slice(-2000);save();closeS();refresh()}
+   ${L.length?`<div class="sub" style="margin-top:16px">Останні 7 днів</div>${L.map(x=>`<div class="r"><span>${esc(x.n||"Витрата")}<small>${x.k===TK?"сьогодні":dLong(pk(x.k))}</small></span><b>−${kc(x.a,x.cur)} <button class="x" data-sprm="${x.id}" aria-label="Видалити" style="margin-left:6px">×</button></b></div>`).join("")}`:""}`}
+function saveSpend(){const a=num($("#spa").value);if(!a)return;(S.sp=S.sp||[]).push({id:uid(),a,cur:S.cur,k:spKey(),ts:Date.now(),n:$("#spn").value.trim(),cat:SPC||catOf({n:$("#spn").value})});if(S.sp.length>2000)S.sp=S.sp.slice(-2000);save();closeS();refresh()}
 
 /* ---------- оптимум ---------- */
 function optimum(){const L=[];for(let d=addD(TD,-90);d<=TD;d=addD(d,1)){const k=ds(d),day=S.days[k];if(!day||!day.sh||!day.f)continue;const sh=day.sh.filter(x=>!x.pl);if(!sh.length)continue;const h=sh.reduce((s,x)=>s+paidH(x),0),st=sh.filter(x=>x.s).map(x=>tm(x.s));L.push({k,d,h,st:st.length?Math.min(...st):null,f:day.f})}
@@ -1542,7 +1570,7 @@ const THN={auto:"Як у системі",dark:"Темна",light:"Світла"}
 let SP=null;
 const nav=(k,c,l,v,i)=>`<button class="ir" data-sp="${k}">${ico(i||k,c)}<span class="lb">${l}</span><span class="vl">${v}</span><i class="chev"></i></button>`;
 const inRow=(l,attr,val,ph="",mode="decimal")=>`<label class="ir"><span class="lb">${l}</span><input ${attr} inputmode="${mode}" value="${esc(val)}" placeholder="${esc(ph)}"></label>`;
-const TITLES={profile:"Профіль",jobs:"Роботи",tpl:"Шаблони змін",load:"Навантаження",base:"Базові витрати",goals:"Цілі накопичень",target:"Ціль на місяць",cur:"Валюта",sleep:"Сон",rest:"Відпочинок",look:"Вигляд",data:"Дані й копія"};
+const TITLES={profile:"Профіль",jobs:"Роботи",tpl:"Шаблони змін",load:"Навантаження",base:"Базові витрати",goals:"Цілі накопичень",target:"Ціль на місяць",inc:"Який дохід показувати",cur:"Валюта",sleep:"Сон",rest:"Відпочинок",look:"Вигляд",data:"Дані й копія"};
 const PHL=["Особистий","Робочий","Допоміжний","Інший"];
 const avHTML=(sz)=>S.prof&&S.prof.av?`<img class="av" data-fid="${S.prof.av}" alt="Фото профілю" style="width:${sz}px;height:${sz}px">`:`<span class="avl" style="width:${sz}px;height:${sz}px">${logo()}</span>`;
 const ctPick=(sel,attr)=>[["CZ","Чехія"],["PL","Польща"],["UA","Україна"],["","Інше"]].map(([c,l])=>`<p class="ghd" style="margin:10px 4px 6px">${l}</p><div class="pick" style="padding:0 0 4px">${CT.filter(x=>x[2]===c).map(([k,lb])=>`<button ${attr}="${k}" class="${sel===k?"on":""}">${lb}</button>`).join("")}</div>`).join("");
@@ -1551,12 +1579,13 @@ function renderSet(){const el=$("#v-set"),c=S.cfg,y=TD.getFullYear(),m=TD.getMon
   if(!SP){el.innerHTML=hd("Налаштування","home")+
    `<button class="g il prof" data-sp="profile">${avHTML(56)}<div><strong>${esc(S.name||"Без імені")}</strong><span>${a?a+" "+pl(a,["рік","роки","років"])+", ":""}профіль і контакти</span></div><i class="chev"></i></button><div style="height:22px"></div>
    <div class="g il">${nav("jobs","#7cb518","Роботи",S.jobs.length===1?(S.jobs[0].pt==="h"?R(S.jobs[0].id,y,m).rate+" "+sym(S.jobs[0].cur)+"/год":S.jobs[0].pt==="m"?"щомісяця":"разові"):S.jobs.length,"work")}${nav("tpl","#2e9e5b","Шаблони змін",S.tpl.length)}${nav("load","#1a9cc7","Навантаження",c.wkU?"ще з’ясовуємо":num(c.week)?c.week+" год/тиж":"не задано")}</div>
-   <div class="g il">${nav("base","#e08a1e","Базові витрати",baseSum()?kc(baseSum()):"не задано")}${nav("goals","#e0457b","Цілі накопичень",S.goals.length)}${nav("target","#c27a00","Ціль на місяць",target()?kc(target()):"—")}${nav("cur","#8a6d3b","Валюта",S.cur)}</div>
+   <div class="g il">${nav("base","#e08a1e","Базові витрати",baseSum()?kc(baseSum()):"не задано")}${nav("goals","#e0457b","Цілі накопичень",S.goals.length)}${nav("target","#c27a00","Ціль на місяць",target()?kc(target()):"—")}${nav("inc","#2e9d6a","Який дохід показувати",INCM.find(x=>x[0]===incM())[1])}${nav("cur","#8a6d3b","Валюта",S.cur)}</div>
    <div class="g il">${nav("sleep","#5b6ee1","Сон",num(c.sg)?nf(num(c.sg))+" год":"не задано")}${nav("rest","#3aa17e","Відпочинок",(c.fun||[]).length||"")}</div>
    <div class="g il">${nav("look","#7c5cd6","Вигляд",THN[c.theme])}${nav("data","#8a8f86","Дані й копія","")}<button class="ir" data-act="intro">${ico("intro","#e8b10c")}<span class="lb">Пройти опитувальник ще раз</span><i class="chev"></i></button><button class="ir" data-act="beta">${ico("bug","#d9466e")}<span class="lb">Повідомити про проблему</span><span class="vl">beta</span><i class="chev"></i></button></div>
    <div class="verf"><b>Bud ${VER}</b><button class="lnk2" data-act="changelog">Що нового</button></div>`;fillFiles();return}
   if(SP.startsWith("job:")){const j=S.jobs.find(x=>x.id===SP.slice(4));if(!j){SP="jobs";return renderSet()}const r=R(j.id,y,m),S2=sym(j.cur);
     el.innerHTML=hd(esc(j.n)||"Робота","jobs")+`<div class="g il noi">${inRow("Назва",`data-jf="n" data-jid="${j.id}"`,j.n,"Робота","text")}<div class="pick" style="padding:10px 14px 14px">${JC.map(cl=>`<button class="sw8${j.c===cl?" on":""}" data-jc="${cl}" data-jid="${j.id}" style="background:${cl}" aria-label="Колір"></button>`).join("")}</div></div>
+    <p class="ghd">Джерело доходу</p><div class="g il"><div class="pick seg3"><button data-jside data-v="0" data-jid="${j.id}" class="${!jobSide(j)?"on":""}">Основна робота</button><button data-jside data-v="1" data-jid="${j.id}" class="${jobSide(j)?"on":""}">Додаткова</button></div></div>
     <p class="ghd">Тип договору</p><div class="g il" style="padding:0 14px 10px">${ctPick(j.ct,`data-jid="${j.id}" data-jct`)}</div>
     <p class="ghd">Як платять</p><div class="g il"><div class="pick seg3">${PT.map(([k,l])=>`<button data-jpt="${k}" data-jid="${j.id}" class="${j.pt===k?"on":""}">${l}</button>`).join("")}</div><div class="pick" style="padding:0 14px 12px">${CUR.map(cc=>`<button data-jcur="${cc[0]}" data-jid="${j.id}" class="${j.cur===cc[0]?"on":""}">${cc[0]}</button>`).join("")}</div></div>
     ${j.pt==="h"?`<div class="g il noi">${inRow(`Брутто за годину, ${S2}`,`data-jr="rate" data-jid="${j.id}"`,r.rate)}${inRow("Після податків, %",`data-jpct data-jid="${j.id}"`,Math.round(r.mult*1000)/10)}${inRow("Неоплачувана перерва, хв",`data-jf="brk" data-jid="${j.id}"`,j.brk||"","немає")}${inRow("Річний ліміт годин",`data-jf="yl" data-jid="${j.id}"`,j.yl||"","немає")}</div><p class="foot">Ставки діють з ${MG[m]}. Перерва віднімається від змін довших за 6 год.</p>`:""}
@@ -1591,6 +1620,10 @@ function renderSet(){const el=$("#v-set"),c=S.cfg,y=TD.getFullYear(),m=TD.getMon
    <button class="ir" data-act="addb" style="color:var(--at);font-weight:600">＋ Додати витрату</button></div><p class="foot">Тапни іконку, щоб обрати категорію. Житло, комунальні, їжа, транспорт, зв’язок і здоров’я я вважаю обов’язковими — про них попереджу першими. «День» — коли платиш: у цей день я сам проведу платіж. Без дня — щоденні витрати.</p>
    <div class="g il noi"><div class="ir"><span class="lb"><b>Разом на місяць</b></span><b id="btot">${kc(baseSum())}</b></div></div>`;
   if(SP==="goals")h=S.goals.map(g=>`<div class="g il noi"><div class="ir"><input class="nm" data-g="${g.id}" data-f="n" value="${esc(g.n)}" aria-label="Назва цілі" inputmode="text" style="font-weight:650">${g.id==="cush"?"":`<button class="x" data-rg="${g.id}" aria-label="Видалити">×</button>`}</div>${inRow(`Потрібно, ${sym()}`,`data-g="${g.id}" data-f="t"`,g.t||"",g.id==="cush"?(Math.round(baseSum()*3)||"авто"):"0")}${inRow(`Вже зібрано, ${sym()}`,`data-g="${g.id}" data-f="s"`,g.s||"","0")}</div>`).join("")+`<button class="btn q" data-act="addg" style="margin:0 0 10px">＋ Додати ціль</button><p class="foot" style="margin-top:6px">Збираються по черзі, зверху вниз. Подушка без суми — 3 місяці базових витрат.</p>`;
+  if(SP==="inc"){const GL=S.gigs.filter(g=>num(g.a)).sort((p,q)=>(q.d||"")<(p.d||"")?-1:1).slice(0,10),sd=(on,attr)=>`<div class="mini2"><button ${attr} data-v="0" class="${!on?"on":""}">Основна</button><button ${attr} data-v="1" class="${on?"on":""}">Додаткова</button></div>`;
+    h=`${incSeg()}<p class="foot" style="margin-top:4px">Витрати й рахунки однакові в усіх режимах. Змінюється лише, який дохід я враховую в балансі, плані, «можна витрачати на день», підсумках і порадах. Наприклад: чеська робота — основна, українські замовлення на інший рахунок — додаткові.</p>
+    <p class="ghd">Роботи</p><div class="g il">${S.jobs.map(j=>`<div class="ir"><span class="lb">${esc(j.n||"Робота")}</span>${sd(jobSide(j),`data-jside data-jid="${j.id}"`)}</div>`).join("")}</div>
+    ${GL.length?`<p class="ghd">Разові підробітки</p><div class="g il">${GL.map(g=>`<div class="ir"><span class="lb">${esc(g.n||"Підробіток")}<small class="mut" style="display:block;font-size:13px">${g.d?dLong(pk(g.d))+" · ":""}${kc(gigNet(g),g.cur)}</small></span>${sd(gigSide(g),`data-gside="${g.id}"`)}</div>`).join("")}</div><p class="foot">Нові разові підробітки без прив’язки до роботи я вважаю додатковими. Змінити можна тут або у формі підробітку.</p>`:""}`}
   if(SP==="target")h=`<div class="g il noi">${inRow(`Чистими на місяць, ${sym()}`,'data-c="target"',c.target||"",autoTarget()||"0")}</div><p class="foot">Лиши порожнім — візьму базові витрати × 1,5.</p>`;
   if(SP==="look")h=`<div class="g il noi">${Object.entries(THN).map(([k,l])=>`<button class="ir" data-th="${k}"><span class="lb">${l}</span>${c.theme===k?'<i class="ck"></i>':""}</button>`).join("")}</div>`;
   if(SP==="data")h=`<div class="g il noi"><button class="ir" data-act="bkp"><span class="lb">Зберегти резервну копію</span><i class="chev"></i></button><label class="ir" style="cursor:pointer"><span class="lb">Відновити з копії</span><i class="chev"></i><input type="file" id="rst" accept="application/json,.json" hidden></label></div>
@@ -1692,6 +1725,7 @@ const SKIPN={me:"Можна заповнити пізніше в профілі.
 function filled(k){const j=S.jobs[0],c=S.cfg,r=R(j.id,TD.getFullYear(),TD.getMonth());switch(k){case"me":return!!(S.name||S.prof.sx||S.prof.bd);case"cur":return!!S.curSet;case"job":return!!(j.n||j.ct);case"pay":return!!(j.pt==="g"?S.gigs.some(g=>num(g.a)):j.pt&&(num(r.rate)||num(r.mon)));case"bonus":return OB.bonus!==null;case"brk":return j.brk!=="";case"tpl":return S.tpl.some(t=>t.s&&t.e);case"payday":return!!num(j.pd);case"j2":return OB.j2a!==null||!!S.jobs[1];case"base":return S.base.some(b=>num(b.a));case"target":return!!(num(c.target)||OB.tga);case"goals":return!!(S.bal.d||S.goals.some(g=>g.id!=="cush"&&(g.n||num(g.t))));case"norm":return!!(num(c.week)||c.wkU);case"fun":return(c.fun||[]).length>0;case"sleep":return!!(c.lb||c.lw||num(c.sg)||num(c.prep));default:return true}}
 function updNext(){const k=oKeys()[OS],sk=SKIPN[k]&&!filled(k),b=$("#obnext"),n=$("#onb .skn");if(b&&(b.textContent==="Далі"||b.textContent==="Пропустити"))b.textContent=sk?"Пропустити":"Далі";if(n)n.hidden=!sk}
 document.addEventListener("change",e=>{const i=e.target;if(i&&i.matches&&i.matches("input[data-rst]")&&i.files[0])readBackupFile(i.files[0])});
+document.addEventListener("change",e=>{if(e.target&&e.target.id==="spkd")spkNote()});
 function renderOnb(){const K=oKeys();OS=Math.max(0,Math.min(OS,K.length-1));const key=K[OS];$("#odots").innerHTML=`<div class="oprog"><i style="width:${OS/(K.length-1)*100}%"></i></div>${SECN[key]?`<span class="osec">${SECN[key]}</span>`:""}`;$("#ost").innerHTML=`<div class="ostep">${onbSteps(key)}</div>`;{const f=$("#ost .oacts"),o=$("#ofoot");o.innerHTML="";if(f)o.appendChild(f)}$("#onb").scrollTop=0;fillFiles()}
 function startOnb(){OS=0;OB={bonus:null,gn:false,hnet:null,j2a:null,tga:false};$("#onb").hidden=false;renderOnb()}
 function endOnb(){if(!S.since)S.nt.ver=VER;S.wnSeen=VER;S.curSet=true;S.jobs.forEach(j=>{if(!j.pt)j.pt="h";if(!j.ct)j.ct="other";if(j.brk==="")j.brk=0;if(j.lag==="")j.lag=num(j.pd)?1:0});S.base=S.base.filter(b=>b.n||num(b.a));S.tpl=S.tpl.filter(t=>t.s&&t.e).map(t=>({...t,n:t.n||"Зміна"}));S.onb=true;S.since=S.since||TK;S.goals=S.goals.filter(g=>g.id==="cush"||g.n||num(g.t));S.gigs=S.gigs.filter(g=>num(g.a));S.jobs.forEach(j=>{if(!j.n)j.n="Робота"});save();$("#onb").hidden=true;go("home");requestAnimationFrame(()=>moveInd(TABS.indexOf(V)))}
@@ -1762,7 +1796,7 @@ function demo(){try{localStorage.setItem(KEY+"_bak",JSON.stringify(S))}catch(e){
   const S0=S;S=D;const pr=new Date(y,m-1,1),cs=mSum(pr.getFullYear(),pr.getMonth(),"j1");D.slips=[{id:uid(),j:"j1",m:mk(pr.getFullYear(),pr.getMonth()),pd:ds(new Date(y,m,15)),g:Math.round(cs.g+800),tax:Math.round((cs.g+800)*.12),net:Math.round((cs.g+800)*.875),bon:[{id:uid(),n:"Премія за місяць",a:800}],files:[]}];
   save();$("#onb").hidden=true;go("home")}
 function undemo(){try{const b=localStorage.getItem(KEY+"_bak");if(b){S=migrate(JSON.parse(b));S.demo=false;localStorage.removeItem(KEY+"_bak")}else{const n=S.name;S=blank();S.name=n;S.onb=true}}catch(e){S=blank();S.onb=true}save();go("home")}
-const VER="0.9.1 beta";
+const VER="0.9.2 beta";
 async function backup(){const name="bud-"+TK+".json",txt=JSON.stringify(S),blob=new Blob([txt],{type:"application/json"});
   try{const f=new File([blob],name,{type:"application/json"});if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:"Bud — резервна копія"});S.lastBk=TK;saveLocal();updBell();return}}catch(e){if(e&&e.name==="AbortError")return}
   const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1500);S.lastBk=TK;saveLocal();updBell()}
@@ -1805,7 +1839,7 @@ document.addEventListener("touchend",()=>{if(!G)return;const g=G;G=null;if(g.loc
   else{sec.style.transition="transform .22s ease,opacity .22s";sec.style.transform="";sec.style.opacity="";setTimeout(reset,230);moveInd(i)}});
 document.addEventListener("touchcancel",()=>{if(G){const sec=$("#v-"+V);sec.style.transform="";sec.style.opacity="";moveInd(TABS.indexOf(V));G=null}});
 /* ---------- сповіщення ---------- */
-const CHANGELOG={"0.9.1 beta":["Кнопка «Відновити дані після оновлення» на старті","Bud щодня зберігає знімок даних на телефоні — їх можна повернути одним тапом","Денна сума тепер відкладає на оренду й інші рахунки, що припадають на день зарплати","Прибрано дублікати: витрати, які збігаються з автосписаними рахунками","Відпустка рахується від дати початку роботи","Підсумки місяця в сторіз — з 1 по 5 число","Розумніші поради про сон: недосип за тиждень, 35 годин відпочинку, зміни «назад», твої власні межі","Разовий дохід потрапляє в баланс у день виплати","Категорії для щоденних витрат","Баланс тепер живий: витрати, рахунки з днем оплати й виплати проводяться самі","Виправлено «можна витрачати на день», коли сьогодні приходить разова оплата","Категорії базових витрат: спершу попереджаю про обов’язкові платежі","«Цей тиждень» і «Усі платежі» по тижнях і місяцях","Сповіщення з історією, прочитаними, свайпом для видалення й нагадуваннями","Шторки закриваються свайпом униз","Минулий день у графіку — коротке зведення й «Змінити»"],"0.9 beta":["Лікарняні й відпустки в графіку: за законами Чехії, Польщі й України для кожного типу договору","Орієнтовна оплата лікарняних і відпускних, ліміти, коментарі й можливість ставити понад закон","Статистика хвороб і відпочинку по місяцях і за рік","Шаблони змін для кожної роботи, а не лише основної"],"0.8 beta":["Нова назва — Bud","Підтвердження змін: план стає фактом, коли ти підтвердиш","«Сьогодні можна витратити» і швидкі витрати одним тапом","«Твій оптимум» в аналізі — і план змін під нього","Річний підсумок зі звітом і пасками","«Твій старт» на головній — підказки, що ще налаштувати","Виправлено: кнопки в опитувальнику, клавіатура, залишок на рахунку"],"0.7 beta":["Рід у профілі: тексти звертаються до тебе в правильному роді","Чистий старт: жодних готових даних і виборів за замовчуванням","«Стерти все» повністю обнуляє апку й запускає опитувальник","Дані з 0.6 можна повернути в «Дані й копія»"],"0.6 beta":["Свайпи між вкладками і свайп праворуч, щоб повернутися назад","Нижнє меню з плаваючим виділенням","«Кілька днів» у графіку: шаблон, вихідний чи очищення одразу для багатьох днів","Час зміни тепер обирається за один раз","Місячна зарплата, разові підробітки й кілька валют","Новий опитувальник: профіль, оплата, ціль заробітку, цілі накопичень, сон","Сповіщення і кнопка «Зберегти» в налаштуваннях"]};
+const CHANGELOG={"0.9.2 beta":["Перемикач «Усі джерела / Основна робота / Додаткові» в «Грошах» і налаштуваннях","Кожну роботу й разовий підробіток можна позначити як основне чи додаткове джерело","Витратам можна ставити дату: вчора, позавчора чи будь-який день"],"0.9.1 beta":["Кнопка «Відновити дані після оновлення» на старті","Bud щодня зберігає знімок даних на телефоні — їх можна повернути одним тапом","Денна сума тепер відкладає на оренду й інші рахунки, що припадають на день зарплати","Прибрано дублікати: витрати, які збігаються з автосписаними рахунками","Відпустка рахується від дати початку роботи","Підсумки місяця в сторіз — з 1 по 5 число","Розумніші поради про сон: недосип за тиждень, 35 годин відпочинку, зміни «назад», твої власні межі","Разовий дохід потрапляє в баланс у день виплати","Категорії для щоденних витрат","Баланс тепер живий: витрати, рахунки з днем оплати й виплати проводяться самі","Виправлено «можна витрачати на день», коли сьогодні приходить разова оплата","Категорії базових витрат: спершу попереджаю про обов’язкові платежі","«Цей тиждень» і «Усі платежі» по тижнях і місяцях","Сповіщення з історією, прочитаними, свайпом для видалення й нагадуваннями","Шторки закриваються свайпом униз","Минулий день у графіку — коротке зведення й «Змінити»"],"0.9 beta":["Лікарняні й відпустки в графіку: за законами Чехії, Польщі й України для кожного типу договору","Орієнтовна оплата лікарняних і відпускних, ліміти, коментарі й можливість ставити понад закон","Статистика хвороб і відпочинку по місяцях і за рік","Шаблони змін для кожної роботи, а не лише основної"],"0.8 beta":["Нова назва — Bud","Підтвердження змін: план стає фактом, коли ти підтвердиш","«Сьогодні можна витратити» і швидкі витрати одним тапом","«Твій оптимум» в аналізі — і план змін під нього","Річний підсумок зі звітом і пасками","«Твій старт» на головній — підказки, що ще налаштувати","Виправлено: кнопки в опитувальнику, клавіатура, залишок на рахунку"],"0.7 beta":["Рід у профілі: тексти звертаються до тебе в правильному роді","Чистий старт: жодних готових даних і виборів за замовчуванням","«Стерти все» повністю обнуляє апку й запускає опитувальник","Дані з 0.6 можна повернути в «Дані й копія»"],"0.6 beta":["Свайпи між вкладками і свайп праворуч, щоб повернутися назад","Нижнє меню з плаваючим виділенням","«Кілька днів» у графіку: шаблон, вихідний чи очищення одразу для багатьох днів","Час зміни тепер обирається за один раз","Місячна зарплата, разові підробітки й кілька валют","Новий опитувальник: профіль, оплата, ціль заробітку, цілі накопичень, сон","Сповіщення і кнопка «Зберегти» в налаштуваннях"]};
 function notifs(){const L=[],add=(id,e,t,s2,act,arg)=>L.push({id,e,t,s:s2,act,arg});if(!S.onb)return L;
   if(S.nt.ver!==VER&&CHANGELOG[VER])add("upd-"+VER,"🆕","Оновлення "+VER,"Що змінилось:","changelog");
   const E=payEvents(TD,2);E.filter(x=>x.t==="in").forEach(x=>{const n=dd(TD,x.d);add("pay-"+ds(x.d)+x.n,"💰",n===0?"Сьогодні виплата":n===1?"Завтра виплата":"Скоро виплата",`${esc(x.n)}: ~${kc(x.a)}`,"go","money")});
@@ -1838,6 +1872,11 @@ document.body.addEventListener("click",e=>{const t=e.target;let b;
   if(b=t.closest("[data-slip]"))return openSlip(b.dataset.slip);
   if(b=t.closest("[data-cf2]")){const[k,id,a]=b.dataset.cf2.split("|");if(a==="e")return openDay(k);confirmShift(k,id,a);return refresh()}
   if(t.closest("[data-cfall]")){pendList().forEach(p=>delete p.x.pl);save();return refresh()}
+  if(b=t.closest("[data-inc]")){S.cfg.inc=b.dataset.inc;save();if(V==="set")renderSet();else refresh();return}
+  if(b=t.closest("[data-jside]")){const j=S.jobs.find(x=>x.id===b.dataset.jid);if(j){j.side=b.dataset.v==="1";save();renderSet()}return}
+  if(b=t.closest("[data-gside]")){const g=S.gigs.find(x=>x.id===b.dataset.gside);if(g){g.side=b.dataset.v==="1";save();renderSet()}return}
+  if(b=t.closest("[data-set]")){go("set");SP=b.dataset.set;renderSet();return}
+  if(b=t.closest("[data-spk]")){SPK=b.dataset.spk;$$("#spk button").forEach(x=>x.classList.toggle("on",x.dataset.spk===SPK));const di=$("#spkd");if(di)di.hidden=SPK!=="x";spkNote();return}
   if(b=t.closest("[data-hp]")){HP={p:b.dataset.hp,o:0};return renderHist()}
   if(b=t.closest("[data-ho]")){HP.o=Math.min(0,HP.o+(+b.dataset.ho));return renderHist()}
   if(b=t.closest("[data-yr]")){YRY+= +b.dataset.yr;return renderYr()}
@@ -2024,8 +2063,6 @@ const wnCmp=(old,neu)=>`<div class="wncmp"><div class="wnc old an d3"><em>Бул
 const wnRow=(l,r,c="")=>`<div class="wnr"><span>${l}</span><b class="${c}">${r}</b></div>`;
 const shpD=(...a)=>shp(...a).replace('class="shw"','class="shw wnd"');
 function wnSlides091(){const L=[],has=!!S.bal.d,c=has?cashflow():null,bn=has?balNow():0;
-  L.push({bg:SPAL.k,fg:SPAL.c,h:`${shp("flower",SPAL.l,170,"right:-40px;top:13%")}${shp("star",SPAL.a,74,"left:8%;top:20%","spin",150)}${shp("cloud",SPAL.b,96,"left:36%;top:33%","bob",300)}${shp("heart",SPAL.p,64,"right:16%;top:41%","bob",450)}
-    <div class="sfill"></div><p class="sk an d1">Оновлення ${VER.replace(" beta","")}</p><h2 class="sh1 an d2" style="font-size:clamp(38px,11vw,50px)">Що нового<br>в Bud</h2><p class="sp1 an d3">Коротко й на прикладах — що змінилось і як тепер працює. Тапай праворуч, щоб гортати.</p>`});
   {let old,neu;if(has){const t0=S.bal.ts||0,from=addD(pk(S.bal.d),1),E=from<=TD?ledger(from,TD):[];const sp=(S.sp||[]).filter(x=>(x.ts||0)>t0&&x.k===S.bal.d).map(x=>({t:"sp",n:x.n||"Витрата",a:toM(num(x.a),x.cur)}));
       const rows=[...E.filter(e=>e.t!=="sp"||(e.ts||0)>t0),...sp].slice(0,3);
       old=wnRow("На рахунку",kc(num(S.bal.a)))+`<p>Рахунки й виплати доводилось віднімати й додавати вручну.</p>`;
@@ -2048,11 +2085,32 @@ function wnSlides091(){const L=[],has=!!S.bal.d,c=has?cashflow():null,bn=has?bal
     <div class="wnphone an d3"><div class="wnpb">${"<i></i>".repeat(6)}</div>${shpD("flower",SPAL.l,64,"right:-8px;top:26px","spin")}${shpD("aster",SPAL.o,40,"left:14px;top:50px","bob")}<b>Твій жовтень<br>в деталях</b></div>`});
   L.push({bg:SPAL.g,fg:SPAL.c,h:`${shpD("blob",SPAL.a,84,"right:-18px;top:35%","bob")}<p class="sk an d1">Твої дані</p><h2 class="sh1 an d2">Не загубляться після оновлення</h2><p class="sp1 an d2">Щодня зберігаю знімок даних. А для файлу копії — кнопка на першому екрані.</p><div class="sfill"></div>
     ${wnCmp(`<p>Оновив — і почав опитування з нуля.</p>`,`<div class="wnbtn">↺ Відновити дані після оновлення</div><p>Копія: «Меню → Дані → Зберегти резервну копію».</p>`)}`});
-  L.push({bg:SPAL.l,fg:SPAL.k,last:true,h:`${shp("flower",SPAL.k,150,"right:-40px;top:13%")}${shp("heart",SPAL.p,70,"left:10%;top:22%","bob",200)}${shp("star",SPAL.o,54,"left:40%;top:34%","spin",350)}
-    <div class="sfill"></div><p class="sk an d1">Готово</p><h2 class="sh1 an d2" style="font-size:clamp(40px,12vw,54px)">Усе на місці</h2><p class="sp1 an d3">Якщо щось працює не так — скрін і в телеграм автору. Дякую, що тестуєш Bud 💚</p><button class="sbtn an d4" data-stclose="1">Поїхали</button>`});
   return L}
-const WHATSNEW={"0.9.1 beta":wnSlides091};
-function openWhatsNew(v){v=v||VER;const f=WHATSNEW[v];if(!f)return false;S.wnSeen=VER;saveLocal();playStories(f(),"Bud · що нового");return true}
+
+/* 0.9.2: джерела доходу й дата витрати */
+function wnSlides092(){const L=[],has=!!S.bal.d,sd=hasSide();
+  const withInc=(m,f)=>{const o=S.cfg.inc;S.cfg.inc=m;try{return f()}finally{S.cfg.inc=o}};
+  const bA=has?withInc("all",balNow):null,bM=has?withInc("main",balNow):null,mS=withInc("side",()=>mSum(TD.getFullYear(),TD.getMonth()).n);
+  const seg=k=>`<div class="wnseg3">${INCM.map(([x,l])=>`<span class="${x===k?"on":""}">${l}</span>`).join("")}</div>`;
+  L.push({bg:SPAL.c,fg:SPAL.k,h:`${shpD("flower",SPAL.g,104,"right:-36px;top:34%")}${shpD("star",SPAL.o,46,"left:10%;top:39%","spin",200)}<p class="sk an d1">Гроші</p><h2 class="sh1 an d2">Основний дохід окремо від додаткового</h2><p class="sp1 an d2">Позначаєш, яка робота основна, а яка додаткова — і вирішуєш, що показувати: усе разом, лише основну чи лише додаткові.</p><div class="sfill"></div>
+    ${wnCmp(has&&sd?wnRow("На рахунку",kc(bA))+`<p>Сюди додавались і гроші з додаткових джерел — навіть з іншого рахунку.</p>`:wnRow("На рахунку","14 650 Kč")+`<p>Усі доходи змішувались в одну суму.</p>`,
+      seg("main")+(has&&sd?wnRow("На рахунку",kc(bM))+`<p>Лише основна робота.${mS?` Додаткові цього місяця — ${kc(mS)}, вони в режимі «Додаткові».`:""}</p>`:wnRow("На рахунку","12 900 Kč")+`<p>Лише основна робота — без ілюзії зайвих грошей.</p>`))}`});
+  L.push({bg:SPAL.b,fg:SPAL.k,h:`${shpD("heart",SPAL.c,92,"right:-22px;top:35%","bob")}<p class="sk an d1">Де це</p><h2 class="sh1 an d2">Перемикач угорі «Грошей»</h2><p class="sp1 an d2">Режим міняє баланс, «можна витрачати на день», план, підсумки й поради. Витрати й рахунки — ті самі в усіх режимах.</p><div class="sfill"></div>
+    <div class="wnc new an d3"><em>Налаштування → Який дохід показувати</em>${S.jobs.slice(0,3).map(j=>`<div class="wnr"><span>${esc(j.n||"Робота")}</span><b class="wnmini">${jobSide(j)?"Додаткова":"Основна"}</b></div>`).join("")}${S.gigs.filter(g=>num(g.a)).slice(0,1).map(g=>`<div class="wnr"><span>${esc(g.n||"Підробіток")}</span><b class="wnmini">${gigSide(g)?"Додаткова":"Основна"}</b></div>`).join("")}<p>Разові підробітки без прив’язки до роботи — додаткові. Змінити можна в один тап.</p></div>`});
+  L.push({bg:SPAL.l,fg:SPAL.k,h:`${shpD("cloud",SPAL.k,80,"right:18px;top:36%","bob")}<p class="sk an d1">Витрати</p><h2 class="sh1 an d2">Забув записати? Постав дату</h2><p class="sp1 an d2">Вчора, позавчора чи будь-який день. Баланс зменшиться, а денна сума на сьогодні перерахується чесно — без «мінуса» за вчорашні покупки.</p><div class="sfill"></div>
+    ${wnCmp(`<p>Усі витрати записувались на сьогодні — і з’їдали сьогоднішній ліміт.</p>`,`<div class="wnchips"><span>Сьогодні</span><span class="on">Вчора</span><span>Позавчора</span><span>Інший день</span></div><p>Продукти · 200 Kč · вчора</p>`)}`});
+  return L}
+const WHATSNEW={"0.9.1 beta":wnSlides091,"0.9.2 beta":wnSlides092};
+const vNum=v=>(String(v||"0").match(/[\d.]+/)||["0"])[0].split(".").map(Number).reduce((a,x,i)=>a+x*Math.pow(1000,2-i),0);
+function wnIntro(vs){
+  return({bg:SPAL.k,fg:SPAL.c,h:`${shp("flower",SPAL.l,170,"right:-40px;top:13%")}${shp("star",SPAL.a,74,"left:8%;top:20%","spin",150)}${shp("cloud",SPAL.b,96,"left:36%;top:33%","bob",300)}${shp("heart",SPAL.p,64,"right:16%;top:41%","bob",450)}
+    <div class="sfill"></div><p class="sk an d1">${vs.length>1?"Оновлення до ":"Оновлення "}${vs[vs.length-1].replace(" beta","")}</p><h2 class="sh1 an d2" style="font-size:clamp(38px,11vw,50px)">Що нового<br>в Bud</h2><p class="sp1 an d3">Коротко й на прикладах — що змінилось і як тепер працює. Тапай праворуч, щоб гортати.</p>`});}
+function wnFinal(){
+  return({bg:SPAL.l,fg:SPAL.k,last:true,h:`${shp("flower",SPAL.k,150,"right:-40px;top:13%")}${shp("heart",SPAL.p,70,"left:10%;top:22%","bob",200)}${shp("star",SPAL.o,54,"left:40%;top:34%","spin",350)}
+    <div class="sfill"></div><p class="sk an d1">Готово</p><h2 class="sh1 an d2" style="font-size:clamp(40px,12vw,54px)">Усе на місці</h2><p class="sp1 an d3">Якщо щось працює не так — скрін і в телеграм автору. Дякую, що тестуєш Bud 💚</p><button class="sbtn an d4" data-stclose="1">Поїхали</button>`});}
+/* показує зміни всіх версій, новіших за ту, що людина вже бачила (або одну версію v) */
+function openWhatsNew(v){const vs=v?[v]:Object.keys(WHATSNEW).filter(x=>vNum(x)>vNum(S.wnSeen)&&vNum(x)<=vNum(VER)).sort((a,b)=>vNum(a)-vNum(b));if(!vs.length||!vs.every(x=>WHATSNEW[x]))return false;
+  const F=[].concat(...vs.map(x=>WHATSNEW[x]()));S.wnSeen=VER;saveLocal();playStories([wnIntro(vs),...F,wnFinal()],"Bud · що нового");return true}
 function wnAuto(){if(!S.onb||S.wnSeen===VER||!WHATSNEW[VER]||!$("#onb").hidden)return false;setTimeout(()=>{if(!openSheet&&!ST)openWhatsNew()},700);return true}
 
 function stAuto(){const w=stWin();if(w&&S.stSeen!==w.key&&$("#onb").hidden)setTimeout(()=>{if(!openSheet)openStories()},700)}
@@ -2066,7 +2124,7 @@ function renderAbsQuiet(){}
 $("#cf").addEventListener("click",e=>{const b=e.target.closest("[data-cf]");if(!b)return;const a=b.dataset.cf,fn=CONF;CONF=null;closeS();if(a==="save"){commitSet();SETBK=null;fn&&fn()}else if(a==="drop"){dropSet();fn&&fn()}});
 $("#gsb").addEventListener("input",e=>{if(e.target.dataset.gf){setBound(e)}});
 $("#gsb").addEventListener("focusout",e=>{if(e.target.dataset&&e.target.dataset.gf)setTimeout(()=>{const a=document.activeElement;if(a&&a.closest&&a.closest("#gsb")&&a.tagName==="INPUT")return;renderGig()},80)});
-$("#gsb").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;const g=S.gigs.find(x=>x.id===GG);if(!g)return;if(b.dataset.gcur){g.cur=b.dataset.gcur;save();renderGig()}else if(b.dataset.gtx){g.tx=b.dataset.gtx;save();renderGig()}else if("gdel" in b.dataset){S.gigs=S.gigs.filter(x=>x.id!==GG);GG=null;save();closeS()}});
+$("#gsb").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;const g=S.gigs.find(x=>x.id===GG);if(!g)return;if(b.dataset.gcur){g.cur=b.dataset.gcur;save();renderGig()}else if(b.dataset.gtx){g.tx=b.dataset.gtx;save();renderGig()}else if(b.dataset.gsd!==undefined){g.side=b.dataset.gsd==="1";save();renderGig();refresh()}else if("gdel" in b.dataset){S.gigs=S.gigs.filter(x=>x.id!==GG);GG=null;save();closeS()}});
 document.addEventListener("change",async e=>{const t=e.target;if(t.id!=="avf"&&t.id!=="avf2")return;const f=t.files&&t.files[0];if(!f||!ASSETS)return;try{const r=await ASSETS.upload(f);if(S.prof.av){try{await ASSETS.delete(S.prof.av)}catch(er){}}S.prof.av=r.id;save();if(!$("#onb").hidden)renderOnb();else renderSet()}catch(er){alert("Не вдалось зберегти фото.")}});
 $("#ov").onclick=closeS;$("#dn").onclick=closeS;$("#msx").onclick=closeS;
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&openSheet)closeS()});
