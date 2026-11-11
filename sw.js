@@ -1,6 +1,6 @@
 // Bud service worker: works offline and shows push notifications.
 // Bump VERSION with every release so phones pick up the new files.
-const VERSION = 'bud-1.0.0';
+const VERSION = 'bud-1.0.1';
 const FILES = [
   './', './index.html', './manifest.webmanifest', './css/app.css',
   './js/app.js', './js/calc.js', './js/store.js', './js/ui.js', './js/buddy.js', './js/care.js', './js/notify.js', './js/config.js',
