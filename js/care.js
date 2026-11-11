@@ -50,10 +50,16 @@ export function balance() {
   const tw = parts.reduce((s, p) => s + w[p.k], 0);
   let score = parts.reduce((s, p) => s + p.v * w[p.k], 0) / tw;
   if (st.er >= 4) score += (st.fe - 2) * 6; // how the shifts felt
+  // how the person said they felt (daily check-in)
+  const SC = { up: 3, calm: 3, tired: 1.5, tense: 1, sad: 1 };
+  const moods = []; for (let i = 0; i < 14; i++) { const m = (S.mood || {})[ds(addD(T, -i))]; if (SC[m]) moods.push(SC[m]); }
+  if (moods.length >= 3) { const av = moods.reduce((a, b) => a + b, 0) / moods.length; score += (av - 2) * 7; parts.push({ k: 'mood', v: Math.round((av - 1) / 2 * 100), label: 'Настрій', note: `${moods.length} ${pl(moods.length, ['відмітка', 'відмітки', 'відміток'])} за 2 тижні` }); }
   score = Math.max(0, Math.min(100, Math.round(score)));
   const label = score >= 80 ? 'Чудовий баланс' : score >= 62 ? 'Рівновага' : score >= 42 ? 'На межі' : 'Перевантаження';
-  const mood = score >= 80 ? 'happy' : score >= 62 ? 'happy' : score >= 42 ? 'worried' : 'tired';
-  return { ok: true, score, label, mood, parts, z, st };
+  const mood = score >= 80 ? 'up' : score >= 62 ? 'calm' : score >= 42 ? 'worried' : 'sleepy';
+  const tone = score >= 80 ? 'lime' : score >= 62 ? 'mint' : score >= 42 ? 'yellow' : 'coral';
+  const text = score >= 80 ? 'Сон, відпочинок і робота в рівновазі. Так тримати.' : score >= 62 ? 'Ритм рівний. Невеликі перекоси є, але сил вистачає.' : score >= 42 ? 'Втома накопичується. Варто додати сну або вихідний.' : 'Забагато роботи й замало відпочинку. Час пригальмувати.';
+  return { ok: true, score, label, mood, tone, text, parts, z, st };
 }
 
 /* ---------- personal tips ---------- */
@@ -121,7 +127,7 @@ export function tips() {
     const thr = C.thrFor(C.LAW.DPP, y);
     const grossMonth = C.toM(fact.g, j.cur) / C.toM(1, 'CZK');
     if (grossMonth > thr * .85 && grossMonth < thr) out.push({ id: 'thr' + j.id, score: 7, icon: 'info', color: 'sky',
-      title: `${C.esc(j.n || 'DPP')}: до порогу ${thr.toLocaleString('uk-UA')} Kč лишилось ${Math.round(thr - grossMonth).toLocaleString('uk-UA')} Kč`,
+      title: `${C.esc(j.n || 'DPP')}: до порогу ${thr.toLocaleString('uk-UA')} Kc лишилось ${Math.round(thr - grossMonth).toLocaleString('uk-UA')} Kc`,
       text: 'Якщо дохід за місяць досягне порогу, з нього утримають соціальне й медичне страхування, зате з’являться лікарняні. Виріши, що для тебе вигідніше.' });
   });
   // 10. money
@@ -157,10 +163,13 @@ export function todayMood() {
   if (ab) return 'chill';
   if (C.payEvents(C.TD, 0).some((e) => e.t === 'in')) return 'proud';
   const sl = C.slDur(S.sleep[k]);
-  if (sl && sl < C.sgv() * 60 - 90) return 'tired';
+  if (sl && sl < C.sgv() * 60 - 90) return 'sleepy';
+  const md = (S.mood || {})[k];
+  if (md === 'tense' || md === 'sad') return md === 'tense' ? 'tense' : 'sad';
+  if (md === 'tired') return 'sleepy';
   if (C.cashRisk()?.lvl === 'hi' || C.curStreak() >= 7) return 'worried';
   if (C.isOff(k) || (!C.isWd(k) && C.hasData())) return 'chill';
   const h = new Date().getHours();
   if (h >= 23 || h < 5) return 'sleepy';
-  return 'happy';
+  return md === 'up' ? 'up' : 'happy';
 }

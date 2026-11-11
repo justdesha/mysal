@@ -1,7 +1,9 @@
 // Bud 1.0 — entry: tabs, quick add, lifecycle.
 import * as C from './calc.js';
 import { load, save, hadLoadError, VER } from './store.js';
-import { $, $$, ic, sheet, closeSheets, haptic, toast } from './ui.js';
+import { $, $$, ic, sheet, closeSheets, haptic, toast, plainC } from './ui.js';
+import { stk } from './stickers.js';
+import { face } from './cast.js';
 import { renderToday } from './today.js';
 import { renderPlan, openDay, openAutoplan } from './schedule.js';
 import { renderMoney, openSpend, openGig } from './money.js';
@@ -26,7 +28,7 @@ export function go(tab, opts = {}) {
   $$('.tab').forEach((b) => b.setAttribute('aria-current', b.dataset.tab === tab ? 'page' : 'false'));
   refresh();
   if (!opts.keepScroll) window.scrollTo(0, 0);
-  moveInd(prev !== tab);
+  moveInd(prev !== tab, prev);
 }
 export function refresh() {
   const t = TABS.find((x) => x.id === cur);
@@ -58,17 +60,25 @@ function shell() {
   });
   $('#add').onclick = quickAdd;
   addEventListener('resize', () => moveInd(false));
+  requestAnimationFrame(() => moveInd(false));
 }
 const tabBtn = (t) => `<button class="tab" data-tab="${t.id}" aria-current="false">${ic(t.icon)}<span>${t.label}</span></button>`;
 
-function moveInd(animate) {
+/** liquid-glass indicator: the leading edge moves first, the trailing edge catches up — it stretches like a drop */
+function moveInd(animate, from) {
   const nav = $('.nav'), b = nav.querySelector(`.tab[data-tab="${cur}"]`), ind = $('.nav-ind');
   if (!b) return;
   const n = nav.getBoundingClientRect(), r = b.getBoundingClientRect();
-  ind.style.transition = animate ? '' : 'none';
-  ind.style.transform = `translateX(${r.left - n.left}px)`;
-  ind.style.width = r.width + 'px';
-  if (animate) { ind.classList.remove('pop'); void ind.offsetWidth; ind.classList.add('pop'); }
+  const left = r.left - n.left + 2, right = n.right - r.right + 2;
+  const order = TABS.map((t) => t.id), toRight = order.indexOf(cur) > order.indexOf(from);
+  if (animate) {
+    ind.style.transition = toRight
+      ? 'right .34s cubic-bezier(.3,1.35,.5,1), left .5s cubic-bezier(.45,1.25,.45,1) .07s'
+      : 'left .34s cubic-bezier(.3,1.35,.5,1), right .5s cubic-bezier(.45,1.25,.45,1) .07s';
+    ind.classList.remove('squish'); void ind.offsetWidth; ind.classList.add('squish');
+  } else ind.style.transition = 'none';
+  ind.style.left = left + 'px';
+  ind.style.right = right + 'px';
 }
 
 /* ---------- the + button ---------- */
@@ -78,11 +88,11 @@ function quickAdd() {
   const s = sheet({
     title: 'Додати', cls: 'quick',
     html: `<div class="qa">
-      <button class="qa-t mint" data-q="shift">${ic('work')}<b>Зміну</b><span>на сьогодні чи будь-який день</span></button>
-      <button class="qa-t sky" data-q="sleep">${ic('moon')}<b>Сон</b><span>як спалось минулої ночі</span></button>
-      <button class="qa-t lime" data-q="spend">${ic('bag')}<b>Витрату</b><span>щоб бачити, скільки лишається</span></button>
-      <button class="qa-t pink" data-q="gig">${ic('gift')}<b>Підробіток</b><span>разова оплата поза графіком</span></button>
-    </div><button class="btn ghost wide" data-q="plan">${ic('magic')}Скласти план змін</button>`,
+      <button class="qa-t mint" data-q="shift">${stk('shift')}<b>Зміну</b><span>на сьогодні чи будь-який день</span><span class="peek">${face({ shape: 'squircle', color: 'orange', mood: 'happy' })}</span></button>
+      <button class="qa-t sky" data-q="sleep">${stk('moon')}<b>Сон</b><span>як спалось минулої ночі</span><span class="peek">${face({ shape: 'blob', color: 'sky', mood: 'sleepy' })}</span></button>
+      <button class="qa-t lime" data-q="spend">${stk('bag')}<b>Витрату</b><span>щоб бачити, скільки лишається</span><span class="peek">${face({ shape: 'circle', color: 'lime', mood: 'calm' })}</span></button>
+      <button class="qa-t pink" data-q="gig">${stk('gift')}<b>Підробіток</b><span>разова оплата поза графіком</span><span class="peek">${face({ shape: 'flower', color: 'pink', mood: 'up' })}</span></button>
+    </div><button class="btn white wide" data-q="plan">${ic('magic')}Скласти план змін</button>`,
     onMount(x) {
       x.body.onclick = (e) => {
         const b = e.target.closest('[data-q]'); if (!b) return;
@@ -101,29 +111,33 @@ function quickAdd() {
   return s;
 }
 
-/* ---------- service worker & updates ---------- */
+/* ---------- service worker & updates ----------
+   iOS keeps a home-screen app alive in the background and rarely re-checks sw.js,
+   so Bud asks for updates itself every time it comes back to the screen.
+   A new version installs quietly and reloads when no sheet is open. */
+let REG = null;
 function sw() {
   if (!('serviceWorker' in navigator) || !/^https?:$/.test(location.protocol)) return;
-  navigator.serviceWorker.register('./sw.js').then((reg) => {
-    reg.addEventListener('updatefound', () => {
-      const w = reg.installing;
-      w && w.addEventListener('statechange', () => { if (w.state === 'installed' && navigator.serviceWorker.controller) showUpdate(w); });
-    });
+  navigator.serviceWorker.register('./sw.js', { updateViaCache: 'none' }).then((reg) => {
+    REG = reg;
+    const take = (w) => w && w.addEventListener('statechange', () => { if (w.state === 'installed' && navigator.serviceWorker.controller) w.postMessage('skipWaiting'); });
+    if (reg.waiting && navigator.serviceWorker.controller) reg.waiting.postMessage('skipWaiting');
+    reg.addEventListener('updatefound', () => take(reg.installing));
   }).catch(() => {});
   let done = false;
-  navigator.serviceWorker.addEventListener('controllerchange', () => { if (!done) { done = true; location.reload(); } });
+  const reload = () => {
+    if (done) return;
+    if (document.documentElement.classList.contains('locked') && !document.hidden) { setTimeout(reload, 1500); return; }
+    done = true; location.reload();
+  };
+  navigator.serviceWorker.addEventListener('controllerchange', reload);
   navigator.serviceWorker.addEventListener('message', (e) => { if (e.data && e.data.open) openUrl(e.data.open); });
 }
-function showUpdate(w) {
-  const b = document.createElement('div');
-  b.className = 'update';
-  b.innerHTML = '<span>Є нова версія Bud</span><button class="btn violet sm">Оновити</button>';
-  b.querySelector('button').onclick = () => w.postMessage('skipWaiting');
-  document.body.append(b);
-}
+export const checkUpdate = () => { try { REG && REG.update(); } catch (e) { /* offline */ } };
 
 /* ---------- start ---------- */
 function start() {
+  plainC();
   const S = load();
   applyTheme();
   shell();
@@ -138,7 +152,7 @@ function start() {
   armLocal(); syncPush();
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) return;
-    C.syncToday(); refresh(); armLocal(); syncPush();
+    C.syncToday(); refresh(); armLocal(); syncPush(); checkUpdate();
   });
   // every change: reschedule reminders a moment later
   import('./store.js').then((m) => m.subscribe(() => { queueSync(); armLocal(); }));

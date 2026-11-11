@@ -2,9 +2,10 @@
 import * as C from './calc.js';
 import { save, VER, backupBlob, restoreFrom, localCopies, wipe, undemo } from './store.js';
 import { ic, sheet, ask, toast, seg, segInd, chips, tgl, haptic } from './ui.js';
-import { buddy } from './buddy.js';
+import { face, bud, BUD, MOOD_SET, moodFace, moodById } from './cast.js';
+import { stk, chipIc } from './stickers.js';
 import { balance, tips, g } from './care.js';
-import { jobColor, hmShort } from './today.js';
+import { jobColor, hmShort, tipHtml } from './today.js';
 import { enablePush, disablePush, testPush, canPush, permission, standalone, pushUrl } from './notify.js';
 import { openDay, openRates, openTemplates } from './schedule.js';
 
@@ -23,55 +24,92 @@ export function renderMe(el) {
   const s = S(), B = balance(), T = tips().slice(0, 4);
   const nights = []; for (let i = 13; i >= 0; i--) { const k = C.ds(C.addD(C.TD, -i)); nights.push({ k, m: C.slDur(s.sleep[k]) }); }
   const goal = C.sgv() * 60, maxN = Math.max(goal + 60, ...nights.map((n) => n.m));
-  const z = B.z || C.sleepStats(C.addD(C.TD, -13), C.TD);
+  const z = B.z || C.sleepStats(C.addD(C.TD, -13), C.TD), st = B.st || C.stats(C.addD(C.TD, -13), C.TD);
   const yr = C.absCount(new Date(C.TD.getFullYear(), 0, 1), C.TD);
-  const initial = s.name ? s.name.trim()[0].toUpperCase() : '';
+  const off = st.days - st.wd;
+  const row = (a, icon, tone, title, sub) => `<button class="row" data-a="${a}">${chipIc(icon, tone)}<span class="grow"><b>${title}</b><span>${sub}</span></span>${ic('right')}</button>`;
 
   el.innerHTML = `
     <header class="page-h"><div><h1 class="h1">${s.name ? C.esc(s.name) : 'Я'}</h1><span class="muted">твій ритм за 2 тижні</span></div>
-      <button class="avatar" data-a="profile" aria-label="Профіль">${s.prof.av ? `<img src="${s.prof.av}" alt="">` : initial ? C.esc(initial) : ic('me')}</button></header>
+      <button class="avatar" data-a="profile" aria-label="Профіль">${s.prof.av ? `<img src="${s.prof.av}" alt="">` : bud(B.ok ? B.mood : 'curious')}</button></header>
 
-    <section class="card bal-card ${B.ok ? '' : 'empty-b'}">
-      <div class="bal-top"><div>
-        ${B.ok ? `<span class="lbl-l">Баланс роботи й життя</span><b class="score">${B.score}</b><span class="score-l">${B.label}</span>` : '<span class="lbl-l">Баланс роботи й життя</span><b class="score-l big">Ще мало даних</b><span class="small">Запиши кілька змін і ночей сну — і тут зʼявиться твій баланс.</span>'}
-      </div><div class="bal-buddy">${buddy({ mood: B.ok ? B.mood : 'curious', pose: 'stand' })}</div></div>
-      ${B.parts.map((p) => `<div class="part"><span class="row-sb"><b>${p.label}</b><span class="small">${p.note}</span></span><span class="pbar"><i style="width:${p.v}%" class="${p.v < 45 ? 'low' : p.v < 70 ? 'mid' : 'hi'}"></i></span></div>`).join('')}
+    <section class="summary c-${B.ok ? B.tone : 'lilac'}">
+      <span class="lbl-l">Баланс роботи й життя</span>
+      <h2 class="word">${B.ok ? B.label : 'Ще мало даних'}</h2>
+      <p>${B.ok ? B.text : 'Запиши кілька змін, ночей сну й настроїв — і тут зʼявиться твій баланс.'}</p>
+      ${B.ok ? `<span class="score-p">${B.score} / 100</span>` : ''}
+      <span class="peek">${face(B.ok ? { shape: 'circle', color: { lime: 'lime', mint: 'mint', yellow: 'sun', coral: 'coral' }[B.tone], mood: B.mood, hair: 'curl' } : { ...BUD, mood: 'curious' })}</span>
     </section>
+
+    <div class="stats3">
+      <div><span>Сон</span><b>${z.n ? hmShort(z.avg) : '—'}</b><small>у середньому</small></div>
+      <div><span>Вихідні</span><b>${st.days ? off : '—'}</b><small>за 2 тижні</small></div>
+      <div><span>Робота</span><b>${st.w ? Math.round(st.pw) + '<small>год</small>' : '—'}</b><small>на тиждень</small></div>
+    </div>
+    ${B.parts.length ? `<section class="card">${B.parts.map((p) => `<div class="part"><span class="row-sb"><b>${p.label}</b><span class="small">${p.note}</span></span><span class="pbar"><i style="width:${Math.max(4, p.v)}%" class="${p.v < 45 ? 'low' : p.v < 70 ? 'mid' : 'hi'}"></i></span></div>`).join('')}</section>` : ''}
+
+    <section class="card">${moodCalendar()}</section>
 
     <section class="card">
-      <div class="row-sb"><h2 class="h3">Сон</h2><button class="btn soft sm" data-a="sleep">${ic('plus')}Записати</button></div>
+      <div class="row-sb"><h2 class="h3">Сон</h2><button class="btn white sm" data-a="sleep">${ic('plus')}Записати</button></div>
       <div class="sl-chart" style="--goal:${goal / maxN * 100}%">${nights.map((n) => `<button class="sl-b ${n.k === C.TK ? 'now' : ''}" data-sk="${n.k}" aria-label="${C.dLong(C.pk(n.k))}: ${n.m ? C.hm(n.m) : 'не записано'}"><i class="${!n.m ? 'none' : n.m < goal - 60 ? 'short' : 'ok'}" style="height:${n.m ? Math.max(6, n.m / maxN * 100) : 4}%"></i><small>${C.DS[C.pk(n.k).getDay()][0]}</small></button>`).join('')}</div>
-      <p class="small muted">${z.n ? `У середньому ${C.hm(z.avg)} за останні 14 днів (${z.n} ${C.pl(z.n, ['ніч', 'ночі', 'ночей'])} записано). Пунктир — твоя ціль ${C.sgv()} год.` : 'Записуй, коли ліг і встав, — побачиш, як зміни впливають на сон.'}</p>
+      <p class="small muted">${z.n ? `У середньому ${C.hm(z.avg)} за останні 14 днів (${z.n} ${C.pl(z.n, ['ніч', 'ночі', 'ночей'])} записано). Пунктир — твоя ціль ${C.sgv()} год.` : 'Записуй, коли лягаєш і встаєш, — побачиш, як зміни впливають на сон.'}</p>
     </section>
 
-    <section><h2 class="h3 sec">Поради для тебе</h2>
-      ${T.map((t) => `<div class="tip c-${t.color}" ${t.act ? `data-tip="${t.act.join('|')}" role="button" tabindex="0"` : ''}><span class="tip-ic">${ic(t.icon)}</span><span class="grow"><b>${t.title}</b><span>${t.text}</span></span></div>`).join('')}
-    </section>
+    <h2 class="h3 sec">Поради для тебе</h2>
+    ${T.map((t) => tipHtml(t, t.act ? `data-tip="${t.act.join('|')}" role="button" tabindex="0"` : '')).join('')}
 
-    <section class="list-card">
-      <button class="row" data-a="abs">${ic('thermo')}<span class="grow"><b>Лікарняні й відпустки</b><span>${yr.sk || yr.vc ? `цього року: лікарняний ${yr.sk} ${C.pl(yr.sk, C.W_DAY)}, відпустка ${yr.vc}` : 'що тобі належить за договором'}</span></span>${ic('right')}</button>
-    </section>
+    <section class="list-card">${row('abs', 'thermo', 'coral', 'Лікарняні й відпустки', yr.sk || yr.vc ? `цього року: лікарняний ${yr.sk} ${C.pl(yr.sk, C.W_DAY)}, відпустка ${yr.vc}` : 'що тобі належить за договором')}</section>
 
     <section class="list-card"><h2 class="h3">Налаштування</h2>
-      <button class="row" data-a="jobs">${ic('work')}<span class="grow"><b>Роботи й договори</b><span>${s.jobs.filter((j) => j.n).map((j) => C.esc(j.n)).join(', ') || 'додай свою роботу'}</span></span>${ic('right')}</button>
-      <button class="row" data-a="rhythm">${ic('clock')}<span class="grow"><b>Ритм і навантаження</b><span>${C.norm()} год на тиждень · відпочинок ${C.restMin() / 60} год між змінами</span></span>${ic('right')}</button>
-      <button class="row" data-a="sleepset">${ic('moon')}<span class="grow"><b>Сон</b><span>ціль ${C.sgv()} год · збори ${C.prepv()} хв</span></span>${ic('right')}</button>
-      <button class="row" data-a="notif">${ic('bell')}<span class="grow"><b>Сповіщення</b><span>${s.push.on ? 'приходять, навіть коли Bud закритий' : permission() === 'granted' ? 'лише коли Bud відкритий' : 'вимкнено'}</span></span>${ic('right')}</button>
-      <button class="row" data-a="look">${ic('palette')}<span class="grow"><b>Вигляд</b><span>${{ auto: 'як у системі', light: 'світлий', dark: 'темний' }[s.cfg.theme || 'auto']}</span></span>${ic('right')}</button>
-      <button class="row" data-a="profile">${ic('me')}<span class="grow"><b>Профіль</b><span>імʼя, звертання, дата народження</span></span>${ic('right')}</button>
-      <button class="row" data-a="data">${ic('download')}<span class="grow"><b>Дані й копія</b><span>${s.lastBk ? `остання копія ${C.dLong(new Date(s.lastBk))}` : 'збережи копію на випадок нового телефона'}</span></span>${ic('right')}</button>
-      <button class="row" data-a="beta">${ic('chat')}<span class="grow"><b>Повідомити про проблему</b><span>скрін + пара слів автору</span></span>${ic('right')}</button>
-      <button class="row" data-a="wn">${ic('spark')}<span class="grow"><b>Що нового</b><span>Bud ${VER}</span></span>${ic('right')}</button>
+      ${row('jobs', 'shift', 'orange', 'Роботи й договори', s.jobs.filter((j) => j.n).map((j) => C.esc(j.n)).join(', ') || 'додай свою роботу')}
+      ${row('rhythm', 'clock', 'lilac', 'Ритм і навантаження', `${C.norm()} год на тиждень · відпочинок ${C.restMin() / 60} год між змінами`)}
+      ${row('sleepset', 'moon', 'sky', 'Сон', `ціль ${C.sgv()} год · збори ${C.prepv()} хв`)}
+      ${row('notif', 'bell', 'yellow', 'Сповіщення', s.push.on ? 'приходять, навіть коли Bud закритий' : permission() === 'granted' ? 'лише коли Bud відкритий' : 'вимкнено')}
+      ${row('look', 'palette', 'pink', 'Вигляд', { auto: 'як у системі', light: 'світлий', dark: 'темний' }[s.cfg.theme || 'auto'])}
+      ${row('profile', 'me', 'mint', 'Профіль', 'імʼя, звертання, дата народження')}
+      ${row('data', 'box', 'lime', 'Дані й копія', s.lastBk ? `остання копія ${C.dLong(new Date(s.lastBk))}` : 'збережи копію на випадок нового телефона')}
+      ${row('beta', 'chat', 'sky', 'Повідомити про проблему', 'скрін + пара слів автору')}
+      ${row('wn', 'spark', 'lilac', 'Що нового', `Bud ${VER}`)}
     </section>`;
   if (!el._b) {
     el._b = true;
     el.addEventListener('click', (e) => {
       const sk = e.target.closest('[data-sk]'); if (sk) return openSleep(sk.dataset.sk);
+      const mc = e.target.closest('[data-mk]'); if (mc) return openMoodDay(mc.dataset.mk);
       const tp = e.target.closest('[data-tip]'); if (tp) { const [t, v] = tp.dataset.tip.split('|'); if (t === 'day') openDay(v); else if (t === 'tab') window.dispatchEvent(new CustomEvent('bud:go', { detail: v })); else if (t === 'sleep') openSleep(C.TK); return; }
       const b = e.target.closest('[data-a]'); if (!b) return;
       ({ sleep: () => openSleep(C.TK), abs: openAbsence, jobs: openJobs, rhythm: openRhythm, sleepset: openSleepSet, notif: openNotif, look: openLook, profile: openProfile, data: openData, beta: openBeta, wn: () => import('./whatsnew.js').then((m) => m.showWhatsNew(true)) })[b.dataset.a]?.();
     });
   }
+}
+
+/* ---------- mood calendar ---------- */
+const FEEL_MOOD = { 1: 'tense', 2: 'calm', 3: 'up' };
+const dayMood = (k) => { const s = S(); return (s.mood || {})[k] || (s.days[k] && FEEL_MOOD[s.days[k].f]) || ''; };
+function moodCalendar() {
+  const y = C.TD.getFullYear(), m = C.TD.getMonth(), first = new Date(y, m, 1), lead = (first.getDay() + 6) % 7, n = C.dim(y, m);
+  const cnt = {};
+  let cells = '';
+  for (let i = 0; i < lead; i++) cells += '<span class="mc empty"></span>';
+  for (let d = 1; d <= n; d++) {
+    const k = C.ds(new Date(y, m, d)), md = dayMood(k);
+    if (md) cnt[md] = (cnt[md] || 0) + 1;
+    cells += `<button class="mc ${k === C.TK ? 'today' : ''} ${k > C.TK ? 'fut' : ''}" data-mk="${k}" ${k > C.TK ? 'disabled' : ''} aria-label="${d} ${C.MG[m]}${md ? ': ' + moodById(md).label : ''}">${md ? moodFace(md) : `<i>${d}</i>`}</button>`;
+  }
+  const top = Object.entries(cnt).sort((a, b) => b[1] - a[1]);
+  return `<div class="row-sb"><h2 class="h3">Настрій · ${C.MN[m]}</h2><span class="small muted">${top.length ? `найчастіше: ${moodById(top[0][0]).label.toLowerCase()}` : 'торкнись дня'}</span></div>
+    <div class="dow" style="margin-top:12px">${['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Нд'].map((x) => `<span>${x}</span>`).join('')}</div>
+    <div class="mcal">${cells}</div>
+    ${top.length ? `<div class="mleg">${top.map(([id, c]) => `<span>${moodFace(id)}${moodById(id).label} · ${c}</span>`).join('')}</div>` : ''}`;
+}
+function openMoodDay(k) {
+  const s = S();
+  sheet({
+    title: C.dLong(C.pk(k)),
+    html: `<p class="small muted">Як ти ${k === C.TK ? 'сьогодні' : 'почува' + g('вся', 'лась', 'вся(-лась)') + ' цього дня'}?</p><div class="feelpick" style="grid-template-columns:repeat(5,1fr)">${MOOD_SET.map((q) => `<button data-m="${q.id}" aria-pressed="${(s.mood || {})[k] === q.id}">${moodFace(q.id)}<span class="tiny">${q.label}</span></button>`).join('')}</div>`,
+    onMount(x) { x.body.addEventListener('click', (e) => { const b = e.target.closest('[data-m]'); if (!b) return; s.mood = s.mood || {}; if (s.mood[k] === b.dataset.m) delete s.mood[k]; else s.mood[k] = b.dataset.m; save(); haptic(10); x.close(); refresh(); }); }
+  });
 }
 
 /* ---------- sleep ---------- */
@@ -88,7 +126,7 @@ export function openSleep(k) {
   const head = () => `<div class="day-h"><button class="ib sm" data-a="p" aria-label="Попередня ніч">${ic('left')}</button><h2 class="h2">Сон</h2><button class="ib sm" data-a="n" aria-label="Наступна ніч" ${cur >= C.TK ? 'disabled' : ''}>${ic('right')}</button></div>`;
   sheet({
     head: head(), html: body(),
-    foot: '<div class="row-g"><button class="btn ghost" data-a="clr">Очистити</button><button class="btn violet grow" data-a="ok">Готово</button></div>',
+    foot: '<div class="row-g"><button class="btn ghost" data-a="clr">Очистити</button><button class="btn ink grow" data-a="ok">Готово</button></div>',
     onMount(x) {
       const re = () => { x.el.querySelector('.day-h').outerHTML = head(); x.set(body()); };
       const write = () => {
@@ -123,7 +161,7 @@ export function openAbsence() {
     <h3 class="h3 sec">Цього року</h3>
     ${groups.length ? groups.map((q) => `<button class="row" data-k="${q.a[0]}"><span class="ev-ic ${q.ab.t === 'sick' ? 'out' : 'in'}">${ic(q.ab.t === 'sick' ? 'thermo' : 'sun')}</span><span class="grow"><b>${q.ab.t === 'sick' ? 'Лікарняний' : 'Відпустка'}</b><span>${C.rng(C.pk(q.a[0]), C.pk(q.a[q.a.length - 1]))} · ${q.a.length} ${C.pl(q.a.length, C.W_DAY)}</span></span>${ic('right')}</button>`).join('') : '<p class="small muted">Цього року ще не було. Щоб записати, відкрий день у «Графіку» → «Хворію» або «Відпустка».</p>'}
     <div class="row-g"><button class="btn soft grow" data-new="sick">${ic('thermo')}Лікарняний</button><button class="btn soft grow" data-new="vac">${ic('sun')}Відпустка</button></div>
-    <p class="hint">${ic('info')}Суми — оцінка за записаними змінами. Точну виплату рахує роботодавець і ČSSZ.</p>`;
+    <p class="hint">${ic('info')}Суми — оцінка за записаними змінами. Точну виплату рахує роботодавець і CSSZ.</p>`;
   sheet({
     title: 'Лікарняні й відпустки', html, tall: true,
     onMount(x) {
@@ -171,7 +209,7 @@ export function openJob(j, isNew = false) {
       <div class="field"><span class="lbl">Як платять</span>${seg('pt', [['h', 'За години'], ['m', 'Оклад']], st.pt || 'h')}</div>
       ${st.pt === 'm' ? `<label><span class="lbl">На руки за місяць, ${C.sym(st.cur)}</span><input class="inp" id="jMon" inputmode="decimal" value="${st.mon}"></label>`
         : `<div class="two"><label><span class="lbl">Ставка за годину, ${C.sym(st.cur)}</span><input class="inp" id="jRate" inputmode="decimal" value="${st.rate}"></label><label><span class="lbl">На руки, %</span><input class="inp" id="jMult" inputmode="decimal" value="${st.mult}"></label></div>
-          <p class="hint">${ic('info')}${st.ct === 'DPP' ? 'На DPP до 12 000 Kč на місяць (2026) зазвичай утримують лише податок 15 %, якщо не підписано prohlášení. З підписаним — часто 100 %.' : 'Відсоток від брутто, що доходить на рахунок. Не знаєш — лиши 100 % і зверни з першою платіжкою.'}</p>`}
+          <p class="hint">${ic('info')}${st.ct === 'DPP' ? 'На DPP до 12 000 Kc на місяць (2026) зазвичай утримують лише податок 15 %, якщо не підписано prohlášení. З підписаним — часто 100 %.' : 'Відсоток від брутто, що доходить на рахунок. Не знаєш — лиши 100 % і зверни з першою платіжкою.'}</p>`}
       <div class="two"><label><span class="lbl">День виплати</span><input class="inp" id="jPd" inputmode="numeric" placeholder="напр. 15" value="${C.num(st.pd) || ''}"></label>
         <div><span class="lbl">За який місяць</span>${chips('lag', [['1', 'Минулий'], ['0', 'Поточний']], String(C.num(st.lag)))}</div></div>
       <div class="field"><span class="lbl">Валюта</span>${chips('cur', C.CUR.map((c) => [c[0], c[0]]), st.cur)}</div>
@@ -185,7 +223,7 @@ export function openJob(j, isNew = false) {
   };
   sheet({
     title: isNew ? 'Нова робота' : 'Робота', html: body(), tall: true,
-    foot: `<div class="row-g">${!isNew && s.jobs.length > 1 ? '<button class="btn ghost" data-a="del">Видалити</button>' : ''}<button class="btn violet grow" data-a="ok">Зберегти</button></div>`,
+    foot: `<div class="row-g">${!isNew && s.jobs.length > 1 ? '<button class="btn ghost" data-a="del">Видалити</button>' : ''}<button class="btn ink grow" data-a="ok">Зберегти</button></div>`,
     onMount(x) {
       requestAnimationFrame(() => segInd(x.body));
       const v = (id) => x.body.querySelector('#' + id);
@@ -273,7 +311,7 @@ function openNotif() {
       : ['off', 'Вимкнено', standalone() ? 'Bud попросить дозвіл.' : 'Спершу додай Bud на початковий екран і відкрий з іконки.'];
     const row = (k, label, sub) => `<button class="row" data-k="${k}"><span class="grow"><b>${label}</b><span>${sub}</span></span>${tgl(!!n[k])}</button>`;
     return `<div class="card tint st-${state[0]}"><b>${state[1]}</b><span class="small">${state[2]}</span>
-        ${s.push.on ? `<div class="row-g"><button class="btn soft grow" data-a="test">Надіслати тест</button><button class="btn ghost grow" data-a="off">Вимкнути</button></div>` : perm !== 'denied' ? `<button class="btn violet wide" data-a="on">${ic('bell')}Увімкнути сповіщення</button>` : ''}</div>
+        ${s.push.on ? `<div class="row-g"><button class="btn soft grow" data-a="test">Надіслати тест</button><button class="btn ghost grow" data-a="off">Вимкнути</button></div>` : perm !== 'denied' ? `<button class="btn ink wide" data-a="on">${ic('bell')}Увімкнути сповіщення</button>` : ''}</div>
       <div class="list-card">
         ${row('shift', 'Перед зміною', n.shift ? `за ${n.shift >= 60 ? n.shift / 60 + ' год' : n.shift + ' хв'}` : 'вимкнено')}
         ${row('early', 'Коли лягати перед ранньою зміною', 'увечері напередодні')}
@@ -346,7 +384,7 @@ function openData() {
   sheet({
     title: 'Дані й копія',
     html: `<p class="small muted">Усе зберігається лише на цьому телефоні. Копія — це файл, з якого Bud відновить дані на новому телефоні чи після очищення Safari.</p>
-      <button class="btn violet wide" data-a="bk">${ic('download')}Зберегти копію</button>
+      <button class="btn ink wide" data-a="bk">${ic('download')}Зберегти копію</button>
       <label class="btn soft wide">${ic('upload')}Відновити з файлу<input type="file" id="rf" accept="application/json,.json" hidden></label>
       ${localCopies().map((c) => `<button class="btn ghost wide" data-local="${c.key}">${c.label}<small>${c.days} ${C.pl(c.days, C.W_DAY)} у графіку</small></button>`).join('')}
       ${s.demo ? '<button class="btn soft wide" data-a="undemo">Прибрати демо-дані</button>' : ''}
@@ -377,7 +415,7 @@ function openBeta() {
   sheet({
     title: 'Повідомити про проблему',
     html: `<div class="steps"><p><b>1.</b> Зроби скрін місця, де щось не так.</p><p><b>2.</b> Напиши, що ${g('ти робив', 'ти робила', 'відбувалось')} і чого ${g('очікував', 'очікувала', 'очікувалось')}.</p><p><b>3.</b> Надішли автору в Telegram разом із технічними даними.</p></div>
-      <button class="btn violet wide" data-a="share">${ic('chat')}Надіслати технічні дані</button><p class="small muted">Там лише версія, екран і модель пристрою. Сум і особистих даних немає.</p>`,
+      <button class="btn ink wide" data-a="share">${ic('chat')}Надіслати технічні дані</button><p class="small muted">Там лише версія, екран і модель пристрою. Сум і особистих даних немає.</p>`,
     onMount(x) { x.el.addEventListener('click', async (e) => { if (!e.target.closest('[data-a]')) return; if (navigator.share) navigator.share({ text: diag }).catch(() => {}); else { await navigator.clipboard?.writeText(diag); toast('Скопійовано'); } }); }
   });
 }

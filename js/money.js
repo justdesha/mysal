@@ -4,6 +4,8 @@ import * as C from './calc.js';
 import { save } from './store.js';
 import { ic, sheet, ask, toast, seg, segInd, chips, countUp, haptic } from './ui.js';
 import { jobColor } from './today.js';
+import { face } from './cast.js';
+import { stk, chipIc } from './stickers.js';
 import { g } from './care.js';
 
 const refresh = () => window.dispatchEvent(new Event('bud:refresh'));
@@ -27,7 +29,7 @@ export function renderMoney(el) {
     <header class="page-h"><div><h1 class="h1">Гроші</h1><span class="muted">${C.MN[MM]} ${MY}</span></div>
       <div class="row-g"><button class="ib" data-a="pm" aria-label="Попередній місяць">${ic('left')}</button><button class="ib" data-a="nm" aria-label="Наступний місяць" ${isCur ? 'disabled' : ''}>${ic('right')}</button></div></header>
 
-    <section class="card violet-card">
+    <section class="card earn"><span class="peek">${face({ shape: 'bolt', color: 'sun', mood: cur.n > prev.n ? 'proud' : 'happy' })}</span>
       <span class="lbl-l">${isCur ? 'Зароблено цього місяця' : 'Зароблено за місяць'}</span>
       <b class="num-xxl" data-count="${Math.round(cur.n)}">${C.kc(cur.n)}</b>
       <p class="small">${cur.pn ? `з планом — ${C.kc(cur.n + cur.pn)} · ` : ''}${diff !== null ? `${diff >= 0 ? '▲' : '▼'} ${Math.abs(diff)} % проти ${C.MG[pd.getMonth()]}` : ''}</p>
@@ -38,20 +40,20 @@ export function renderMoney(el) {
     ${isCur ? `<section class="card bal" data-a="bal" role="button" tabindex="0">
       <div class="row-sb"><span class="lbl-l">На рахунку</span>${ic('edit')}</div>
       ${bal !== null ? `<b class="num-xl">${C.kc(bal)}</b>
-        ${bud ? `<div class="bud"><span>Можна витрачати сьогодні</span><b>${C.kc(Math.max(0, bud.left))}</b><small>${bud.spent ? `уже витрачено ${C.kc(bud.spent)} · ` : ''}${bud.until ? `до ${C.dLong(bud.until)}` : ''}</small></div>` : ''}`
+        ${bud ? `<div class="bud"><span class="peek">${face({ shape: 'circle', color: 'lime', mood: bud.left > 0 ? 'calm' : 'worried' })}</span><span>Можна витрачати сьогодні</span><b>${C.kc(Math.max(0, bud.left))}</b><small>${bud.spent ? `уже витрачено ${C.kc(bud.spent)} · ` : ''}${bud.until ? `до ${C.dLong(bud.until)}` : ''}</small></div>` : ''}`
       : '<b class="num-xl sm">Вкажи, скільки зараз на рахунку</b><p class="small muted">Bud порахує, скільки можна витрачати щодня до наступної виплати, щоб вистачило на рахунки.</p>'}
     </section>
     ${risk ? `<section class="note ${risk.lvl === 'hi' ? 'warn' : ''}">${ic('warn')}<span><b>${risk.t}</b> ${risk.s}</span></section>` : ''}
-    <div class="row-g"><button class="btn lime grow" data-a="spend">${ic('bag')}Витрата</button><button class="btn soft grow" data-a="gig">${ic('gift')}Підробіток</button></div>
+    <div class="row-g"><button class="btn ink grow" data-a="spend">${ic('bag')}Витрата</button><button class="btn white grow" data-a="gig">${ic('gift')}Підробіток</button></div>
 
     <section class="card"><h2 class="h3">Найближчі 30 днів</h2>
       ${events.length ? events.map((e) => { if (s.bal.d) run += e.t === 'in' ? e.a : -e.a; return `<div class="row">
-        <span class="ev-ic ${e.t}">${ic(e.t === 'in' ? 'coin' : 'wallet')}</span><span class="grow"><b>${C.esc(e.n)}</b><span>${C.dLong(e.d)}${e.t === 'in' && !e.real ? ' · оцінка' : ''}</span></span>
+        <span class="ev-ic ${e.t}">${stk(e.t === 'in' ? 'coin' : 'wallet')}</span><span class="grow"><b>${C.esc(e.n)}</b><span>${C.dLong(e.d)}${e.t === 'in' && !e.real ? ' · оцінка' : ''}</span></span>
         <span class="amt ${e.t}">${e.t === 'in' ? '+' : '−'}${C.kc(e.a)}${s.bal.d ? `<small>лишиться ${C.kc(run)}</small>` : ''}</span></div>`; }).join('')
       : '<p class="small muted">Тут будуть виплати й регулярні платежі. Вкажи день виплати в налаштуваннях роботи, а рахунки — у «Базових витратах».</p>'}
     </section>` : ''}
 
-    <section class="card">
+    <section class="card save">
       <div class="row-sb"><h2 class="h3">Відкласти</h2>${adv ? `<span class="lvl l${adv.li}">${C.LV[adv.li][1]}</span>` : ''}</div>
       ${adv ? `<p class="small">${adv.free >= 0 ? `Після базових витрат у ${C.ML[pm]} лишилось ${C.kc(adv.free)}.` : 'Минулого місяця дохід не покрив базових витрат.'}</p>
         ${adv.save > 0 ? `<b class="num-xl">${C.kc(adv.save)}</b><p class="small muted">${Math.round(adv.sh * 100)} % вільних грошей — решта ${C.kc(adv.life)} на життя</p>
@@ -62,12 +64,12 @@ export function renderMoney(el) {
     </section>
 
     <section class="list-card"><h2 class="h3">Більше</h2>
-      <button class="row" data-a="gigs">${ic('gift')}<span class="grow"><b>Разові підробітки</b><span>${s.gigs.length ? `${s.gigs.length} записів` : 'зйомка, переклад, допомога з переїздом'}</span></span>${ic('right')}</button>
-      <button class="row" data-a="base">${ic('wallet')}<span class="grow"><b>Базові витрати</b><span>${C.baseSum() ? `${C.kc(C.baseSum())} на місяць` : 'житло, їжа, транспорт, звʼязок'}</span></span>${ic('right')}</button>
-      <button class="row" data-a="hist">${ic('doc')}<span class="grow"><b>Історія грошей</b><span>витрати, виплати й платежі</span></span>${ic('right')}</button>
-      <button class="row" data-a="sim">${ic('magic')}<span class="grow"><b>А що, якщо?</b><span>скільки дадуть ще кілька змін і чого коштуватимуть</span></span>${ic('right')}</button>
-      <button class="row" data-a="year">${ic('chart')}<span class="grow"><b>Річний підсумок</b><span>доходи по місяцях і роботодавцях, експорт</span></span>${ic('right')}</button>
-      <button class="row" data-a="cur">${ic('globe')}<span class="grow"><b>Валюти</b><span>основна — ${s.cur}</span></span>${ic('right')}</button>
+      <button class="row" data-a="gigs">${chipIc('gift', 'pink')}<span class="grow"><b>Разові підробітки</b><span>${s.gigs.length ? `${s.gigs.length} записів` : 'зйомка, переклад, допомога з переїздом'}</span></span>${ic('right')}</button>
+      <button class="row" data-a="base">${chipIc('wallet', 'lime')}<span class="grow"><b>Базові витрати</b><span>${C.baseSum() ? `${C.kc(C.baseSum())} на місяць` : 'житло, їжа, транспорт, звʼязок'}</span></span>${ic('right')}</button>
+      <button class="row" data-a="hist">${chipIc('doc', 'sky')}<span class="grow"><b>Історія грошей</b><span>витрати, виплати й платежі</span></span>${ic('right')}</button>
+      <button class="row" data-a="sim">${chipIc('magic', 'lilac')}<span class="grow"><b>А що, якщо?</b><span>скільки дадуть ще кілька змін і чого коштуватимуть</span></span>${ic('right')}</button>
+      <button class="row" data-a="year">${chipIc('chart', 'orange')}<span class="grow"><b>Річний підсумок</b><span>доходи по місяцях і роботодавцях, експорт</span></span>${ic('right')}</button>
+      <button class="row" data-a="cur">${chipIc('globe', 'mint')}<span class="grow"><b>Валюти</b><span>основна — ${s.cur}</span></span>${ic('right')}</button>
     </section>`;
   el.querySelectorAll('[data-count]').forEach((n) => countUp(n, +n.dataset.count, (v) => C.kc(v)));
   if (!el._b) {
@@ -104,7 +106,7 @@ export function openBalance() {
     html: `<p class="small muted">Впиши залишок, який бачиш у банку зараз. Далі Bud сам додаватиме виплати й віднімати платежі та витрати.</p>
       <div class="money-in"><input class="inp big" id="bA" inputmode="decimal" placeholder="0" value="${now !== null ? Math.round(now) : ''}"><span>${C.sym()}</span></div>
       ${s.bal.d ? `<p class="small muted">Останнє оновлення: ${C.dLong(C.pk(s.bal.d))}</p>` : ''}`,
-    foot: `<div class="row-g">${s.bal.d ? '<button class="btn ghost" data-a="off">Не вести баланс</button>' : ''}<button class="btn violet grow" data-a="ok">Зберегти</button></div>`,
+    foot: `<div class="row-g">${s.bal.d ? '<button class="btn ghost" data-a="off">Не вести баланс</button>' : ''}<button class="btn ink grow" data-a="ok">Зберегти</button></div>`,
     onMount(x) {
       setTimeout(() => x.body.querySelector('#bA').focus(), 350);
       x.el.addEventListener('click', (e) => {
@@ -116,27 +118,42 @@ export function openBalance() {
   });
 }
 
-export function openSpend() {
-  const s = S(); let cat = '';
-  const html = `<div class="money-in"><input class="inp big" id="sA" inputmode="decimal" placeholder="0"><span>${C.sym()}</span></div>
-    <input class="inp" id="sN" placeholder="На що: продукти, кава, квиток" maxlength="40">
-    <div class="field"><span class="lbl">Категорія</span><div class="chips hscroll">${C.CATS.map((c) => `<button type="button" class="chip" data-c="${c[0]}" aria-pressed="false">${c[1]} ${c[2]}</button>`).join('')}</div></div>
-    <div class="field"><span class="lbl">Коли</span>${chips('when', [['t', 'Сьогодні'], ['y', 'Вчора']], 't')}</div>`;
+export function openSpend(sp) {
+  const s = S(), ex = !!sp;
+  const q = sp ? { ...sp } : { a: '', n: '', cat: '', k: C.TK };
+  const y = C.ds(C.addD(C.TD, -1));
+  let when = q.k === C.TK ? 't' : q.k === y ? 'y' : 'd';
+  const whenRow = () => `${chips('when', [['t', 'Сьогодні'], ['y', 'Вчора'], ['d', 'Інший день']], when)}
+    ${when === 'd' ? `<input class="inp" type="date" id="sD" value="${q.k}" max="${C.TK}">` : ''}`;
+  const html = `<div class="money-in"><input class="inp big" id="sA" inputmode="decimal" placeholder="0" value="${q.a || ''}"><span>${C.sym(q.cur)}</span></div>
+    <input class="inp" id="sN" placeholder="На що: продукти, кава, квиток" maxlength="40" value="${C.esc(q.n || '')}">
+    <div class="field"><span class="lbl">Категорія</span><div class="chips hscroll">${C.CATS.map((c) => `<button type="button" class="chip" data-c="${c[0]}" aria-pressed="${c[0] === q.cat}">${c[1]} ${c[2]}</button>`).join('')}</div></div>
+    <div class="field"><span class="lbl">Коли</span><div id="sW">${whenRow()}</div></div>`;
   sheet({
-    title: 'Нова витрата', html,
-    foot: '<button class="btn violet wide" data-a="ok">Додати</button>',
+    title: ex ? 'Витрата' : 'Нова витрата', html,
+    foot: `<button class="btn ink wide" data-a="ok">${ex ? 'Зберегти' : 'Додати'}</button>`,
     onMount(x) {
-      let when = 't';
-      setTimeout(() => x.body.querySelector('#sA').focus(), 350);
+      let cat = q.cat || '';
+      if (!ex) setTimeout(() => x.body.querySelector('#sA').focus(), 350);
       x.body.addEventListener('input', (e) => { if (e.target.id === 'sN' && !cat) { const c = C.catOf({ n: e.target.value }); x.body.querySelectorAll('[data-c]').forEach((b) => b.setAttribute('aria-pressed', b.dataset.c === c && e.target.value.length > 2)); } });
       x.el.addEventListener('click', (e) => {
         const b = e.target.closest('button'); if (!b) return;
-        if (b.dataset.c) { cat = b.dataset.c; x.body.querySelectorAll('[data-c]').forEach((q) => q.setAttribute('aria-pressed', q === b)); return; }
-        if (b.closest('[data-chips="when"]')) { when = b.dataset.v; x.body.querySelectorAll('[data-chips="when"] .chip').forEach((q) => q.setAttribute('aria-pressed', q === b)); return; }
+        if (b.dataset.c) { cat = b.dataset.c; x.body.querySelectorAll('[data-c]').forEach((z) => z.setAttribute('aria-pressed', z === b)); return; }
+        if (b.closest('[data-chips="when"]')) {
+          const d = x.body.querySelector('#sD'); if (d && d.value) q.k = d.value;
+          when = b.dataset.v; x.body.querySelector('#sW').innerHTML = whenRow(); return;
+        }
         if (b.dataset.a === 'ok') {
           const a = C.num(x.body.querySelector('#sA').value); if (!a) { x.body.querySelector('#sA').focus(); return; }
           const n = x.body.querySelector('#sN').value.trim();
-          const k = when === 'y' ? C.ds(C.addD(C.TD, -1)) : C.TK;
+          const d = x.body.querySelector('#sD');
+          const k = when === 't' ? C.TK : when === 'y' ? y : (d && d.value) || q.k || C.TK;
+          if (ex) {
+            const it = s.sp.find((z) => z.id === sp.id);
+            if (it) Object.assign(it, { a, n, k: k > C.TK ? C.TK : k, cat: cat || C.catOf({ n }) });
+            save(); haptic(12); x.close(); refresh(); toast('Збережено');
+            return;
+          }
           s.sp.push({ id: C.uid(), a, cur: s.cur, k, ts: Date.now(), n, cat: cat || C.catOf({ n }) });
           if (s.sp.length > 2000) s.sp = s.sp.slice(-2000);
           save(); haptic(12); x.close(); refresh();
@@ -160,7 +177,7 @@ export function openGig(gig) {
     ${C.CUR.length > 1 ? `<div class="field"><span class="lbl">Валюта</span>${chips('gc', C.CUR.map((c) => [c[0], c[0]]), q.cur)}</div>` : ''}`;
   sheet({
     title: ex ? 'Підробіток' : 'Разовий підробіток', html: body(),
-    foot: `<div class="row-g">${ex ? '<button class="btn ghost" data-a="del">Видалити</button>' : ''}<button class="btn violet grow" data-a="ok">${ex ? 'Зберегти' : 'Додати'}</button></div>`,
+    foot: `<div class="row-g">${ex ? '<button class="btn ghost" data-a="del">Видалити</button>' : ''}<button class="btn ink grow" data-a="ok">${ex ? 'Зберегти' : 'Додати'}</button></div>`,
     onMount(x) {
       requestAnimationFrame(() => segInd(x.body));
       const read = () => { const v = (id) => x.body.querySelector('#' + id); q.n = v('gN').value.trim(); q.a = v('gA').value; q.d = v('gD').value || C.TK; q.pd = v('gPD').value; if (v('gP')) q.p = C.num(v('gP').value) || 85; };
@@ -184,8 +201,8 @@ function openGigs() {
   const list = [...s.gigs].sort((a, b) => (b.d || '').localeCompare(a.d || ''));
   sheet({
     title: 'Разові підробітки', tall: true,
-    html: `${list.length ? list.map((q) => `<button class="row" data-id="${q.id}"><span class="grow"><b>${C.esc(q.n || 'Підробіток')}</b><span>${q.d ? C.dLong(C.pk(q.d)) : ''}</span></span><span class="amt in">+${C.kc(C.gigNet(q), q.cur)}</span></button>`).join('') : '<div class="empty soft"><b>Поки порожньо</b><span>Сюди йдуть разові оплати поза графіком.</span></div>'}`,
-    foot: '<button class="btn violet wide" data-a="new">Додати підробіток</button>',
+    html: `${list.length ? list.map((q) => `<button class="row" data-id="${q.id}">${chipIc('gift', 'pink')}<span class="grow"><b>${C.esc(q.n || 'Підробіток')}</b><span>${q.d ? C.dLong(C.pk(q.d)) : ''}</span></span><span class="amt in">+${C.kc(C.gigNet(q), q.cur)}</span></button>`).join('') : '<div class="empty soft"><b>Поки порожньо</b><span>Сюди йдуть разові оплати поза графіком.</span></div>'}`,
+    foot: '<button class="btn ink wide" data-a="new">Додати підробіток</button>',
     onMount(x) { x.el.addEventListener('click', (e) => { const b = e.target.closest('[data-id],[data-a]'); if (!b) return; x.close(); setTimeout(() => openGig(b.dataset.id ? s.gigs.find((q) => q.id === b.dataset.id) : null), 200); }); }
   });
 }
@@ -220,7 +237,8 @@ function openBase() {
 function openGoals() {
   const s = S();
   const body = () => `${s.goals.map((x) => `<div class="card tint" data-id="${x.id}"><input class="inp" data-f="n" value="${C.esc(x.n)}" placeholder="Назва цілі">
-      <div class="two"><label><span class="lbl">Потрібно</span><input class="inp" data-f="t" inputmode="decimal" value="${C.num(x.t) || ''}" placeholder="${x.id === 'cush' && C.baseSum() ? Math.round(C.baseSum() * 3) + ' (3 міс. витрат)' : ''}"></label><label><span class="lbl">Уже є</span><input class="inp" data-f="s" inputmode="decimal" value="${C.num(x.s) || ''}"></label></div>
+      <div class="two"><label><span class="lbl">Потрібно</span><input class="inp" data-f="t" inputmode="decimal" value="${C.num(x.t) || ''}" placeholder="${x.id === 'cush' && C.baseSum() ? Math.round(C.baseSum() * 3) : ''}"></label><label><span class="lbl">Уже є</span><input class="inp" data-f="s" inputmode="decimal" value="${C.num(x.s) || ''}"></label></div>
+      ${x.id === 'cush' && C.baseSum() && !C.num(x.t) ? `<p class="small muted">Підказка: ${C.kc(Math.round(C.baseSum() * 3))} — це три місяці базових витрат.</p>` : ''}
       ${x.id !== 'cush' ? `<button class="link danger" data-del="${x.id}">Видалити ціль</button>` : ''}</div>`).join('')}
     <button class="btn soft wide" data-a="add">${ic('plus')}Нова ціль</button>`;
   sheet({
@@ -234,19 +252,68 @@ function openGoals() {
 
 /* ---------- history ---------- */
 function openHistory() {
-  const s = S(), a = C.addD(C.TD, -60), L = C.ledger(a, C.TD);
+  const s = S();
+  const row = (e) => `<span class="ev-ic ${e.t === 'in' ? 'in' : 'out'}">${e.t === 'sp' ? C.catI(e.cat)[1] : stk(e.t === 'in' ? 'coin' : 'wallet')}</span>
+      <span class="grow"><b>${C.esc(e.n)}</b><span>${C.dLong(e.d)}${e.t === 'out' ? ' · рахунок' : ''}</span></span><span class="amt ${e.t === 'in' ? 'in' : 'out'}">${e.t === 'in' ? '+' : '−'}${C.kc(e.a)}</span>`;
+  const body = () => { const L = C.ledger(C.addD(C.TD, -60), C.TD); return L.length
+    ? `${L.some((e) => e.t === 'sp') ? `<p class="hint">${ic('info')}Торкнись витрати, щоб змінити суму чи день. Свайп ліворуч — видалити.</p>` : ''}
+      ${L.map((e) => e.t === 'sp'
+        ? `<div class="swr" data-sp="${e.id}"><button class="swr-del" data-del="${e.id}" tabindex="-1">${ic('trash')}<span>Видалити</span></button><button class="row swr-row" data-edit="${e.id}">${row(e)}</button></div>`
+        : `<div class="row">${row(e)}</div>`).join('')}`
+    : '<div class="empty soft"><b>Порожньо</b><span>За останні 60 днів ще нічого не записано.</span></div>'; };
+  let redraw = null;
   sheet({
-    title: 'Історія грошей', tall: true,
-    html: L.length ? L.map((e) => `<div class="row" ${e.t === 'sp' ? `data-sp="${e.id}"` : ''}><span class="ev-ic ${e.t === 'in' ? 'in' : 'out'}">${e.t === 'sp' ? C.catI(e.cat)[1] : ic(e.t === 'in' ? 'coin' : 'wallet')}</span>
-      <span class="grow"><b>${C.esc(e.n)}</b><span>${C.dLong(e.d)}${e.t === 'out' ? ' · рахунок' : ''}</span></span><span class="amt ${e.t === 'in' ? 'in' : 'out'}">${e.t === 'in' ? '+' : '−'}${C.kc(e.a)}</span>
-      ${e.t === 'sp' ? `<button class="ib sm" data-del="${e.id}" aria-label="Видалити">${ic('trash')}</button>` : ''}</div>`).join('') : '<div class="empty soft"><b>Порожньо</b><span>За останні 60 днів ще нічого не записано.</span></div>',
+    title: 'Історія грошей', html: body(),
+    onClose() { window.removeEventListener('bud:refresh', redraw); },
     onMount(x) {
-      x.body.addEventListener('click', (e) => {
-        const b = e.target.closest('[data-del]'); if (!b) return;
-        const it = s.sp.find((q) => q.id === b.dataset.del); s.sp = s.sp.filter((q) => q.id !== b.dataset.del); save(); refresh();
-        b.closest('.row').remove(); toast('Видалено', { action: 'Повернути', onAction: () => { S().sp.push(it); save(); refresh(); } });
-      });
+      redraw = () => x.set(body());
+      window.addEventListener('bud:refresh', redraw);
+      const del = (id) => {
+        const it = s.sp.find((q) => q.id === id); if (!it) return;
+        s.sp = s.sp.filter((q) => q.id !== id); save(); haptic(12);
+        const w = x.body.querySelector(`.swr[data-sp="${id}"]`);
+        if (w) { w.style.height = w.offsetHeight + 'px'; w.classList.add('gone'); requestAnimationFrame(() => { w.style.height = '0px'; }); }
+        setTimeout(refresh, 260);
+        toast('Витрату видалено', { action: 'Повернути', ms: 4000, onAction: () => { S().sp.push(it); save(); refresh(); } });
+      };
+      swipeRows(x.body, del, (id) => { const it = s.sp.find((q) => q.id === id); if (it) openSpend(it); });
     }
+  });
+}
+
+/** swipe a .sw row left to reveal «Видалити»; a long swipe deletes right away */
+function swipeRows(root, onDel, onTap) {
+  const OPEN = -104;
+  let cur = null, x0 = 0, y0 = 0, dx = 0, base = 0, dir = '';
+  const shut = (w) => { if (!w) return; w.classList.remove('open'); w.querySelector('.swr-row').style.transform = ''; };
+  root.addEventListener('touchstart', (e) => {
+    const w = e.target.closest('.swr'); root.querySelectorAll('.swr.open').forEach((o) => { if (o !== w) shut(o); });
+    if (!w || e.target.closest('.swr-del')) { cur = null; return; }
+    cur = w; x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; dx = 0; dir = ''; base = w.classList.contains('open') ? OPEN : 0;
+  }, { passive: true });
+  root.addEventListener('touchmove', (e) => {
+    if (!cur) return;
+    const mx = e.touches[0].clientX - x0, my = e.touches[0].clientY - y0;
+    if (!dir) { if (Math.abs(mx) < 8 && Math.abs(my) < 8) return; dir = Math.abs(mx) > Math.abs(my) ? 'h' : 'v'; }
+    if (dir !== 'h') { cur = null; return; }
+    dx = Math.min(0, base + mx);
+    const r = cur.querySelector('.swr-row'); r.style.transition = 'none'; r.style.transform = `translateX(${dx}px)`;
+    cur.classList.toggle('far', dx < -cur.offsetWidth * .55);
+  }, { passive: true });
+  root.addEventListener('touchend', () => {
+    if (!cur || dir !== 'h') { cur = null; return; }
+    const w = cur, r = w.querySelector('.swr-row'); r.style.transition = ''; cur = null;
+    w._swiped = Date.now();
+    if (dx < -w.offsetWidth * .55) { r.style.transform = 'translateX(-100%)'; onDel(w.dataset.sp); return; }
+    if (dx < OPEN / 2) { w.classList.add('open'); r.style.transform = `translateX(${OPEN}px)`; haptic(); }
+    else shut(w);
+  });
+  root.addEventListener('click', (e) => {
+    const d = e.target.closest('[data-del]'); if (d) { onDel(d.dataset.del); return; }
+    const w = e.target.closest('.swr'); if (!w) return;
+    if (w._swiped && Date.now() - w._swiped < 350) return;
+    if (w.classList.contains('open')) { shut(w); return; }
+    const ed = e.target.closest('[data-edit]'); if (ed) onTap(ed.dataset.edit);
   });
 }
 

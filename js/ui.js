@@ -1,9 +1,29 @@
 // Sheets, action sheets, toast, small helpers.
 import { esc } from './calc.js';
+import { chipIc } from './stickers.js';
 
 export const $ = (s, r = document) => r.querySelector(s);
 export const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 export const haptic = (ms = 8) => { try { navigator.vibrate && navigator.vibrate(ms); } catch (e) { /* iOS */ } };
+
+/* ---------- «č» → «c» everywhere on screen ----------
+   Dela draws č badly on some iPhones, so every č/Č that reaches the screen
+   (contract names, job names the user typed) is shown as plain c/C.
+   Stored data and input fields stay untouched. */
+const HK = /[\u010c\u010d]/;
+const fixText = (n) => { if (HK.test(n.data)) n.data = n.data.replace(/\u010d/g, 'c').replace(/\u010c/g, 'C'); };
+function fixTree(root) {
+  if (root.nodeType === 3) { fixText(root); return; }
+  if (root.nodeType !== 1 || !HK.test(root.textContent)) return;
+  const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT); let n;
+  while ((n = w.nextNode())) fixText(n);
+}
+export function plainC() {
+  fixTree(document.body);
+  new MutationObserver((ms) => ms.forEach((m) => {
+    if (m.type === 'characterData') fixText(m.target); else m.addedNodes.forEach(fixTree);
+  })).observe(document.body, { childList: true, subtree: true, characterData: true });
+}
 
 /* ---------- line icons ---------- */
 const P = {
@@ -74,7 +94,7 @@ export function sheet({ title = '', head = '', html = '', foot = '', tall = fals
     set(h) { const t = api.body.scrollTop; api.body.innerHTML = h; api.body.scrollTop = t; },
     setFoot(h) { const f = el.querySelector('.sh-foot'); if (f) f.innerHTML = h; },
     close(v) {
-      if (closed) return; closed = true;
+      if (closed) return; closed = true; unlift();
       el.classList.remove('on'); back.classList.remove('on');
       stack.splice(stack.indexOf(api), 1);
       setTimeout(() => { el.remove(); back.remove(); if (!stack.length) document.documentElement.classList.remove('locked'); }, 380);
@@ -82,18 +102,27 @@ export function sheet({ title = '', head = '', html = '', foot = '', tall = fals
     }
   };
   stack.push(api);
+  // keep the sheet above the on-screen keyboard
+  const vv = window.visualViewport;
+  const lift = () => { if (!vv) return; const kb = Math.max(0, Math.round(innerHeight - vv.height - vv.offsetTop)); el.style.setProperty('--kb', kb + 'px'); el.classList.toggle('kb', kb > 60); };
+  if (vv) { vv.addEventListener('resize', lift); vv.addEventListener('scroll', lift); }
+  const unlift = () => { if (vv) { vv.removeEventListener('resize', lift); vv.removeEventListener('scroll', lift); } };
+  el.addEventListener('focusin', (e) => { if (e.target.matches('input, textarea')) setTimeout(() => e.target.scrollIntoView({ block: 'nearest' }), 320); });
   back.onclick = () => api.close();
   el.querySelector('[data-x]').onclick = () => api.close();
   // swipe down from the handle/header, or from the top of the content
-  let y0 = null, dy = 0, fromBody = false;
+  let y0 = null, x0 = 0, dy = 0, fromBody = false, lock = '';
   el.addEventListener('touchstart', (e) => {
     const inHead = e.target.closest('.sh-grab, .sh-head');
     fromBody = !inHead && api.body.scrollTop <= 0 && !e.target.closest('input, textarea, .hscroll');
-    if (inHead || fromBody) { y0 = e.touches[0].clientY; dy = 0; }
+    if (inHead || fromBody) { y0 = e.touches[0].clientY; x0 = e.touches[0].clientX; dy = 0; lock = ''; }
   }, { passive: true });
   el.addEventListener('touchmove', (e) => {
     if (y0 === null) return;
     dy = e.touches[0].clientY - y0;
+    // a sideways gesture (swiping a row) never drags the sheet
+    if (!lock) { const ax = Math.abs(e.touches[0].clientX - x0); if (ax < 8 && Math.abs(dy) < 8) return; lock = ax > Math.abs(dy) ? 'h' : 'v'; }
+    if (lock === 'h') { y0 = null; dy = 0; return; }
     if (dy > 0 && (!fromBody || api.body.scrollTop <= 0)) { el.classList.add('drag'); el.style.transform = `translateY(${dy * (fromBody ? .7 : 1)}px)`; }
   }, { passive: true });
   el.addEventListener('touchend', () => {
@@ -134,7 +163,7 @@ export function menu(anchor, items, pick) {
   const r = anchor.getBoundingClientRect();
   const back = document.createElement('div'); back.className = 'menu-back';
   const m = document.createElement('div'); m.className = 'menu';
-  m.innerHTML = items.map((it, i) => `<button data-i="${i}">${it.icon ? ic(it.icon) : ''}<span>${esc(it.label)}</span></button>`).join('');
+  m.innerHTML = items.map((it, i) => `<button data-i="${i}">${it.stk ? chipIc(it.stk, it.tone || 'lilac') : it.icon ? ic(it.icon) : ''}<span>${esc(it.label)}</span></button>`).join('');
   m.style.top = r.bottom + 8 + 'px';
   m.style.right = Math.max(12, innerWidth - r.right) + 'px';
   document.body.append(back, m);

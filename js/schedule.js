@@ -3,6 +3,7 @@ import * as C from './calc.js';
 import { save } from './store.js';
 import { $, ic, sheet, ask, toast, menu, seg, segInd, chips, tgl, haptic } from './ui.js';
 import { jobColor } from './today.js';
+import { face } from './cast.js';
 import { g } from './care.js';
 
 const refresh = () => window.dispatchEvent(new Event('bud:refresh'));
@@ -10,7 +11,14 @@ let Y = C.TD.getFullYear(), M = C.TD.getMonth();
 const S = () => C.getState();
 
 /* ---------------- month ---------------- */
+// faces are built once and reused in every cell
+let FACE = null;
+const faces = () => FACE || (FACE = {
+  off: face({ shape: 'circle', color: 'lime', mood: 'chill' }), sick: face({ shape: 'triangle', color: 'coral', mood: 'sick' }), vac: face({ shape: 'blob', color: 'sky', mood: 'calm' }),
+  f1: face({ shape: 'triangle', color: 'coral', mood: 'tense' }), f2: face({ shape: 'circle', color: 'lime', mood: 'calm' }), f3: face({ shape: 'bolt', color: 'sun', mood: 'up' })
+});
 export function renderPlan(el) {
+  faces();
   const s = S(), first = new Date(Y, M, 1), off = (first.getDay() + 6) % 7, n = C.dim(Y, M);
   const sum = C.mSum(Y, M);
   const isCur = Y === C.TD.getFullYear() && M === C.TD.getMonth();
@@ -20,7 +28,7 @@ export function renderPlan(el) {
     const k = C.ds(new Date(Y, M, d)), day = s.days[k], sh = C.shOf(k), ab = C.absOf(k);
     const cls = ['dc', k === C.TK ? 'today' : '', k > C.TK ? 'fut' : ''];
     let inner = '', style = '';
-    if (ab) { cls.push(ab.t === 'sick' ? 'sick' : 'vac'); inner = ic(ab.t === 'sick' ? 'thermo' : 'sun'); }
+    if (ab) { cls.push(ab.t === 'sick' ? 'sick' : 'vac'); inner = ab.t === 'sick' ? FACE.sick : FACE.vac; }
     else if (sh.length) {
       const h = sh.reduce((t, x) => t + C.paidH(x), 0);
       const cols = [...new Set(sh.map((x) => jobColor(C.job(x.j))))];
@@ -28,15 +36,15 @@ export function renderPlan(el) {
       style = cols.length > 1 ? `style="background:linear-gradient(135deg,var(--${cols[0]}) 50%,var(--${cols[1]}) 50%)"` : `style="background:var(--${cols[0]})"`;
       inner = `<b>${C.nf(h)}</b>`;
       if (C.overlaps(k).length) cls.push('warn');
-    } else if (C.isOff(k)) { cls.push('off'); inner = ic('leaf'); }
-    if (day && day.f) inner += `<i class="feel f${day.f}"></i>`;
+    } else if (C.isOff(k)) { cls.push('off'); inner = FACE.off; }
+    if (day && day.f && sh.length) inner += `<span class="feelf">${FACE['f' + day.f]}</span>`;
     cells += `<button class="${cls.join(' ')}" ${style} data-k="${k}" aria-label="${d} ${C.MG[M]}"><span class="dn">${d}</span>${inner}</button>`;
   }
   const jobs = s.jobs.filter((j) => j.n);
   el.innerHTML = `
     <header class="page-h"><div><h1 class="h1">${C.MN[M]}</h1><span class="muted">${Y}${isCur ? '' : ' · <button class="link sm" data-a="now">до сьогодні</button>'}</span></div>
       <div class="row-g tight"><button class="ib" data-a="prev" aria-label="Попередній місяць">${ic('left')}</button><button class="ib" data-a="next" aria-label="Наступний місяць">${ic('right')}</button>
-      <button class="ib violet" data-a="more" aria-label="Інструменти">${ic('more')}</button></div></header>
+      <button class="ib ink" data-a="more" aria-label="Інструменти">${ic('more')}</button></div></header>
     <section class="card cal">
       <div class="dow">${['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Нд'].map((x) => `<span>${x}</span>`).join('')}</div>
       <div class="grid">${cells}</div>
@@ -46,7 +54,7 @@ export function renderPlan(el) {
       <div><span>Чистими</span><b>${C.kc(sum.n)}</b></div><div><span>Години</span><b>${C.nf(sum.h)}</b></div><div><span>Зміни</span><b>${sum.w}</b></div>
       ${sum.pn ? `<p class="small muted wide">з планом — ${C.kc(sum.n + sum.pn)} і ${C.nf(sum.h + sum.ph)} год</p>` : ''}
     </section>
-    <button class="btn violet wide" data-a="auto">${ic('magic')}Скласти план змін</button>
+    <button class="btn ink wide" data-a="auto">${ic('magic')}Скласти план змін</button>
     <p class="hint">${ic('info')}Натисни на день, щоб додати зміну, вихідний, лікарняний чи відпустку.</p>`;
   if (!el._b) {
     el._b = true;
@@ -57,7 +65,7 @@ export function renderPlan(el) {
       if (a === 'prev' || a === 'next') { const t = new Date(Y, M + (a === 'next' ? 1 : -1), 1); Y = t.getFullYear(); M = t.getMonth(); haptic(); renderPlan(el); }
       if (a === 'now') { Y = C.TD.getFullYear(); M = C.TD.getMonth(); renderPlan(el); }
       if (a === 'auto') openAutoplan();
-      if (a === 'more') menu(b, [{ label: 'Скласти план змін', icon: 'magic', value: 'auto' }, { label: `Ставки на ${C.MN[M].toLowerCase()}`, icon: 'coin', value: 'rates' }, { label: 'Шаблони змін', icon: 'clock', value: 'tpl' }, { label: 'Лікарняні й відпустки', icon: 'thermo', value: 'abs' }], (v) => {
+      if (a === 'more') menu(b, [{ label: 'Скласти план змін', stk: 'magic', tone: 'lilac', value: 'auto' }, { label: `Ставки на ${C.MN[M].toLowerCase()}`, stk: 'coin', tone: 'lime', value: 'rates' }, { label: 'Шаблони змін', stk: 'clock', tone: 'sky', value: 'tpl' }, { label: 'Лікарняні й відпустки', stk: 'thermo', tone: 'coral', value: 'abs' }], (v) => {
         if (v === 'auto') openAutoplan(); if (v === 'rates') openRates(Y, M); if (v === 'tpl') openTemplates(); if (v === 'abs') import('./me.js').then((m) => m.openAbsence());
       });
     });
@@ -97,14 +105,14 @@ export function openDay(k, opts = {}) {
       body += `<button class="btn soft wide" data-a="addsh">${ic('plus')}Ще одна зміна</button>`;
       if (ov.length) body += `<p class="note warn">${ic('warn')}Зміни перетинаються на ${C.hm(ov[0].min)}.</p>`;
       if (fut) body += `<p class="note">${ic('info')}Це план. У факт піде, коли день настане.</p>`;
-      if (sh.some((x) => x.pl) && !fut) body += `<button class="btn violet wide" data-a="confirm">${ic('check')}${g('Я відпрацював', 'Я відпрацювала', 'Зміна відбулась')}</button>`;
-      if (!fut) body += `<div class="field"><span class="lbl">Як ти після роботи?</span>${chips('feel', [[1, 'Важко'], [2, 'Нормально'], [3, 'Легко']], day.f || '')}</div>`;
+      if (sh.some((x) => x.pl) && !fut) body += `<button class="btn ink wide" data-a="confirm">${ic('check')}${g('Я відпрацював', 'Я відпрацювала', 'Зміна відбулась')}</button>`;
+      if (!fut) body += `<div class="field"><span class="lbl">Як ти після роботи?</span><div class="feelpick" data-chips="feel">${[[1, 'Важко'], [2, 'Нормально'], [3, 'Легко']].map(([v, l]) => `<button type="button" data-v="${v}" aria-pressed="${day.f === v}">${faces()['f' + v]}${l}</button>`).join('')}</div></div>`;
     } else if (mode === 'off') {
-      body += `<div class="empty soft"><b>Вихідний</b><span>Відпочинок теж частина графіка. Bud не ставитиме сюди змін в автоплані.</span></div>`;
+      body += `<div class="empty soft">${face({ shape: 'circle', color: 'lime', mood: 'calm', hair: 'brow' })}<b>Вихідний</b><span>Відпочинок теж частина графіка. Bud не ставитиме сюди змін в автоплані.</span></div>`;
     } else if (mode === 'sick' || mode === 'vac') {
       body += absSummary(cur);
     } else {
-      body += `<div class="empty soft"><b>Порожній день</b><span>Обери вище, що в цей день: зміна, вихідний, лікарняний чи відпустка.</span></div>`;
+      body += `<div class="empty soft">${face({ shape: 'circle', color: 'grape', mood: 'curious', hair: 'curl' })}<b>Порожній день</b><span>Обери вище, що в цей день: зміна, вихідний, лікарняний чи відпустка.</span></div>`;
     }
     return body;
   };
@@ -113,7 +121,7 @@ export function openDay(k, opts = {}) {
   if (opts.addShift && !C.shOf(k).length && !C.absOf(k)) { const s = S(); s.days[k] = { sh: [newShift(k)] }; save(); }
   sheet({
     head: head(), html: draw(), tall: true,
-    foot: `<div class="row-g"><button class="btn ghost" data-a="clear">Очистити</button><button class="btn violet grow" data-x2>Готово</button></div>`,
+    foot: `<div class="row-g"><button class="btn ghost" data-a="clear">Очистити</button><button class="btn ink grow" data-x2>Готово</button></div>`,
     onMount(x) {
       const rerender = () => { x.el.querySelector('.sh-head .day-h').outerHTML = head(); x.set(draw()); segInd(x.body); };
       requestAnimationFrame(() => segInd(x.body));
@@ -175,7 +183,7 @@ function shiftCard(k, x) {
 function absSummary(k) {
   const ab = C.absOf(k), G = C.absGroups()[ab.g] || [k], from = C.pk(G[0]), to = C.pk(G[G.length - 1]);
   const total = G.reduce((t, q) => t + C.toM(C.absVal(q, C.absOf(q)), C.job(ab.j).cur), 0);
-  return `<div class="abs-c ${ab.t}"><b>${ab.t === 'sick' ? 'Лікарняний' : 'Відпустка'}</b>
+  return `<div class="abs-c ${ab.t}"><span style="position:absolute;right:-14px;top:-12px;width:84px;transform:rotate(12deg)">${ab.t === 'sick' ? faces().sick : faces().vac}</span><b>${ab.t === 'sick' ? 'Лікарняний' : 'Відпустка'}</b>
     <span>${C.rng(from, to)} · ${G.length} ${C.pl(G.length, C.W_DAY)} · ${C.esc(C.job(ab.j).n || '')}</span>
     <span>Очікувана виплата ≈ <b>${C.kc(total)}</b></span>
     <button class="btn soft wide" data-a="abs">${ic('edit')}Змінити період</button></div>`;
@@ -214,7 +222,7 @@ export function openAbs(k, type) {
   };
   sheet({
     title: ex ? 'Період відсутності' : (st.t === 'sick' ? 'Лікарняний' : 'Відпустка'), html: body(),
-    foot: `<div class="row-g">${ex ? '<button class="btn ghost" data-a="del">Видалити</button>' : ''}<button class="btn violet grow" data-a="save">Зберегти</button></div>`,
+    foot: `<div class="row-g">${ex ? '<button class="btn ghost" data-a="del">Видалити</button>' : ''}<button class="btn ink grow" data-a="save">Зберегти</button></div>`,
     onMount(x) {
       requestAnimationFrame(() => segInd(x.body));
       const read = () => { st.from = x.body.querySelector('#aFrom').value || st.from; st.to = x.body.querySelector('#aTo').value || st.to; if (st.to < st.from) st.to = st.from; const p = x.body.querySelector('#aP'); if (p) st.p = p.value.trim(); };
@@ -316,7 +324,7 @@ export function openAutoplan(period) {
   };
   sheet({
     title: 'План змін', html: body(), tall: true,
-    foot: '<button class="btn violet wide" data-a="apply">Додати в графік</button>',
+    foot: '<button class="btn ink wide" data-a="apply">Додати в графік</button>',
     onMount(x) {
       requestAnimationFrame(() => segInd(x.body));
       const re = () => { x.set(body()); segInd(x.body); };
@@ -383,7 +391,7 @@ export function openTemplates() {
       <input class="inp" id="tN" placeholder="Назва, напр. Ранкова" maxlength="20">
       <div class="two"><input class="inp" type="time" id="tS" value="08:00"><input class="inp" type="time" id="tE" value="16:30"></div>
       ${s.jobs.length > 1 ? chips('tj', s.jobs.map((j) => [j.id, C.esc(j.n || 'Робота')]), s.jobs[0].id) : ''}
-      <button class="btn violet wide" data-a="add">${ic('plus')}Додати шаблон</button></div>`;
+      <button class="btn ink wide" data-a="add">${ic('plus')}Додати шаблон</button></div>`;
   sheet({
     title: 'Шаблони змін', html: body(), tall: true,
     onMount(x) {

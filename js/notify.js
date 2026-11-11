@@ -3,6 +3,8 @@ import * as C from './calc.js';
 import { save } from './store.js';
 import { PUSH_URL } from './config.js';
 import { sheet, ic, toast } from './ui.js';
+import { chipIc } from './stickers.js';
+import { bud } from './cast.js';
 
 const S = () => C.getState();
 export const pushUrl = () => (S().push.url || PUSH_URL || '').replace(/\/+$/, '');
@@ -82,13 +84,13 @@ export function updateBadge() {
 export function openInbox(go) {
   const render = () => {
     const L = inbox();
-    if (!L.length) return `<div class="empty"><b>Тут тихо</b><span>Нагадування про зміни, сон і виплати зʼявлятимуться тут.</span></div>`;
-    return L.map((x) => `<button class="nt ${x.read ? '' : 'unread'}" data-id="${x.id}" data-url="${x.url}"><span class="nt-ic">${ic(x.id.startsWith('pay') ? 'coin' : x.id.startsWith('bill') ? 'wallet' : x.id.startsWith('bed') ? 'moon' : x.id.startsWith('cf') ? 'check' : 'clock')}</span>
+    if (!L.length) return `<div class="empty">${bud('chill')}<b>Тут тихо</b><span>Нагадування про зміни, сон і виплати зʼявлятимуться тут.</span></div>`;
+    return L.map((x) => `<button class="nt ${x.read ? '' : 'unread'}" data-id="${x.id}" data-url="${x.url}">${x.id.startsWith('pay') ? chipIc('coin', 'lime') : x.id.startsWith('bill') ? chipIc('wallet', 'yellow') : x.id.startsWith('bed') ? chipIc('moon', 'sky') : x.id.startsWith('cf') ? chipIc('heart', 'pink') : x.id.startsWith('plan') ? chipIc('cal', 'lilac') : chipIc('shift', 'orange')}
       <span class="grow"><b>${C.esc(x.title)}</b><span>${C.esc(x.body)}</span></span></button>`).join('');
   };
   sheet({
     title: 'Сповіщення', html: render(),
-    foot: unread() ? '<button class="btn soft wide" id="ntAll">Позначити все прочитаним</button>' : '',
+    foot: unread() ? '<button class="btn white wide" id="ntAll">Позначити все прочитаним</button>' : '',
     onMount(s) {
       s.body.onclick = (e) => {
         const b = e.target.closest('[data-id]'); if (!b) return;

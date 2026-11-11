@@ -1,51 +1,86 @@
 // «Що нового» — full-screen stories with a before → after picture for every change.
-// Shown once after updating (and after restoring a backup made on an older version).
+// Each version has its own deck. People see every deck newer than the one they saw last
+// (after updating, and after restoring a backup made on an older version).
 import * as C from './calc.js';
 import { save, VER } from './store.js';
 import { ic, haptic } from './ui.js';
-import { buddy } from './buddy.js';
+import { face, bud, cluster, moodFace } from './cast.js';
 import { pushUrl } from './notify.js';
 
-const BEFORE_AFTER = (before, after) => `<div class="wn-ba"><div class="wn-b"><span class="wn-tag">Було</span>${before}</div><span class="wn-arrow">${ic('right')}</span><div class="wn-a"><span class="wn-tag">Стало</span>${after}</div></div>`;
+const BA = (before, after) => `<div class="wn-ba"><div class="wn-b"><span class="wn-tag">було</span>${before}</div><span class="wn-arrow">${ic('right')}</span><div class="wn-a"><span class="wn-tag">стало</span>${after}</div></div>`;
 
-function slides() {
-  const s = C.getState(), days = Object.keys(s.days).length, push = !!pushUrl();
+const DECKS = {
+  '1.0.0': () => {
+    const push = !!pushUrl();
+    return [
+      { bg: 'lime', html: `<p class="wn-k">структура</p><h2 class="wn-h">Чотири розділи замість лабіринту</h2>
+        ${BA(`<div class="mock clutter">${'<i></i>'.repeat(9)}</div><small>5 вкладок, меню з 13 пунктів, 9 блоків на огляді</small>`,
+          `<div class="mock four"><i class="mint"></i><i class="lime"></i><i class="sky"></i><i class="pink"></i></div><small>Сьогодні · Графік · Гроші · Я, рідкісне — у «Більше»</small>`)}` },
+      { bg: 'sky', html: `<p class="wn-k">сповіщення</p><h2 class="wn-h">Нагадування, навіть коли Bud закритий</h2>
+        ${BA(`<div class="mock badge"><span>Bud</span><b>3</b></div><small>лише число на іконці</small>`,
+          `<div class="mock banner"><b>Зміна о 08:00</b><span>Готель · до 16:30</span></div><small>перед зміною, коли лягати, виплата, платежі</small>`)}
+        ${push ? '' : '<p class="wn-t sm">Запрацює, щойно підключимо сервер сповіщень. До того — коли Bud відкритий.</p>'}` },
+      { bg: 'yellow', html: `<p class="wn-k">автоплан</p><h2 class="wn-h">План змін під твій ритм</h2>
+        ${BA(`<div class="mock days">${'<i></i>'.repeat(7)}</div><small>зміни розкидались лише під ціль</small>`,
+          `<div class="mock chipsm"><span>Зранку</span><span>Сб · Нд вільні</span><span>≤ 4 поспіль</span></div><small>коли комфортно, які дні вільні, скільки днів поспіль</small>`)}` },
+      { bg: 'pink', html: `<p class="wn-k">виправлено</p><h2 class="wn-h">Точніші розрахунки</h2>
+        <ul class="wn-list"><li>Лікарняні з редукцією за чеськими правилами 2026 року — раніше виходили завищеними.</li>
+        <li>Поріг страхування DPP — за кожен місяць окремо (12 000 Kc, з 2027 — 12 500 Kc).</li>
+        <li>Лікарняні на новій роботі більше не занижені.</li>
+        <li>«Ціль закрита» — лише коли гроші справді зароблені.</li>
+        <li>Сон усюди рахується за ті самі 14 днів.</li></ul>` }
+    ];
+  },
+  '1.0.1': () => [
+    { bg: 'lilac', html: `<p class="wn-k">новий вигляд</p><h2 class="wn-h">Знайомся з компанією</h2>
+      ${BA(`<div class="mock oldbud"><i></i></div><small>один мультяшний бадді</small>`,
+        `<div class="mock newcast">${face({ shape: 'circle', color: 'grape', mood: 'happy', hair: 'curl' })}${face({ shape: 'bolt', color: 'sun', mood: 'up' })}${face({ shape: 'flower', color: 'pink', mood: 'calm' })}</div><small>градієнтні персонажі, які показують твій стан</small>`)}` },
+    { bg: 'orange', html: `<p class="wn-k">щодня</p><h2 class="wn-h">«Як ти сьогодні?»</h2>
+      ${BA(`<div class="mock lines"><i></i><i></i><i></i></div><small>Bud знав лише про зміни й сон</small>`,
+        `<div class="mock moods">${moodFace('up')}${moodFace('calm')}${moodFace('tired')}</div><small>один дотик — і настрій іде в баланс і календар настрою</small>`)}` },
+    { bg: 'sky', html: `<p class="wn-k">меню</p><h2 class="wn-h">Скляне меню і компактний плюс</h2>
+      ${BA(`<div class="mock oldnav"><i></i></div><small>темна смуга й великий плюс</small>`,
+        `<div class="mock newnav"><i></i></div><small>прозоре скло, виділення перетікає між вкладками</small>`)}` }
+  ],
+  '1.0.2': () => [
+    { bg: 'sky', html: `<p class="wn-k">панелі</p><h2 class="wn-h">Панелі під розмір</h2>
+      ${BA(`<div class="mock shold"><i><b></b><b></b></i></div><small>займали весь екран, знизу — порожньо</small>`,
+        `<div class="mock shnew"><i><b></b><b></b></i></div><small>висота — за вмістом, видно, що позаду</small>`)}` },
+    { bg: 'pink', html: `<p class="wn-k">витрати</p><h2 class="wn-h">Витрату можна змінити</h2>
+      ${BA(`<div class="mock swold"><i></i><b>${ic('trash')}</b></div><small>лише кнопка-кошик у кожному рядку</small>`,
+        `<div class="mock swnew"><i></i><b>${ic('trash')}Видалити</b></div><small>торкнись — зміни суму чи день; свайп ліворуч — видалити</small>`)}` },
+    { bg: 'lime', html: `<p class="wn-k">дрібниці</p><h2 class="wn-h">Ще трохи</h2>
+      <ul class="wn-list"><li>Крони тепер пишуться «Kc», без гачка: так шрифт не ламається.</li>
+      <li>Панель піднімається над клавіатурою, поля не ховаються.</li>
+      <li>Bud оновлюється сам, щойно ти його відкриваєш.</li></ul>` }
+  ]
+};
+const vnum = (v) => String(v || '0').split(/[ .-]/).slice(0, 3).map((x) => +x || 0).reduce((a, x) => a * 100 + x, 0);
+
+function slides(fromVer) {
+  const s = C.getState(), days = Object.keys(s.days).length;
+  const keys = Object.keys(DECKS).filter((v) => vnum(v) > vnum(fromVer) && vnum(v) <= vnum(VER)).sort((a, b) => vnum(a) - vnum(b));
+  const body = keys.flatMap((v) => DECKS[v]());
+  const big = keys.includes('1.0.0'), look = keys.includes('1.0.1');
   return [
-    { bg: 'violet', html: `<div class="wn-buddy">${buddy({ mood: 'proud', pose: 'cheer' })}</div><p class="wn-k">оновлення</p><h2 class="wn-h">Bud ${VER}</h2><p class="wn-t">Новий вигляд, простіша структура і сповіщення, які приходять, навіть коли Bud закритий.</p>` },
-    { bg: 'cream', html: `<p class="wn-k">структура</p><h2 class="wn-h">Чотири розділи замість лабіринту</h2>
-      ${BEFORE_AFTER(`<div class="mock clutter">${'<i></i>'.repeat(9)}</div><small>5 вкладок, меню з 13 пунктів, 9 блоків на огляді</small>`,
-        `<div class="mock four"><i class="mint"></i><i class="lime"></i><i class="sky"></i><i class="pink"></i></div><small>Сьогодні · Графік · Гроші · Я, а все рідкісне — у «Більше»</small>`)}` },
-    { bg: 'mint', html: `<p class="wn-k">сповіщення</p><h2 class="wn-h">Нагадування — навіть коли Bud закритий</h2>
-      ${BEFORE_AFTER(`<div class="mock badge"><span>Bud</span><b>3</b></div><small>лише число на іконці</small>`,
-        `<div class="mock banner"><b>Зміна о 08:00</b><span>Готель · до 16:30</span></div><small>перед зміною, коли лягати, виплата, платежі</small>`)}
-      ${push ? '' : '<p class="wn-t sm">Запрацює, щойно підключимо сервер сповіщень. До того — коли Bud відкритий.</p>'}` },
-    { bg: 'lime', html: `<p class="wn-k">автоплан</p><h2 class="wn-h">План змін під твій ритм</h2>
-      ${BEFORE_AFTER(`<div class="mock days">${'<i></i>'.repeat(7)}</div><small>зміни розкидались лише під ціль</small>`,
-        `<div class="mock chipsm"><span>Зранку</span><span>Сб · Нд вільні</span><span>≤ 4 поспіль</span></div><small>коли комфортно, які дні лишити вільними, скільки днів поспіль</small>`)}` },
-    { bg: 'sky', html: `<p class="wn-k">турбота</p><h2 class="wn-h">Поради з твоїх даних</h2>
-      ${BEFORE_AFTER(`<div class="mock lines"><i></i><i></i><i></i><i></i></div><small>довгі статті</small>`,
-        `<div class="mock tipm"><b>Завтра рання зміна о 6:00</b><span>Лягай до 21:00</span></div><small>коротко, з твоїм графіком і сном, плюс баланс роботи й життя</small>`)}` },
-    { bg: 'pink', html: `<p class="wn-k">виправлено</p><h2 class="wn-h">Точніші розрахунки</h2>
-      <ul class="wn-list"><li>Лікарняні рахуються з редукцією за чеськими правилами 2026 року — раніше виходили завищеними.</li>
-      <li>Для DPP поріг страхування перевіряється за кожен місяць окремо (12 000 Kč, з 2027 — 12 500 Kč).</li>
-      <li>Лікарняні на новій роботі більше не занижені.</li>
-      <li>Надбавка за вихідні береться зі ставок місяця зміни.</li>
-      <li>«Ціль закрита» — тільки коли гроші справді зароблені.</li>
-      <li>Сон в усіх місцях рахується за ті самі 14 днів.</li></ul>` },
-    { bg: 'violet', html: `<div class="wn-buddy">${buddy({ mood: 'happy', pose: 'hug' })}</div><h2 class="wn-h">Усе твоє на місці</h2><p class="wn-t">${days ? `${days} ${C.pl(days, C.W_DAY)} у графіку, роботи, ставки й цілі перенесено.` : 'Можна починати.'} Копія старої версії лишилась на телефоні — «Я → Дані й копія».</p>
-      <button class="btn lime wide big" data-wn="end">Подивитись новий Bud</button>` }
+    { bg: 'white', html: `<div class="cluster-wrap">${cluster()}</div><p class="wn-k">оновлення</p><h2 class="wn-h">Bud ${VER}</h2><p class="wn-t">${big ? 'Новий вигляд, простіша структура і сповіщення, які приходять, навіть коли Bud закритий.' : look ? 'Новий вигляд, персонажі, щоденний настрій і зручніші панелі.' : 'Панелі під розмір і витрати, які можна змінити.'}</p>` },
+    ...body,
+    { bg: 'lilac', html: `<div class="wn-face">${bud('proud')}</div><h2 class="wn-h">Усе твоє на місці</h2><p class="wn-t">${days ? `${days} ${C.pl(days, C.W_DAY)} у графіку, роботи, ставки й цілі — на місці.` : 'Можна починати.'}${big ? ' Копія старої версії лишилась на телефоні — «Я → Дані й копія».' : ''}</p>
+      <button class="btn ink wide big" data-wn="end">Подивитись</button>` }
   ];
 }
 
 export function maybeWhatsNew() {
   const s = C.getState();
   if (!s.onb || s.wnv === VER) return;
-  if (!s.wasV && s.wnv) { s.wnv = VER; save(); return; }
-  showWhatsNew();
+  const from = s.wasV ? '0.9' : s.wnv;
+  if (!from) { s.wnv = VER; save(); return; } // brand new person — nothing to compare with
+  showWhatsNew(false, from);
 }
 
-export function showWhatsNew(manual = false) {
-  const L = slides();
+export function showWhatsNew(manual = false, from) {
+  const s = C.getState();
+  const L = slides(manual ? '1.0.0' : (from || s.wnv || '0.9'));
   let i = 0, t0 = 0, el0 = 0, paused = false, raf = 0;
   const DUR = 7000;
   const el = document.createElement('div');
@@ -56,7 +91,7 @@ export function showWhatsNew(manual = false) {
   document.documentElement.classList.add('locked');
   const bars = [...el.querySelectorAll('.wn-bars b')], stage = el.querySelector('.wn-stage');
   const show = (n) => { i = n; el0 = 0; el.dataset.bg = L[i].bg; stage.innerHTML = `<section class="wn-s">${L[i].html}</section>`; bars.forEach((b, k) => { b.style.width = k < i ? '100%' : '0'; }); t0 = performance.now(); };
-  const close = () => { cancelAnimationFrame(raf); el.classList.add('out'); setTimeout(() => { el.remove(); document.documentElement.classList.remove('locked'); }, 300); const s = C.getState(); s.wnv = VER; delete s.wasV; save(); };
+  const close = () => { cancelAnimationFrame(raf); el.classList.add('out'); setTimeout(() => { el.remove(); document.documentElement.classList.remove('locked'); }, 300); const st = C.getState(); st.wnv = VER; delete st.wasV; save(); };
   const loop = (now) => { if (!paused && i < L.length - 1) el0 += now - t0; t0 = now; bars[i].style.width = i === L.length - 1 ? '100%' : Math.min(100, el0 / DUR * 100) + '%'; if (el0 >= DUR) show(i + 1); raf = requestAnimationFrame(loop); };
   let down = 0, y0 = 0;
   el.addEventListener('pointerdown', (e) => { if (e.target.closest('button:not(.wn-nav)')) return; down = Date.now(); y0 = e.clientY; paused = true; });

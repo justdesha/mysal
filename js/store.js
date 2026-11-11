@@ -2,7 +2,7 @@
 // Before the first launch of a new version the raw data is copied aside, so it can be brought back.
 import * as C from './calc.js';
 
-export const VER = '1.0.0';
+export const VER = '1.0.2';
 const KEY = C.KEY;               // "mysal7"
 const SNAP = KEY + '_snap';      // daily / per-version snapshot (same as 0.9.x)
 const PRE1 = KEY + '_pre1';      // untouched copy of the data as it was before 1.0
@@ -19,6 +19,7 @@ function upgrade(S) {
   S.push = { on: false, id: '', url: '', ...(S.push || {}) };
   if (!S.push.id) S.push.id = C.uid() + C.uid();
   if (!S.wnv) S.wnv = '';
+  if (!S.mood || typeof S.mood !== 'object') S.mood = {};
   return S;
 }
 

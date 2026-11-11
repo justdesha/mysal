@@ -1,12 +1,13 @@
 // Bud service worker: works offline and shows push notifications.
 // Bump VERSION with every release so phones pick up the new files.
-const VERSION = 'bud-1.0.1';
+const VERSION = 'bud-1.0.2';
 const FILES = [
   './', './index.html', './manifest.webmanifest', './css/app.css',
-  './js/app.js', './js/calc.js', './js/store.js', './js/ui.js', './js/buddy.js', './js/care.js', './js/notify.js', './js/config.js',
+  './js/app.js', './js/calc.js', './js/store.js', './js/ui.js', './js/cast.js', './js/stickers.js', './js/care.js', './js/notify.js', './js/config.js',
   './js/today.js', './js/schedule.js', './js/money.js', './js/me.js', './js/onboarding.js', './js/whatsnew.js',
   './icons/icon-180.png', './icons/icon-192.png', './icons/icon-512.png', './icons/favicon.png',
   './fonts/dela-gothic-one-cyrillic-400-normal.woff2', './fonts/dela-gothic-one-latin-400-normal.woff2',
+  './fonts/dela-gothic-one-latin-ext-400-normal.woff2', './fonts/rubik-latin-ext-400-normal.woff2', './fonts/rubik-latin-ext-500-normal.woff2', './fonts/rubik-latin-ext-700-normal.woff2',
   './fonts/rubik-cyrillic-400-normal.woff2', './fonts/rubik-latin-400-normal.woff2',
   './fonts/rubik-cyrillic-500-normal.woff2', './fonts/rubik-latin-500-normal.woff2',
   './fonts/rubik-cyrillic-700-normal.woff2', './fonts/rubik-latin-700-normal.woff2'
@@ -14,8 +15,8 @@ const FILES = [
 
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(VERSION).then((c) => c.addAll(FILES)).then(() => caches.keys()).then((k) => {
-    // coming from Bud 0.9.x: take over right away, there is nothing to ask about
-    if (k.some((x) => x.startsWith('bud-0.'))) return self.skipWaiting();
+    // take over right away: the page reloads itself once no sheet is open
+    return self.skipWaiting();
   }));
 });
 self.addEventListener('activate', (e) => {
